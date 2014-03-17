@@ -6,6 +6,7 @@ public class Membre {
 	private String dateNaissance;
 	private String telephone;
 	private String email;
+	private Adresse adresse;
 	
 	public Membre(){
 		
