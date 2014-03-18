@@ -1,4 +1,4 @@
-package classes;
+package entites;
 
 public class Membre {
 	private String nom;

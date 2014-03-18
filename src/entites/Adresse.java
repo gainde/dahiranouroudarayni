@@ -1,4 +1,4 @@
-package classes;
+package entites;
 
 public class Adresse {
 	private String rue;
