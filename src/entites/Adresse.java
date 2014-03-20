@@ -1,15 +1,49 @@
 package entites;
 
-public class Adresse {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+
+@Embeddable
+public class Adresse implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2570643538893483774L;
+
+	@Column(name="adresse", length = 30, nullable = false)
 	private String rue;
+	
+	@Column(length = 30, nullable = false)
 	private String ville;
+	
+	@Column(length = 30, nullable = false)
 	private String province;
+	
+	@Column(length = 30, nullable = false)
 	private String codepostale;
+	
+	@Column(length = 30, nullable = false)
 	private String pays;
 	
 	public Adresse(){
 		
 	}
+	
+	public Adresse(String rue, String ville, String province,
+			String codepostale, String pays) {
+		super();
+		this.rue = rue;
+		this.ville = ville;
+		this.province = province;
+		this.codepostale = codepostale;
+		this.pays = pays;
+	}
+
+
 
 	public String getRue() {
 		return rue;
@@ -51,6 +85,8 @@ public class Adresse {
 		this.pays = pays;
 	}
 	
-	
+	public String toString() {
+		return String.format("Adresse[%s,%s,%s,%s,%s]", getRue(), getVille(), getProvince(), getCodepostale(), getPays());
+	}
 
 }
