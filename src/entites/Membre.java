@@ -42,7 +42,6 @@ public class Membre implements Serializable{
 	private Adresse adresse;
 	
 	public Membre(){
-		
 	}
 	
 	

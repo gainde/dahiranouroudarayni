@@ -9,6 +9,10 @@ import java.security.NoSuchAlgorithmException;
 
 
 public class SecurePass {
+	public static void main(String args[]){
+		String stringmd5 = "fqdc0740";
+		System.out.println(md5(stringmd5));
+	}
 	public static String md5(String pass){
         String generatedPassword = null;
         try {
