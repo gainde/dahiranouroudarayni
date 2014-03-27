@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Moussa/Documents/GitHub/dahiranouroudarayni/lib/mysql-connector-java-5.0.5-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Moussa/Documents/GitHub/dahiranouroudarayni/lib/toplink-essentials.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Moussa/Documents/GitHub/dahiranouroudarayni/lib/toplink-essentials-agent.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.5-bin.jar"/>
+	<classpathentry kind="lib" path="lib/toplink-essentials-agent.jar"/>
+	<classpathentry kind="lib" path="lib/toplink-essentials.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

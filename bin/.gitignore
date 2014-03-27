@@ -1,10 +1,9 @@
-/tests
-/entites
-/dbmanager
-/persistance
-/vue
-/securite
 /dao
-/generique
 /daoimpl
+/entites
 /logique
+/persistance
+/securite
+/tests
+/vue
+/META-INF
