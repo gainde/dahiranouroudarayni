@@ -3,6 +3,8 @@
 *.jar
 *.war
 *.ear
+.classpath
+bin/*
 
 #netbeans specific
 core
