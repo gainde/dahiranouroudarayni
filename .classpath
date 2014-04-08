@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="C:/Users/Moussa/Documents/GitHub/dahiranouroudarayni/lib/toplink-essentials.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Moussa/Documents/GitHub/dahiranouroudarayni/lib/toplink-essentials-agent.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Moussa/Documents/GitHub/dahiranouroudarayni/lib/org.testng.eclipse_6.8.6.20141201_2240.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
