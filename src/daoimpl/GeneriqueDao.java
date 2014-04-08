@@ -6,16 +6,17 @@ import java.lang.reflect.ParameterizedType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import dao.GeneriqueDao;
+import dao.Dao;
 
-public class GeneriqueDaoImpl<T, PK extends Serializable> implements GeneriqueDao<T, PK> {
+public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T, PK> {
 	
 	protected Class<T> entityClass;
 
     @PersistenceContext
     protected EntityManager entityManager;
 
-    public GeneriqueDaoImpl() {
+    @SuppressWarnings("unchecked")
+	public GeneriqueDao() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass()
              .getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];

@@ -1,13 +1,16 @@
-package logique;
+package validation;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JLabel;
+
 public class Validation {
-	public enum TypeValidation {EMAIL, TELEPHONE, CHAINE, CODEPOSTALE};
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private static final String TELEPHONE_PATTERN = "[0-9]{10}";
-	private static final String CODE_POSTALE_PATTERN = "([A-Za-z][0-9]){3}";
+	private static final String CODE_POSTALE_PATTERN = "^[ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ]( )?\\d[ABCEGHJKLMNPRSTVWXYZ]\\d$";
 	private static boolean valide = false; 
 	
 	private static Pattern pattern;
@@ -27,18 +30,18 @@ public class Validation {
 		if(telephone == null || telephone.isEmpty())
 			return valide = nullable;
 		else{
-			//TODO check if pattern match
+			matcher = Pattern.compile(TELEPHONE_PATTERN).matcher(telephone);
+			return matcher.matches();
 		}
-		return false;
 	}
 	
 	public static boolean validerCodePostale(String codePostale, boolean nullable){
 		if(codePostale == null || codePostale.isEmpty())
 			return valide = nullable;
 		else{
-			//TODO check if pattern match
+			matcher = Pattern.compile(CODE_POSTALE_PATTERN).matcher(codePostale);
+			return matcher.matches();
 		}
-		return false;
 	}
 	
 	public static boolean validerChaine(String chaine, int tailleMax, boolean nullable){
@@ -46,6 +49,10 @@ public class Validation {
 			return valide = nullable;
 		else
 			return valide = (chaine.length()<=tailleMax);
+	}
+	
+	public static boolean validerNombre(String nombre, int min, int max, boolean nullable){
+		return false;
 	}
 
 }

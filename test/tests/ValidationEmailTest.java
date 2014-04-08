@@ -1,59 +1,50 @@
 package tests;
 
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+
+import validation.Validation;
 
 
-@RunWith(Parameterized.class)
 public class ValidationEmailTest {
-	private EmailValidator emailValidator;
+	private static final String VALID_EMAILS [] = new String[] { "moussa@yahoo.com",
+			"moussa-100@yahoo.com", "moussa.100@yahoo.com",
+			"moussa111@moussa.com", "moussa-100@moussa.net",
+			"moussa.100@moussa.com.au", "moussa@1.com",
+			"moussa@gmail.com.com", "moussa+100@gmail.com",
+			"moussa-100@yahoo-test.com" } ;
+	
+	private static final String INVALID_EMAILS [] = new String [] { "moussa", "moussa@.com.my",
+			"moussa123@gmail.a", "moussa123@.com", "moussa123@.com.com",
+			".moussa@moussa.com", "moussa()*@gmail.com", "moussa@%*.com",
+			"moussa..2002@gmail.com", "moussa.@gmail.com",
+			"moussa@moussa@gmail.com", "moussa@gmail.com.1a" };
 	 
 	@BeforeClass
-	public void initData() {
-		emailValidator = new EmailValidator();
+	public static void initData() {
 	}
  
-	@Parameterized.Parameters
-	public Object[][] ValidEmailProvider() {
-		return new Object[][] { { new String[] { "mkyong@yahoo.com",
-			"mkyong-100@yahoo.com", "mkyong.100@yahoo.com",
-			"mkyong111@mkyong.com", "mkyong-100@mkyong.net",
-			"mkyong.100@mkyong.com.au", "mkyong@1.com",
-			"mkyong@gmail.com.com", "mkyong+100@gmail.com",
-			"mkyong-100@yahoo-test.com" } } };
-	}
+	
+	@Test
+	public void ValidEmailTest() {
  
-	@Parameterized.Parameters
-	public Object[][] InvalidEmailProvider() {
-		return new Object[][] { { new String[] { "mkyong", "mkyong@.com.my",
-			"mkyong123@gmail.a", "mkyong123@.com", "mkyong123@.com.com",
-			".mkyong@mkyong.com", "mkyong()*@gmail.com", "mkyong@%*.com",
-			"mkyong..2002@gmail.com", "mkyong.@gmail.com",
-			"mkyong@mkyong@gmail.com", "mkyong@gmail.com.1a" } } };
-	}
- 
-	//TODO adapter avec JUnit
-	@Test(dataProvider = "ValidEmailProvider")
-	public void ValidEmailTest(String[] Email) {
- 
-		for (String temp : Email) {
-			boolean valid = emailValidator.validate(temp);
-			System.out.println("Email is valid : " + temp + " , " + valid);
-			Assert.assertEquals(valid, true);
+		for (String email : VALID_EMAILS) {
+			boolean valide = Validation.validerEmail(email, true);
+			System.out.println("Email est valide : " + email + " , " + valide);
+			Assert.assertEquals(valide, true);
 		}
  
 	}
- 
-	@Test(dataProvider = "InvalidEmailProvider", dependsOnMethods = "ValidEmailTest")
-	public void InValidEmailTest(String[] Email) {
- 
-		for (String temp : Email) {
-			boolean valid = emailValidator.validate(temp);
-			System.out.println("Email is valid : " + temp + " , " + valid);
-			Assert.assertEquals(valid, false);
+	
+	@Test
+	public void InValidEmailTest() {
+		
+		for (String email : INVALID_EMAILS) {
+			boolean valide = Validation.validerEmail(email, true);
+			System.out.println("Email est invalide : " + email + " , " + valide);
+			Assert.assertEquals(valide, false);
 		}
 	}
 }

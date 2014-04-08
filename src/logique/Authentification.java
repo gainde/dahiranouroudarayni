@@ -9,10 +9,13 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import vue.AuthentificationDialog;
+import dao.UtilisateurDao;
 
 public class Authentification{
 	private AuthentificationDialog dialog;
-	
+	JDialog jtest = new JDialog();
+	UtilisateurDao user;
+
 	public Authentification(final JFrame parent, boolean modal){
 		dialog = new AuthentificationDialog(parent, modal);
 		addListener(parent);
@@ -56,6 +59,9 @@ public class Authentification{
 	}
 	
 	private boolean veriferMotDePasse(String user, String pass){
+		//TODO verifier dans la base de données
+		//TODO appeler la classe DAO et verifier la vérification retourne true
+		
 		return false;
 	}
 	

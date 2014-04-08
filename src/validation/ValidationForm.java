@@ -1,28 +1,29 @@
-package logique;
+package validation;
 
 import javax.swing.JLabel;
 
-import logique.Validation.TypeValidation;
+import logique.TypeValidation;
+
 
 public class ValidationForm {
-	private Object field;
+	private String fieldText;
 	private JLabel lb;
 	private String msgError;
 	private boolean nullable;
-	private int min = -1; 
-	private int max = -1;
+	
 	private TypeValidation type;
-	public ValidationForm(Object field, JLabel lb, String msgError,
+	
+	public ValidationForm(String texte, JLabel lb, String msgError,
 			boolean nullable, TypeValidation typeValidation) {
 		super();
-		this.field = field;
+		this.fieldText = texte;
 		this.lb = lb;
 		this.msgError = msgError;
 		this.nullable = nullable;
 		this.type = typeValidation;
 	}
-	public Object getField() {
-		return field;
+	public String getField() {
+		return fieldText;
 	}
 	public JLabel getLb() {
 		return lb;
@@ -33,14 +34,8 @@ public class ValidationForm {
 	public boolean isNullable() {
 		return nullable;
 	}
-	public int getMin() {
-		return min;
-	}
-	public int getMax() {
-		return max;
-	}
-	public void setField(Object field) {
-		this.field = field;
+	public void setField(String text) {
+		this.fieldText = text;
 	}
 	public void setLb(JLabel lb) {
 		this.lb = lb;
@@ -50,12 +45,6 @@ public class ValidationForm {
 	}
 	public void setNullable(boolean nullable) {
 		this.nullable = nullable;
-	}
-	public void setMin(int min) {
-		this.min = min;
-	}
-	public void setMax(int max) {
-		this.max = max;
 	}
 	
 	public void valider(){
