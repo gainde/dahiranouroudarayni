@@ -6,6 +6,7 @@ import java.lang.reflect.ParameterizedType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import persistance.EMF;
 import dao.Dao;
 
 public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T, PK> {
@@ -13,7 +14,7 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
 	protected Class<T> entityClass;
 
     @PersistenceContext
-    protected EntityManager entityManager;
+    protected EntityManager entityManager = EMF.getEntityManager("jpa");
 
     @SuppressWarnings("unchecked")
 	public GeneriqueDao() {
