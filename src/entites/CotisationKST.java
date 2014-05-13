@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -12,6 +15,9 @@ import javax.persistence.TemporalType;
 @SuppressWarnings("serial")
 @Table(name="cotisationkst")
 public class CotisationKST implements Serializable{
+	@Id
+	@GeneratedValue
+	private int id;
 	@Column(nullable = false)
 	private float montant;// montant cotise par membres
 	@Column(length = 2, nullable = false)
@@ -19,7 +25,6 @@ public class CotisationKST implements Serializable{
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dateCotisationKST;// la date de cotisation
-	
 	private Membre membre;
 	public CotisationKST() {
 	}

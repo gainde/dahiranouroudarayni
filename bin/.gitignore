@@ -1,3 +1,4 @@
+/META-INF
 /dao
 /daoimpl
 /entites
@@ -6,4 +7,3 @@
 /securite
 /tests
 /vue
-/META-INF

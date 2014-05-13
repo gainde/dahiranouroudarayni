@@ -37,7 +37,7 @@ public class Authentification{
             	}
             	boolean valide = veriferMotDePasse(dialog.getUsernameField().getText(), dialog.getPasswordField().getPassword().toString());
                 if (valide) {
-                	//TODO afficher la fênetre
+                	//TODO afficher la fï¿½netre
                 	dialog.getLabelStatus().setText("Mot de passe valide");
                 } else {
                 	dialog.getLabelStatus().setText("Mot de passe invalide");
