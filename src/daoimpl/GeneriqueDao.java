@@ -2,6 +2,7 @@ package daoimpl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,5 +45,10 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
         t = this.entityManager.merge(t);
         this.entityManager.remove(t);
     }
+    
+    @Override
+	public List getAll(String query) {
+    	return entityManager.createQuery(query).getResultList();
+	}
 
 }

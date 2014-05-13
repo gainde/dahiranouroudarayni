@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="516.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.Cotisation">
+<AnchorPane prefHeight="520.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.Cotisation">
 	<children>
-		<TabPane layoutX="22.0" layoutY="144.0" prefHeight="349.0" prefWidth="671.0" tabClosingPolicy="UNAVAILABLE">
+		<TabPane id="tabpaneCotisation" layoutX="22.0" layoutY="144.0" prefHeight="349.0" prefWidth="671.0" tabClosingPolicy="UNAVAILABLE">
 			<tabs>
 				<Tab text="Loyer">
 					<content>
@@ -16,8 +16,8 @@
 							<children>
 								<TableView id="tableLoyer" fx:id="tableLoyer" layoutX="373.0" layoutY="50.0" prefHeight="263.0" prefWidth="284.0">
 									<columns>
-										<TableColumn id="tableLoyerDate" fx:id="tableLoyerDate" prefWidth="144.0" text="C1" />
-										<TableColumn id="tableLoyerMontant" fx:id="tableLoyerMontant" minWidth="0.0" prefWidth="139.0" text="C2" />
+										<TableColumn id="tableLoyerDate" fx:id="tableLoyerDate" prefWidth="144.0" text="Date" />
+										<TableColumn id="tableLoyerMontant" fx:id="tableLoyerMontant" minWidth="0.0" prefWidth="139.0" text="Montant" />
 									</columns>
 								</TableView>
 								<GridPane layoutX="20.0" layoutY="50.0">
@@ -35,9 +35,9 @@
 										<DatePicker id="dateLoyer" fx:id="dateLoyer" prefHeight="25.0" prefWidth="172.0" promptText="Choisir Date" GridPane.columnIndex="1" />
 										<Label text="Montant" GridPane.rowIndex="1" />
 										<TextField id="txtMontantLoyer" fx:id="txtMontantLoyer" promptText="Montant loyer" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-										<Button id="btnAjouterLoyer" fx:id="btnAjouterLoyer" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Ajouter" GridPane.columnIndex="1" GridPane.rowIndex="2">
+										<Button id="btnAjouterLoyer" fx:id="btnAjouterLoyer" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Ajouter" GridPane.columnIndex="1" GridPane.rowIndex="2">
 											<GridPane.margin>
-												<Insets left="95.0" />
+												<Insets />
 											</GridPane.margin>
 										</Button>
 									</children>
@@ -54,11 +54,11 @@
 							<children>
 								<TableView id="tableKST" fx:id="tableKST" layoutX="373.0" layoutY="50.0" prefHeight="263.0" prefWidth="284.0">
 									<columns>
-										<TableColumn id="tableKSTDate" fx:id="tableKSTDate" prefWidth="138.0" text="C1" />
-										<TableColumn id="tableKSTMontant" fx:id="tableKSTMontant" minWidth="0.0" prefWidth="145.0" text="C2" />
+										<TableColumn id="tableKSTDate" fx:id="tableKSTDate" prefWidth="138.0" text="Date" />
+										<TableColumn id="tableKSTMontant" fx:id="tableKSTMontant" minWidth="0.0" prefWidth="145.0" text="Montant" />
 									</columns>
 								</TableView>
-								<GridPane layoutX="26.0" layoutY="67.0">
+								<GridPane layoutX="23.0" layoutY="50.0">
 									<columnConstraints>
 										<ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="132.0" />
 										<ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="169.0" />
@@ -73,7 +73,7 @@
 										<DatePicker id="dateKST" fx:id="dateKST" prefHeight="25.0" prefWidth="172.0" promptText="Choisir Date" GridPane.columnIndex="1" />
 										<Label text="Montant" GridPane.rowIndex="1" />
 										<TextField id="montantKST" fx:id="montantKST" promptText="Montant  Cotisation KST" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-										<Button id="btnAjouterKST" fx:id="btnAjouterKST" mnemonicParsing="false" text="Ajouter" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+										<Button id="btnAjouterKST" fx:id="btnAjouterKST" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Ajouter" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 									</children>
 								</GridPane>
 								<ComboBox id="cmbAnneeKST" fx:id="cmbAnneeKST" editable="true" layoutX="486.0" layoutY="14.0" prefHeight="25.0" prefWidth="171.0" promptText="Choisir une année" />
@@ -87,11 +87,11 @@
 							<children>
 								<TableView id="tableEvenement" fx:id="tableEvenement" layoutX="373.0" layoutY="50.0" prefHeight="263.0" prefWidth="284.0">
 									<columns>
-										<TableColumn id="tableEvenementDate" fx:id="tableEvenementDate" prefWidth="138.0" text="C1" />
-										<TableColumn id="tableEvenementMontant" fx:id="tableEvenementMontant" minWidth="0.0" prefWidth="145.0" text="C2" />
+										<TableColumn id="tableEvenementDate" fx:id="tableEvenementDate" prefWidth="138.0" text="Date" />
+										<TableColumn id="tableEvenementMontant" fx:id="tableEvenementMontant" minWidth="0.0" prefWidth="145.0" text="Montant" />
 									</columns>
 								</TableView>
-								<GridPane layoutX="26.0" layoutY="67.0">
+								<GridPane layoutX="14.0" layoutY="50.0">
 									<columnConstraints>
 										<ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="127.0" />
 										<ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="174.0" />

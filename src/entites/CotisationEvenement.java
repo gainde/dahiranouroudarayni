@@ -23,4 +23,45 @@ public class CotisationEvenement implements Serializable{
 	private Evenement evenement;
 	
 	private Membre membre;
+
+	public CotisationEvenement(float montantCotiser, Date dateCotisationEven) {
+		super();
+		this.montantCotiser = montantCotiser;
+		this.dateCotisationEven = dateCotisationEven;
+	}
+
+	public float getMontantCotiser() {
+		return montantCotiser;
+	}
+
+	public void setMontantCotiser(float montantCotiser) {
+		this.montantCotiser = montantCotiser;
+	}
+
+	public Date getDateCotisationEven() {
+		return dateCotisationEven;
+	}
+
+	public void setDateCotisationEven(Date dateCotisationEven) {
+		this.dateCotisationEven = dateCotisationEven;
+	}
+
+	public Evenement getEvenement() {
+		return evenement;
+	}
+
+	public void setEvenement(Evenement evenement) {
+		this.evenement = evenement;
+	}
+
+	public Membre getMembre() {
+		return membre;
+	}
+
+	public void setMembre(Membre membre) {
+		this.membre = membre;
+	}
+	
+	
+	
 }
