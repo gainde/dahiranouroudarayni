@@ -2,20 +2,23 @@ package daoimpl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import dao.GeneriqueDao;
+import persistance.EMF;
+import dao.Dao;
 
-public class GeneriqueDaoImpl<T, PK extends Serializable> implements GeneriqueDao<T, PK> {
+public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T, PK> {
 	
 	protected Class<T> entityClass;
 
     @PersistenceContext
-    protected EntityManager entityManager;
+    protected EntityManager entityManager = EMF.getEntityManager("jpa");
 
-    public GeneriqueDaoImpl() {
+    @SuppressWarnings("unchecked")
+	public GeneriqueDao() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass()
              .getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
@@ -42,5 +45,10 @@ public class GeneriqueDaoImpl<T, PK extends Serializable> implements GeneriqueDa
         t = this.entityManager.merge(t);
         this.entityManager.remove(t);
     }
+    
+    @Override
+	public List getAll(String query) {
+    	return entityManager.createQuery(query).getResultList();
+	}
 
 }

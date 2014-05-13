@@ -8,6 +8,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import validation.ValidationErreur;
+
+
 import entites.Adresse;
 import entites.Membre;
 

@@ -7,6 +7,9 @@ import java.awt.event.AWTEventListener;
 public class SecureSession {
 	private Session session;
 	
+	public SecureSession(){
+		trackSystemEvents();
+	}
 	private void trackSystemEvents()
 	{
 		Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener(){
