@@ -25,7 +25,7 @@ public class Membres extends Application {
 
         try {
             // Load the root layout from the fxml file
-            FXMLLoader loader = new FXMLLoader(EditerMembres.class.getResource("MembreVue.fxml"));
+            FXMLLoader loader = new FXMLLoader(Membres.class.getResource("MembreVue.fxml"));
             anc = (AnchorPane) loader.load();
             membreController = (MembreController)loader.getController();
             Scene scene = new Scene(anc);

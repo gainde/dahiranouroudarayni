@@ -143,7 +143,7 @@ public class MembreController  implements Initializable{
 
 		        try {
 		            // Load the root layout from the fxml file
-		            FXMLLoader loader = new FXMLLoader(Membres.class.getResource("CotisationUI.fxml"));
+		            FXMLLoader loader = new FXMLLoader(CotisationController.class.getResource("CotisationUI.fxml"));
 		            AnchorPane anc = (AnchorPane) loader.load();
 		            CotisationController cotisation = (CotisationController)loader.getController();
 		            Scene scene = new Scene(anc);

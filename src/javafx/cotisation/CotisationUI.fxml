@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="520.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.Cotisation">
+<AnchorPane prefHeight="520.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.cotisation.CotisationController">
 	<children>
 		<TabPane id="tabpaneCotisation" layoutX="22.0" layoutY="144.0" prefHeight="349.0" prefWidth="671.0" tabClosingPolicy="UNAVAILABLE">
 			<tabs>

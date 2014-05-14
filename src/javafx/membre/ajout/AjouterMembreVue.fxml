@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="429.0" maxWidth="600.0" minHeight="429.0" minWidth="600.0" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.AjouterMembreController">
+<AnchorPane maxHeight="429.0" maxWidth="600.0" minHeight="429.0" minWidth="600.0" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.ajout.AjouterMembreController">
 	<children>
 		<VBox prefHeight="429.0" prefWidth="600.0">
 			<children>
