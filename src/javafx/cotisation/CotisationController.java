@@ -1,4 +1,4 @@
-package vue;
+package javafx.cotisation;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -23,10 +26,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import dao.CotisationEvenementDao;
 import dao.CotisationKSTDao;
 import dao.CotisationLoyerDao;
@@ -37,13 +42,13 @@ import entites.CotisationEvenement;
 import entites.CotisationKST;
 import entites.CotisationLoyer;
 
-public class Cotisation implements Initializable{
+public class CotisationController implements Initializable{
 	@FXML private TabPane tabpaneCotisation;
 	@FXML private TableView<CotisationLoyer> tableLoyer ;
 	@FXML private TableView<CotisationKST> tableKST ;
 	@FXML private TableView<CotisationEvenement> tableEvenement ;
 	
-    @FXML private TableColumn<CotisationLoyer, Date> tableLoyerDate;
+    @FXML private TableColumn<CotisationLoyer, String> tableLoyerDate;
     @FXML private TableColumn<CotisationLoyer, Double> tableLoyerMontant;
     @FXML private TableColumn<CotisationKST, Date> tableKSTDate;
     @FXML private TableColumn<CotisationKST, Double> tableKSTMontant;
@@ -87,8 +92,27 @@ public class Cotisation implements Initializable{
 		handleComboBoxEvenement();
 		//TODO ajouter tab event method
 		
-		tableLoyerDate.setCellValueFactory(new PropertyValueFactory<CotisationLoyer, Date>("Date"));
-		tableLoyerMontant.setCellValueFactory(new PropertyValueFactory<CotisationLoyer, Double>("Montant"));
+		tableLoyer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CotisationLoyer>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends CotisationLoyer> observable,
+					CotisationLoyer oldValue, CotisationLoyer newValue) {
+				//TODO gerer cas null a cause du filtre change detect
+				System.out.println("Click montant : "+((newValue==null)?"vide":newValue.getMontant()));
+				
+			}
+		});
+		tableLoyerDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationLoyer, String>, ObservableValue<String>>() {
+		     public ObservableValue<String> call(CellDataFeatures<CotisationLoyer, String> p) {
+		         return new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(p.getValue().getDate()));
+		     }
+		  });
+		tableLoyerMontant.setCellValueFactory(new Callback<CellDataFeatures<CotisationLoyer, Double>, ObservableValue<Double>>() {
+		     public ObservableValue<Double> call(CellDataFeatures<CotisationLoyer, Double> p) {
+		         return new ReadOnlyObjectWrapper(p.getValue().getMontant());
+		     }
+		  });
 		tableKSTDate.setCellValueFactory(new PropertyValueFactory<CotisationKST, Date>("Date"));
 		tableKSTMontant.setCellValueFactory(new PropertyValueFactory<CotisationKST, Double>("Montant"));
 		tableEvenementDate.setCellValueFactory(new PropertyValueFactory<CotisationEvenement, Date>("Date"));
@@ -102,7 +126,7 @@ public class Cotisation implements Initializable{
     
     private void HandleButtonAjouterLoyer(){
     	btnAjouterLoyer.setOnMouseReleased(new EventHandler<Event>() {
-
+    		
 			@Override
 			public void handle(Event event) {
 				ajouterCotisationLoyer();
@@ -221,8 +245,8 @@ public class Cotisation implements Initializable{
 	public void ajouterCotisationLoyer(){
 		LocalDate localDate = dateLoyer.getValue();
 		String montant = txtMontantLoyer.getText();
-		float montantLoyer;
-		montantLoyer = Float.parseFloat(montant);
+		Double montantLoyer;
+		montantLoyer = Double.parseDouble(montant);
 		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
 		CotisationLoyer cotisation = new CotisationLoyer(montantLoyer, date);

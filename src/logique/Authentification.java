@@ -5,10 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javafx.AuthentificationDialog;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import vue.AuthentificationDialog;
 import dao.UtilisateurDao;
 
 public class Authentification{
