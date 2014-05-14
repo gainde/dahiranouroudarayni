@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="520.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.MembreController">
+<AnchorPane prefHeight="520.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.MembreController">
 	<children>
 <HBox fx:id="hboxBorder" prefHeight="520.0" prefWidth="720.0">
 <children><Pane prefHeight="260.0" prefWidth="380.0">
 <children>
 						<TableView fx:id="tableViewMembre" layoutY="220.0" prefHeight="300.0" prefWidth="380.0">
 							<columns>
-								<TableColumn prefWidth="120.0" text="Prénom" />
-								<TableColumn prefWidth="121.0" text="Nom" />
-								<TableColumn prefWidth="138.0" text="Téléphone" />
+								<TableColumn fx:id="tablePrenom" prefWidth="120.0" text="Prénom" />
+								<TableColumn fx:id="tableNom" prefWidth="121.0" text="Nom" />
+								<TableColumn fx:id="tableTelephone" prefWidth="138.0" text="Téléphone" />
 							</columns>
 						</TableView>
 						<HBox layoutY="144.0" prefHeight="76.0" prefWidth="380.0" spacing="10.0">

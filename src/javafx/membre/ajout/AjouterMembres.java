@@ -1,4 +1,4 @@
-package vue;
+package javafx.membre.ajout;
 import java.io.IOException;
 
 import javafx.application.Application;

@@ -1,10 +1,10 @@
 package logique;
 
 import javafx.application.Application;
+import javafx.membre.Membres;
+import javafx.membre.ajout.AjouterMembres;
+import javafx.membre.edit.EditerMembres;
 import javafx.stage.Stage;
-import vue.AjouterMembres;
-import vue.EditerMembres;
-import vue.Membres;
 
 public class Main {
 	

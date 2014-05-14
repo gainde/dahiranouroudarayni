@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="429.0" maxWidth="600.0" minHeight="429.0" minWidth="600.0" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vue.AjouterMembreController">
+<AnchorPane maxHeight="429.0" maxWidth="600.0" minHeight="429.0" minWidth="600.0" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.ajout.AjouterMembreController">
 	<children>
 		<VBox prefHeight="429.0" prefWidth="600.0">
 			<children>
@@ -60,7 +60,6 @@
 						<TextField fx:id="nomField" promptText="Entrer votre nom de famille" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 						<TextField fx:id="emailField" promptText="xxxxx@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 						<TextField fx:id="telephoneField" promptText="514 708 4568" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-						<TextField fx:id="naissanceField" promptText="jour/mois/année" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 						<TextField fx:id="adresseField" promptText="8190, rue Arthur Peloquin, #1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 						<TextField fx:id="postalField" promptText="H1R 2S8" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 						<TextField fx:id="villeField" promptText="Entrer votre ville" GridPane.columnIndex="1" GridPane.rowIndex="7" />
@@ -89,7 +88,7 @@
 								<Button fx:id="btnAnnuler" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Annuler" />
 								<Button fx:id="btnEnregistrer" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Enregistrer" />
 							</children>
-						</HBox>
+						</HBox><DatePicker fx:id="dateNaissance" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 					</children>
 				</GridPane>
 			</children>

@@ -5,10 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javafx.AuthentificationDialog;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import vue.AuthentificationDialog;
 import dao.UtilisateurDao;
 
 public class Authentification{
@@ -59,8 +60,8 @@ public class Authentification{
 	}
 	
 	private boolean veriferMotDePasse(String user, String pass){
-		//TODO verifier dans la base de données
-		//TODO appeler la classe DAO et verifier la vérification retourne true
+		//TODO verifier dans la base de donnï¿½es
+		//TODO appeler la classe DAO et verifier la vï¿½rification retourne true
 		
 		return false;
 	}

@@ -1,4 +1,4 @@
-package vue;
+package javafx.cotisation;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ public class CotisationView extends Application {
             // Load the root layout from the fxml file
             FXMLLoader loader = new FXMLLoader(CotisationView.class.getResource("CotisationUI.fxml"));
             rootLayout = (AnchorPane) loader.load();
-            Cotisation controlleur = loader.getController();
+            CotisationController controlleur = loader.getController();
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             controlleur.setStage(primaryStage);

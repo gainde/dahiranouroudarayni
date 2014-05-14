@@ -1,4 +1,4 @@
-package vue;
+package javafx.cotisation;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -37,7 +37,7 @@ import entites.CotisationEvenement;
 import entites.CotisationKST;
 import entites.CotisationLoyer;
 
-public class Cotisation implements Initializable{
+public class CotisationController implements Initializable{
 	@FXML private TabPane tabpaneCotisation;
 	@FXML private TableView<CotisationLoyer> tableLoyer ;
 	@FXML private TableView<CotisationKST> tableKST ;
