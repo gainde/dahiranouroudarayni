@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.5-bin.jar"/>
 	<classpathentry kind="lib" path="lib/toplink-essentials-agent.jar"/>
 	<classpathentry kind="lib" path="lib/toplink-essentials.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+=======
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+<<<<<<< HEAD
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.5-bin.jar"/>
+	<classpathentry kind="lib" path="lib/toplink-essentials-agent.jar"/>
+	<classpathentry kind="lib" path="lib/toplink-essentials.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/Moussa/Documents/GitHub/dahiranouroudarayni/lib/org.testng.eclipse_6.8.6.20141201_2240.jar"/>
+>>>>>>> 11173e6fbcb055f29257232cfb912f18865ac8f3
+>>>>>>> 19b71f6db11f2ff24d646ee6242b93a0cd0f2ac0
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -4,11 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Table(name="dahira")
 public class Dahira implements Serializable{
+	@Id
+	@GeneratedValue
+	private int id;
 	@Column(length = 30, nullable = false)
 	private String nomDahira;// nom de la dahira
 	@Column(length = 1000, nullable = false)
@@ -24,7 +30,6 @@ public class Dahira implements Serializable{
 	
 	public Dahira() {
 	}
-	
 	public Dahira(String nomDahira, String description,
 			int numeroEnregistrement, String telephone, String email,
 			String siteWeb, Adresse adresse) {

@@ -6,14 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 
+@SuppressWarnings("serial")
 @Embeddable
 public class Adresse implements Serializable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2570643538893483774L;
-
 	@Column(name="adresse", length = 30, nullable = false)
 	private String rue;
 	
