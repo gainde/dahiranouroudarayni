@@ -60,8 +60,8 @@ public class Authentification{
 	}
 	
 	private boolean veriferMotDePasse(String user, String pass){
-		//TODO verifier dans la base de données
-		//TODO appeler la classe DAO et verifier la vérification retourne true
+		//TODO verifier dans la base de donnï¿½es
+		//TODO appeler la classe DAO et verifier la vï¿½rification retourne true
 		
 		return false;
 	}
