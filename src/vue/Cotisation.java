@@ -67,7 +67,7 @@ public class Cotisation implements Initializable{
     
     @FXML private Label lbMembre;
     
-    
+   
     private Stage stage;
     ObservableList<CotisationLoyer> loyerData = FXCollections.observableArrayList();
     ObservableList<CotisationKST> KSTData = FXCollections.observableArrayList();
