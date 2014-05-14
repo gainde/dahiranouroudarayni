@@ -94,7 +94,7 @@ public class MembreController  implements Initializable{
 
 	        try {
 	            // Load the root layout from the fxml file
-	            FXMLLoader loader = new FXMLLoader(Membres.class.getResource("AjouterMembreVue.fxml"));
+	            FXMLLoader loader = new FXMLLoader(AjouterMembreController.class.getResource("AjouterMembreVue.fxml"));
 	            AnchorPane anc = (AnchorPane) loader.load();
 	            AjouterMembreController addMemberController = (AjouterMembreController)loader.getController();
 	            Scene scene = new Scene(anc);
@@ -119,7 +119,7 @@ public class MembreController  implements Initializable{
 
 	        try {
 	            // Load the root layout from the fxml file
-	            FXMLLoader loader = new FXMLLoader(Membres.class.getResource("EditerMembreVue.fxml"));
+	            FXMLLoader loader = new FXMLLoader(EditerMembreController.class.getResource("EditerMembreVue.fxml"));
 	            AnchorPane anc = (AnchorPane) loader.load();
 	            EditerMembreController editMemberController = (EditerMembreController)loader.getController();
 	            Scene scene = new Scene(anc);
