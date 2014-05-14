@@ -1,4 +1,4 @@
-package vue;
+package javafx.membre;
 
 import java.io.IOException;
 import java.net.URL;
@@ -7,11 +7,14 @@ import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.cotisation.CotisationController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.membre.ajout.AjouterMembreController;
+import javafx.membre.edit.EditerMembreController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -142,7 +145,7 @@ public class MembreController  implements Initializable{
 		            // Load the root layout from the fxml file
 		            FXMLLoader loader = new FXMLLoader(Membres.class.getResource("CotisationUI.fxml"));
 		            AnchorPane anc = (AnchorPane) loader.load();
-		            Cotisation cotisation = (Cotisation)loader.getController();
+		            CotisationController cotisation = (CotisationController)loader.getController();
 		            Scene scene = new Scene(anc);
 		            scene.getStylesheets().add("META-INF/css/style.css");
 		            primaryStage.setScene(scene);

@@ -1,4 +1,4 @@
-package vue;
+package javafx.membre.ajout;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.membre.MembreController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;

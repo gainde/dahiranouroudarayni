@@ -1,4 +1,4 @@
-package vue;
+package javafx.membre.edit;
 
 import java.net.URL;
 import java.util.ResourceBundle;
