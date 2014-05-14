@@ -17,6 +17,9 @@
 								<TableColumn fx:id="tablePrenom" prefWidth="120.0" text="Prénom" />
 								<TableColumn fx:id="tableNom" prefWidth="121.0" text="Nom" />
 								<TableColumn fx:id="tableTelephone" prefWidth="138.0" text="Téléphone" />
+								<TableColumn prefWidth="120.0" text="Prénom" />
+								<TableColumn prefWidth="121.0" text="Nom" />
+								<TableColumn prefWidth="138.0" text="Téléphone" />
 							</columns>
 						</TableView>
 						<HBox layoutY="144.0" prefHeight="76.0" prefWidth="380.0" spacing="10.0">

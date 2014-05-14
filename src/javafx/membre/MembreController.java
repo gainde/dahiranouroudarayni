@@ -2,6 +2,7 @@ package javafx.membre;
 
 import java.io.IOException;
 import java.net.URL;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
