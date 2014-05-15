@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
 import persistance.EMF;
@@ -13,9 +14,12 @@ import dao.Dao;
 public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T, PK> {
 	
 	protected Class<T> entityClass;
+	
 
     @PersistenceContext
     protected EntityManager entityManager = EMF.getEntityManager("jpa");
+    protected EntityTransaction tx = entityManager.getTransaction();
+    
 
     @SuppressWarnings("unchecked")
 	public GeneriqueDao() {
@@ -42,13 +46,24 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
 
     @Override
     public void delete(T t) {
+    	if(t != null){
         t = this.entityManager.merge(t);
         this.entityManager.remove(t);
+    	}
     }
     
     @Override
 	public List getAll(String query) {
     	return entityManager.createQuery(query).getResultList();
+	}
+    
+    public void demarerTransaction(){
+    	tx.begin();
+    }
+	public void commitTransaction(){
+		tx.commit();
+	}
+	public void finirTransaction(){
 	}
 
 }

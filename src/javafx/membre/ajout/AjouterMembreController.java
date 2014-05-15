@@ -9,6 +9,10 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import dao.CotisationLoyerDao;
+import dao.MembreDao;
+import daoimpl.CotisationLoyerImpl;
+import daoimpl.MembreDaoImpl;
 import entites.Adresse;
 import entites.CotisationLoyer;
 import entites.Membre;
@@ -22,6 +26,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.membre.MembreController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -51,6 +56,7 @@ public class AjouterMembreController implements Initializable{
 	 private Stage stage;
 	 private Stage parentStage;
 	 private Membre   membre;
+	 private MembreController membreController;
 	 
 	String province = "Quebec";
 	Date date = null;
@@ -69,12 +75,19 @@ public class AjouterMembreController implements Initializable{
 		return this.parentStage;
 	}
 	
+	public MembreController getMembreController() {
+		return membreController;
+	}
+
+	public void setMembreController(MembreController membreController) {
+		this.membreController = membreController;
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		// action bouton annuler
 		 btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
 		 	    @Override public void handle(ActionEvent event) {
-		 	    	System.out.println("Ok");
 		 	    	parentStage.show();
 		 	    	stage.close();
 		 	    }
@@ -98,18 +111,24 @@ public class AjouterMembreController implements Initializable{
 		LocalDate localDate = dateNaissance.getValue();
 		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 		date = Date.from(instant);
-		System.out.println("date de naissance" + date.toString());
-		System.out.println("Prenom" + prenomField.getText());
-		System.out.println("Nom" + nomField.getText());
-			membre = new Membre(prenomField.getText(),
-					nomField.getText(),date,telephoneField.getText(),
+			membre = new Membre(nomField.getText(),
+					prenomField.getText(),date,telephoneField.getText(),
 					emailField.getText());
 			Adresse adresse = new Adresse(adresseField.getText(),
 					villeField.getText(),province,
 					postalField.getText(),"Canada");
 			membre.setAdresse(adresse);
 			System.out.println(membre.toString());
+			enreisgitrerMembre(membre);
+			membreController.getTableViewMembre().getItems().add(membre);
 			}
+	}
+	//ajouter membre dans la base de donnée
+	public void enreisgitrerMembre(Membre member){
+		MembreDao membreDao =  new MembreDaoImpl();
+		membreDao.demarerTransaction();
+		membreDao.create(member);
+		membreDao.commitTransaction();
 	}
 	
 	//action sur le combox selection de province

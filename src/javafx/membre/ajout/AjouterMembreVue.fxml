@@ -88,7 +88,7 @@
 								<Button fx:id="btnAnnuler" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Annuler" />
 								<Button fx:id="btnEnregistrer" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Enregistrer" />
 							</children>
-						</HBox><DatePicker fx:id="dateNaissance" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+						</HBox><DatePicker fx:id="dateNaissance" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 					</children>
 				</GridPane>
 			</children>
