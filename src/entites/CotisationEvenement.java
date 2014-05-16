@@ -4,54 +4,73 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
 @SuppressWarnings("serial")
-@Table(name = "cotisation_evenement")
+@Entity
+@Table(name = "cotisationevenement")
 public class CotisationEvenement implements Serializable{
 	@Id
 	@GeneratedValue
 	private int id;
+	
 	@Column(nullable = false)
-	private float montantCotiser;//le montant cotise par membres
+	private Double montant;//le montant cotise par membres
+	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dateCotisationEven;// la date de cotisation
-
+	private Date dateCotisation;// la date de cotisation
+	
+	@Column
+	private String idEven =  "Autre";
+	
+	
+	//private String idMembre = "Anonyme";
+	
+	//@ManyToOne(fetch=FetchType.LAZY)
+    //@JoinColumn
 	private Evenement evenement;
 	
+	@ManyToOne
+    @JoinColumn(name="id")
 	private Membre membre;
-
-	public CotisationEvenement(float montantCotiser, Date dateCotisationEven) {
+	
+	public CotisationEvenement() {
 		super();
-		this.montantCotiser = montantCotiser;
-		this.dateCotisationEven = dateCotisationEven;
 	}
 
-	public float getMontantCotiser() {
-		return montantCotiser;
+	public CotisationEvenement(Double montantCotiser, Date dateCotisationEven) {
+		super();
+		this.montant = montantCotiser;
+		this.dateCotisation = dateCotisationEven;
 	}
 
-	public void setMontantCotiser(float montantCotiser) {
-		this.montantCotiser = montantCotiser;
+	public Double getMontant() {
+		return montant;
 	}
 
-	public Date getDateCotisationEven() {
-		return dateCotisationEven;
+	public void setMontant(Double montantCotiser) {
+		this.montant = montantCotiser;
 	}
 
-	public void setDateCotisationEven(Date dateCotisationEven) {
-		this.dateCotisationEven = dateCotisationEven;
+	public Date getDateCotisation() {
+		return dateCotisation;
 	}
 
-	public Evenement getEvenement() {
+	public void setDateCotisation(Date dateCotisationEven) {
+		this.dateCotisation = dateCotisationEven;
+	}
+
+	/*public Evenement getEvenement() {
 		return evenement;
 	}
 
@@ -61,6 +80,22 @@ public class CotisationEvenement implements Serializable{
 
 	public Membre getMembre() {
 		return membre;
+	}
+
+	public void setMembre(Membre membre) {
+		this.membre = membre;
+	}*/
+
+	public String getIdEven() {
+		return idEven;
+	}
+
+	public void setIdEven(String idEven) {
+		this.idEven = idEven;
+	}
+
+	public Membre getMembre() {
+		return this.membre;
 	}
 
 	public void setMembre(Membre membre) {

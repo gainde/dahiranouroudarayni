@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,14 +23,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import logique.TypeCotisation;
 import dao.CotisationEvenementDao;
 import dao.CotisationKSTDao;
 import dao.CotisationLoyerDao;
@@ -41,25 +41,26 @@ import daoimpl.CotisationLoyerImpl;
 import entites.CotisationEvenement;
 import entites.CotisationKST;
 import entites.CotisationLoyer;
+import entites.Membre;
 
 public class CotisationController implements Initializable{
-	@FXML private TabPane tabpaneCotisation;
+	@FXML private TabPane tabPaneCotisation;
 	@FXML private TableView<CotisationLoyer> tableLoyer ;
 	@FXML private TableView<CotisationKST> tableKST ;
 	@FXML private TableView<CotisationEvenement> tableEvenement ;
 	
     @FXML private TableColumn<CotisationLoyer, String> tableLoyerDate;
     @FXML private TableColumn<CotisationLoyer, Double> tableLoyerMontant;
-    @FXML private TableColumn<CotisationKST, Date> tableKSTDate;
+    @FXML private TableColumn<CotisationKST, String> tableKSTDate;
     @FXML private TableColumn<CotisationKST, Double> tableKSTMontant;
-    @FXML private TableColumn<CotisationEvenement, Date> tableEvenementDate;
+    @FXML private TableColumn<CotisationEvenement, String> tableEvenementDate;
     @FXML private TableColumn<CotisationEvenement, Double> tableEvenementMontant;
     @FXML private DatePicker dateLoyer;
     @FXML private DatePicker dateKST;
     @FXML private DatePicker dateEvenement;
     
     @FXML private TextField txtMontantLoyer;
-    @FXML private TextField txtMontantKST;
+    @FXML private TextField montantKST;
     @FXML private TextField txtMontantEvenement;
     
     @FXML private Button btnAjouterLoyer;
@@ -72,6 +73,8 @@ public class CotisationController implements Initializable{
     
     @FXML private Label lbMembre;
     
+    @FXML private ComboBox<String> cmbTypeCotisation;
+    
    
     private Stage stage;
     ObservableList<CotisationLoyer> loyerData = FXCollections.observableArrayList();
@@ -81,47 +84,34 @@ public class CotisationController implements Initializable{
     private final String LIST_COTISATION_KST = "select c from CotisationKST c";
     private final String LIST_COTISATION_EVENEMENT = "select c from CotisationEvenement c";
     
+    final String LOYER_TAB_ID = "loyerTab";
+	final String KST_TAB_ID = "KSTTab";
+	final String EVENEMENT_TAB_ID = "evenementTab";
+	
+	final char COTISATION_KST_MENSUEL = '1';
+	final char COTISATION_KST_AUTRE = '0';
+	
+	private Membre membre;
+	
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-    	HandleButtonAjouterLoyer();
-    	HandleButtonAjouterKST();
-    	HandleButtonAjouterEvenement();
-		handleComboBoxLoyer();
-		handleComboBoxKST();
-		handleComboBoxEvenement();
-		//TODO ajouter tab event method
-		
-		tableLoyer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CotisationLoyer>() {
-
-			@Override
-			public void changed(
-					ObservableValue<? extends CotisationLoyer> observable,
-					CotisationLoyer oldValue, CotisationLoyer newValue) {
-				//TODO gerer cas null a cause du filtre change detect
-				System.out.println("Click montant : "+((newValue==null)?"vide":newValue.getMontant()));
-				
-			}
-		});
-		tableLoyerDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationLoyer, String>, ObservableValue<String>>() {
-		     public ObservableValue<String> call(CellDataFeatures<CotisationLoyer, String> p) {
-		         return new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(p.getValue().getDate()));
-		     }
-		  });
-		tableLoyerMontant.setCellValueFactory(new Callback<CellDataFeatures<CotisationLoyer, Double>, ObservableValue<Double>>() {
-		     public ObservableValue<Double> call(CellDataFeatures<CotisationLoyer, Double> p) {
-		         return new ReadOnlyObjectWrapper(p.getValue().getMontant());
-		     }
-		  });
-		tableKSTDate.setCellValueFactory(new PropertyValueFactory<CotisationKST, Date>("Date"));
-		tableKSTMontant.setCellValueFactory(new PropertyValueFactory<CotisationKST, Double>("Montant"));
-		tableEvenementDate.setCellValueFactory(new PropertyValueFactory<CotisationEvenement, Date>("Date"));
-		tableEvenementMontant.setCellValueFactory(new PropertyValueFactory<CotisationEvenement, Double>("Montant"));
+    	handleTabPaneCotisation();
+		initialiserTabLoyer();
+		initialiserTabKST();
+		initialiserTabEvenement();
 		chargerCotisationLoyer();
 	}
     
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+    public Membre getMembre(){
+    	return this.membre;
+    }
+    
+    public void setMembre(Membre m){
+    	this.membre = m;
     }
     
     private void HandleButtonAjouterLoyer(){
@@ -197,9 +187,27 @@ public class CotisationController implements Initializable{
 		});
     }
 
+	private void handleTabPaneCotisation(){
+		tabPaneCotisation.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Tab> observable,
+					Tab oldValue, Tab newValue) {
+				
+				
+				if(newValue.getId().equals(LOYER_TAB_ID)){
+					chargerCotisationLoyer();
+				}else if(newValue.getId().equals(KST_TAB_ID)){
+					chargerCotisationKST();
+				}else if(newValue.getId().equals(EVENEMENT_TAB_ID)){
+					chargerCotisationEvenement();
+				}
+				
+			}
+		});
+	}
 	
-	
-	public void chargerCotisationLoyer(){
+	private void chargerCotisationLoyer(){
 		ObservableList<CotisationLoyer> cotisationLoyerData = FXCollections.observableArrayList();
 		CotisationLoyerDao cotisationLoyerDao = new CotisationLoyerImpl();
 		ArrayList<String> cmbData = new ArrayList<String>();
@@ -213,7 +221,7 @@ public class CotisationController implements Initializable{
 		tableLoyer.setItems(loyerData);
 		fillComboBox(cmbAnneeLoyer, cmbData);
 	}
-	public void chargerCotisationKST(){
+	private void chargerCotisationKST(){
 		ObservableList<CotisationKST> cotisationKSTData = FXCollections.observableArrayList();
 		CotisationKSTDao cotisationKSTDao = new CotisationKSTImpl();
 		ArrayList<String> cmbData = new ArrayList<String>();
@@ -227,7 +235,7 @@ public class CotisationController implements Initializable{
 		tableKST.setItems(KSTData);
 		fillComboBox(cmbAnneeKST, cmbData);
 	}
-	public void chargerCotisationEvenement(){
+	private void chargerCotisationEvenement(){
 		ObservableList<CotisationEvenement> cotisationEvenementData = FXCollections.observableArrayList();
 		CotisationEvenementDao cotisationEvenementDao = new CotisationEvenementImpl();
 		ArrayList<String> cmbData = new ArrayList<String>();
@@ -235,14 +243,14 @@ public class CotisationController implements Initializable{
 		for (Object p : cotisationEvenementDao.getAll(LIST_COTISATION_EVENEMENT)) {
 			CotisationEvenement evenement = (CotisationEvenement)p;
 			cotisationEvenementData.add(evenement);
-			cmbData.add(new SimpleDateFormat("yyyy").format(evenement.getDateCotisationEven()));
+			cmbData.add(new SimpleDateFormat("yyyy").format(evenement.getDateCotisation()));
 		}
 		EvenementData = cotisationEvenementData;
 		tableEvenement.setItems(EvenementData);
 		fillComboBox(cmbAnneeEvenement, cmbData);
 	}
 	
-	public void ajouterCotisationLoyer(){
+	private void ajouterCotisationLoyer(){
 		LocalDate localDate = dateLoyer.getValue();
 		String montant = txtMontantLoyer.getText();
 		Double montantLoyer;
@@ -252,37 +260,39 @@ public class CotisationController implements Initializable{
 		CotisationLoyer cotisation = new CotisationLoyer(montantLoyer, date);
 		ajouterCotisationLoyer(cotisation);
 	}
-	public void ajouterCotisationLoyer(CotisationLoyer cotisation){
+	private void ajouterCotisationLoyer(CotisationLoyer cotisation){
 		CotisationLoyerDao cotisationLoyerDao =  new CotisationLoyerImpl();
 		cotisationLoyerDao.create(cotisation);
 		tableLoyer.getItems().add(cotisation);
 	}
-	public void ajouterCotisationKST(){
+	private void ajouterCotisationKST(){
 		LocalDate localDate = dateKST.getValue();
-		String montant = txtMontantKST.getText();
-		float montantLoyer;
-		montantLoyer = Float.parseFloat(montant);
+		String montant = montantKST.getText();
+		char type = TypeCotisation.valueOf(cmbTypeCotisation.getValue()).getCodeType() ;
+		Double montantLoyer;
+		montantLoyer = Double.parseDouble(montant);
 		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
-		CotisationKST cotisation = new CotisationKST(montantLoyer,null,  date);
+		CotisationKST cotisation = new CotisationKST(montantLoyer,type,  date);
+		//TODO set Membre
 		ajouterCotisationKST(cotisation);
 	}
-	public void ajouterCotisationKST(CotisationKST cotisation){
+	private void ajouterCotisationKST(CotisationKST cotisation){
 		CotisationKSTDao cotisationKSTDao =  new CotisationKSTImpl();
 		cotisationKSTDao.create(cotisation);
 		tableKST.getItems().add(cotisation);
 	}
-	public void ajouterCotisationEvenement(){
+	private void ajouterCotisationEvenement(){
 		LocalDate localDate = dateEvenement.getValue();
 		String montant = txtMontantEvenement.getText();
-		float montantLoyer;
-		montantLoyer = Float.parseFloat(montant);
+		Double montantLoyer;
+		montantLoyer = Double.parseDouble(montant);
 		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
-		CotisationKST cotisation = new CotisationKST(montantLoyer,null,  date);
-		ajouterCotisationKST(cotisation);
+		CotisationEvenement cotisation = new CotisationEvenement(montantLoyer,date);
+		ajouterCotisationEvenement(cotisation);
 	}
-	public void ajouterCotisationEvenementT(CotisationEvenement cotisation){
+	private void ajouterCotisationEvenement(CotisationEvenement cotisation){
 		CotisationEvenementDao cotisationEvenementDao =  new CotisationEvenementImpl();
 		cotisationEvenementDao.create(cotisation);
 		tableEvenement.getItems().add(cotisation);
@@ -297,5 +307,72 @@ public class CotisationController implements Initializable{
     	cmb.setItems(options);
     	
     }
+	
+	private void fillComboBoxTypeCotisagtionKST(ComboBox<String> cmb){
+    	ObservableList<String> options = 
+    		    FXCollections.observableArrayList();
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy");
+    	options.add(TypeCotisation.MENSUEL.name());
+    	options.add(TypeCotisation.AUTRE.name());
+    	
+    	cmb.setItems(options);
+    	cmb.setValue(TypeCotisation.MENSUEL.name());
+    	
+    }
+	
+	private void initialiserTabLoyer(){
+		HandleButtonAjouterLoyer();
+		handleComboBoxLoyer();
+		tableLoyer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CotisationLoyer>() {
+			
+			@Override
+			public void changed(
+					ObservableValue<? extends CotisationLoyer> observable,
+					CotisationLoyer oldValue, CotisationLoyer newValue) {
+				//TODO gerer cas null a cause du filtre change detect
+				System.out.println("Click montant : "+((newValue==null)?"vide":newValue.getMontant()));
+				
+			}
+		});
+		tableLoyerDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationLoyer, String>, ObservableValue<String>>() {
+		     public ObservableValue<String> call(CellDataFeatures<CotisationLoyer, String> p) {
+		         return new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(p.getValue().getDate()));
+		     }
+		  });
+		tableLoyerMontant.setCellValueFactory(new Callback<CellDataFeatures<CotisationLoyer, Double>, ObservableValue<Double>>() {
+		     public ObservableValue<Double> call(CellDataFeatures<CotisationLoyer, Double> p) {
+		         return new ReadOnlyObjectWrapper(p.getValue().getMontant());
+		     }
+		  });
+	}
+	private void initialiserTabKST(){
+		HandleButtonAjouterKST();
+		handleComboBoxKST();
+		fillComboBoxTypeCotisagtionKST(cmbTypeCotisation);
+		tableKSTDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationKST, String>, ObservableValue<String>>() {
+		     public ObservableValue<String> call(CellDataFeatures<CotisationKST, String> o) {
+		         return new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(o.getValue().getDateCotisationKST()));
+		     }
+		  });
+		tableKSTMontant.setCellValueFactory(new Callback<CellDataFeatures<CotisationKST, Double>, ObservableValue<Double>>() {
+		     public ObservableValue<Double> call(CellDataFeatures<CotisationKST, Double> p) {
+		         return new ReadOnlyObjectWrapper(p.getValue().getMontant());
+		     }
+		  });
+	}
+	private void initialiserTabEvenement(){
+		HandleButtonAjouterEvenement();
+		handleComboBoxEvenement();
+		tableEvenementDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationEvenement, String>, ObservableValue<String>>() {
+		     public ObservableValue<String> call(CellDataFeatures<CotisationEvenement, String> o) {
+		         return new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(o.getValue().getDateCotisation()));
+		     }
+		  });
+		tableEvenementMontant.setCellValueFactory(new Callback<CellDataFeatures<CotisationEvenement, Double>, ObservableValue<Double>>() {
+		     public ObservableValue<Double> call(CellDataFeatures<CotisationEvenement, Double> p) {
+		         return new ReadOnlyObjectWrapper(p.getValue().getMontant());
+		     }
+		  });
+	}
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,55 +14,82 @@ import javax.persistence.TemporalType;
 
 
 @SuppressWarnings("serial")
+@Entity
 @Table(name="cotisationkst")
 public class CotisationKST implements Serializable{
 	@Id
 	@GeneratedValue
 	private int id;
+	
 	@Column(nullable = false)
-	private float montant;// montant cotise par membres
-	@Column(length = 2, nullable = false)
-	private String typeDeCotisation;//type de cotisation si c est de type mensuel ou non
+	private Double montant;// montant cotise par membres
+	
+	@Column(name="type", length = 1, nullable = false)
+	private char type;//type de cotisation si c est de type mensuel ou non
+	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dateCotisationKST;// la date de cotisation
-	private Membre membre;
+	private Date dateCotisation;// la date de cotisation
+	
+	@Column(nullable = false)
+	private String idMembre = "";
+	
+	//private Membre membre;
+	
 	public CotisationKST() {
 	}
 	
-	public CotisationKST(float montant, String typeDeCotisation,
+	public CotisationKST(Double montant, char typeDeCotisation,
 			Date dateCotisationKST) {
 		super();
 		this.montant = montant;
-		this.typeDeCotisation = typeDeCotisation;
-		this.dateCotisationKST = dateCotisationKST;
+		this.type = typeDeCotisation;
+		this.dateCotisation = dateCotisationKST;
 	}
 
-	public float getMontant() {
+	public Double getMontant() {
 		return montant;
 	}
-	public void setMontant(float montant) {
+	public void setMontant(Double montant) {
 		this.montant = montant;
 	}
-	public String getTypeDeCotisation() {
-		return typeDeCotisation;
+	public char getTypeDeCotisation() {
+		return type;
 	}
-	public void setTypeDeCotisation(String typeDeCotisation) {
-		this.typeDeCotisation = typeDeCotisation;
+	public void setTypeDeCotisation(char typeDeCotisation) {
+		this.type = typeDeCotisation;
 	}
 	
 	public Date getDateCotisationKST() {
-		return dateCotisationKST;
+		return dateCotisation;
 	}
 
 	public void setDateCotisationKST(Date dateCotisationKST) {
-		this.dateCotisationKST = dateCotisationKST;
+		this.dateCotisation = dateCotisationKST;
 	}
+	
+	
+	
+	public String getIdMembre() {
+		return idMembre;
+	}
+
+	public void setIdMembre(String idMembre) {
+		this.idMembre = idMembre;
+	}
+
+	/*public Membre getMembre() {
+		return membre;
+	}
+
+	public void setMembre(Membre membre) {
+		this.membre = membre;
+	}*/
 
 	@Override
 	public String toString() {
-		return "CotisationKST [montant=" + montant + ", typeDeCotisation="
-				+ typeDeCotisation + ", dateCotisationKST=" + dateCotisationKST
+		return "CotisationKST [montant=" + montant + ", typeCotisation="
+				+ type + ", dateCotisation=" + dateCotisation
 				+ "]";
 	}
 	

@@ -25,7 +25,7 @@ public class CotisationLoyer implements Serializable{
 	private Long id;
 	
 	@Column(nullable = false)
-	private float montant;//le montant cotise par membres
+	private Double montant;//le montant cotise par membres
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -34,12 +34,12 @@ public class CotisationLoyer implements Serializable{
 	//private Membre membre;
 	
 	@Column(nullable = false)
-	private int idMembre = 202;
+	private String idMembre = "";
 	
 	public CotisationLoyer() {
 	}
 	
-	public CotisationLoyer(float montant, Date date) {
+	public CotisationLoyer(Double montant, Date date) {
 		super();
 		this.montant = montant;
 		//this.groupe = groupe;
@@ -58,17 +58,17 @@ public class CotisationLoyer implements Serializable{
 	public void setDatecotisation(Date datecotisation) {
 		this.datecotisation = datecotisation;
 	}
-	public int getIdMembre() {
+	public String getIdMembre() {
 		return idMembre;
 	}
-	public void setIdMembre(int idMembre) {
+	public void setIdMembre(String idMembre) {
 		this.idMembre = idMembre;
 	}
 	
-	public float getMontant() {
+	public Double getMontant() {
 		return montant;
 	}
-	public void setMontant(float montant) {
+	public void setMontant(Double montant) {
 		this.montant = montant;
 	}
 	public Date getDate() {

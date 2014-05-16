@@ -10,19 +10,19 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Adresse implements Serializable{
 	
-	@Column(name="adresse", length = 30, nullable = false)
+	@Column(name="adresse", length = 30)
 	private String rue;
 	
-	@Column(length = 30, nullable = false)
+	@Column(length = 30)
 	private String ville;
 	
-	@Column(length = 30, nullable = false)
+	@Column(length = 30)
 	private String province;
 	
-	@Column(length = 30, nullable = false)
+	@Column(length = 30)
 	private String codepostale;
 	
-	@Column(length = 30, nullable = false)
+	@Column(length = 30)
 	private String pays;
 	
 	public Adresse(){
