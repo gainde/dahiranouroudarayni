@@ -18,10 +18,6 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="membre")
 public class Membre implements Serializable{
-
-	@Id
-	@GeneratedValue
-	private int id;
 	
 	@Column(length = 30, nullable = false, unique = true)
 	private String nom;
@@ -36,6 +32,7 @@ public class Membre implements Serializable{
 	@Column(length = 30, nullable = false, unique = true)
 	private String telephone;
 	
+	@Id
 	@Column(length = 30, nullable = false, unique = true)
 	private String email;
 	
@@ -55,12 +52,6 @@ public class Membre implements Serializable{
 		this.dateNaissance = dateNaissance;
 		this.telephone = telephone;
 		this.email = email;
-	}
-
-
-
-	public int getId() {
-		return id;
 	}
 
 	public String getNom() {
@@ -87,10 +78,7 @@ public class Membre implements Serializable{
 		return adresse;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
@@ -116,7 +104,7 @@ public class Membre implements Serializable{
 	}
 	
 	public String toString() {
-		return String.format("Membre [%d,%s,%s,%s,%s,%s,%s]", getId(), getNom(), getPrenom(),
+		return String.format("Membre [%s,%s,%s,%s,%s,%s]", getNom(), getPrenom(),
 				new SimpleDateFormat("dd/MM/yyyy").format(getDateNaissance()), getTelephone(), getEmail(), adresse.toString());
 	}
 	
