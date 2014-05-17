@@ -8,6 +8,11 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import validation.ValidateurChaine;
+import validation.ValidationErreur;
+import validation.ValideurCodePostale;
+import validation.ValideurEmail;
+import validation.ValideurTelephone;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
 import entites.Adresse;
@@ -24,9 +29,28 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class EditerMembreController implements Initializable{
+	
+	@FXML
+	private Text textErrPrenom;
+	@FXML
+	private Text textErrNom;
+	@FXML
+	private Text textErrAdresse;
+	@FXML
+	private Text textErrTelephone;
+	@FXML
+	private Text textErrEmail;
+	@FXML
+	private Text textErrCodepostal;
+	@FXML
+	private Text textErrVille;
+	@FXML
+	private Text textErrMessage;
+	
 	
 	 @FXML private TextField prenomField;
 	 @FXML private TextField nomField;
@@ -45,7 +69,7 @@ public class EditerMembreController implements Initializable{
 	 @FXML private Button btnEnregistrer;
 	 
 	 private Stage stage;
-	 private Stage parentStage;
+	
 	 private Membre   editMembre;
 	 private MembreController membreController;
 		String province = "Quebec";
@@ -77,12 +101,6 @@ public class EditerMembreController implements Initializable{
 		this.stage = stage;
 	}
 	
-	public void setParentStage(Stage stage){
-		this.parentStage = stage;
-	}
-	public Stage getParentStage(){
-		return this.parentStage;
-	}
 	
 	public Membre getEditMembre() {
 		return editMembre;
@@ -103,10 +121,48 @@ public class EditerMembreController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		// Valider le champ prenom 
+				ValidateurChaine validerPrenom = new ValidateurChaine(prenomField,
+						textErrPrenom, false, ValidationErreur.CHAINE_ERR,10);
+				validerPrenom.validerChaine(prenomField, textErrPrenom);
+				
+				// Valider le champ nom 
+				ValidateurChaine validerNom = new ValidateurChaine(nomField,
+						textErrNom, false, ValidationErreur.CHAINE_ERR,10);
+				validerNom.validerChaine(nomField, textErrNom);
+						
+				// Valider le champ adresse 
+				ValidateurChaine validerAdresse = new ValidateurChaine(adresseField,
+								textErrAdresse, true, ValidationErreur.CHAINE_ERR,10);
+				validerAdresse.validerChaine(adresseField, textErrAdresse);
+				
+				// Valider le champ ville 
+						ValidateurChaine validerVille = new ValidateurChaine(villeField,
+										textErrVille, true, ValidationErreur.CHAINE_ERR,10);
+						validerVille.validerChaine(villeField, textErrVille);
+				
+				//Valider le mail
+				ValideurEmail validerEmail = new ValideurEmail(emailField,
+						textErrEmail, false, ValidationErreur.EMAIL_ERR);
+				validerEmail.validerEmail(emailField,textErrEmail);
+			
+				//Valider le mail
+				ValideurCodePostale validerCodePostal = new ValideurCodePostale(postalField,
+						textErrCodepostal, true, ValidationErreur.CODEPOSTALE_ERR);
+				validerCodePostal.validerCodePostal(postalField,textErrCodepostal);
+				
+				//Valider le telephone
+				ValideurTelephone validerTelephone = new ValideurTelephone(telephoneField,
+								textErrTelephone, true, ValidationErreur.CODEPOSTALE_ERR);
+				validerTelephone.validerTelephone(telephoneField,textErrTelephone);
+				
+		
+		
 		// action bouton annuler
 				 btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
 				 	    @Override public void handle(ActionEvent event) {
-				 	    	parentStage.show();
+				 	    	//parentStage.show();
 				 	    	stage.close();
 				 	    }
 				 	});
@@ -115,14 +171,19 @@ public class EditerMembreController implements Initializable{
 				 btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
 				 	    @Override 
 				 	    public void handle(ActionEvent event) {
-				 	    	enregistrerMembre();
-				 	    	membreController.makeDataMembre(editMembre);
-				 	    	membreController.getMembreDonnee().add(editMembre);
-				 	    	parentStage.show();
-				 	    	
-							//getMembreController().getIndex();
-							//getMembreController().setMembreActif(editMembre);
-				 	    	stage.close();
+				 	    	if(validerTelephone.valider() && validerCodePostal.valider()
+									&& validerEmail.valider()  &&  validerVille.valider()
+											 &&  validerAdresse.valider() && validerNom.valider()
+													&&  validerPrenom.valider()){
+							
+				 	    		enregistrerMembre();
+					 	    	membreController.makeDataMembre(editMembre);
+					 	    	membreController.updateMembreTableView();
+					 	    	stage.close();
+								
+							}else{
+								textErrMessage.setText("Veuillez corriger les champs invalides!");
+							}
 				 	    }
 				 	});
 				 handleComboBoxProvince();

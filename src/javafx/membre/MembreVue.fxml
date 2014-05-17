@@ -7,20 +7,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="520.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.MembreController">
+<AnchorPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.MembreController">
 	<children>
-		<HBox fx:id="hboxBorder" prefHeight="520.0" prefWidth="720.0">
+		<HBox id="hboxParent" fx:id="hboxBorder" alignment="CENTER_RIGHT" layoutX="56.0" layoutY="90.0" prefHeight="522.0" prefWidth="720.0" AnchorPane.bottomAnchor="88.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="90.0">
 			<children>
 				<Pane prefHeight="260.0" prefWidth="380.0">
 					<children>
-						<TableView fx:id="tableViewMembre" layoutY="220.0" prefHeight="300.0" prefWidth="380.0">
+						<TableView fx:id="tableViewMembre" layoutX="3.0" layoutY="220.0" prefHeight="299.0" prefWidth="371.0">
 							<columns>
 								<TableColumn fx:id="tablePrenom" prefWidth="120.0" text="Prénom" />
 								<TableColumn fx:id="tableNom" prefWidth="121.0" text="Nom" />
 								<TableColumn fx:id="tableTelephone" prefWidth="138.0" text="Téléphone" />
 							</columns>
 						</TableView>
-								<TextField fx:id="rechercherField" layoutX="8.0" layoutY="181.0" prefHeight="26.0" prefWidth="193.0" promptText="Rechercher membre" HBox.hgrow="ALWAYS" />
+								<TextField id="rechercheField" fx:id="rechercherField" layoutX="8.0" layoutY="181.0" prefHeight="26.0" prefWidth="193.0" promptText="Rechercher membre" HBox.hgrow="ALWAYS" />
 						<Label alignment="CENTER" layoutX="-2.0" layoutY="33.0" prefHeight="21.0" prefWidth="380.0" text="INFORMATIONS DES MEMBRES" textAlignment="CENTER">
 							<font>
 								<Font name="Arial Black" size="18.0" />
@@ -28,26 +28,23 @@
 							<effect>
 								<InnerShadow />
 							</effect>
-						</Label><TitledPane layoutX="223.0" layoutY="84.0" prefHeight="136.0" prefWidth="160.0" text="Nouveau membre">
+						</Label><TitledPane layoutX="218.0" layoutY="84.0" prefHeight="136.0" prefWidth="156.0" text="Nouveau membre">
 <content>
 										<Button id="btnAjouter" fx:id="btnAjouter" contentDisplay="BOTTOM" layoutX="263.0" layoutY="101.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="79.0" text="Ajouter" />
 </content></TitledPane>
 					</children>
 				</Pane>
-				<Pane prefHeight="260.0" prefWidth="340.0">
+				<Pane prefHeight="522.0" prefWidth="358.0">
 					<children>
-						<VBox prefHeight="520.0" prefWidth="340.0">
+						<VBox layoutX="4.0" layoutY="1.0" prefHeight="520.0" prefWidth="342.0">
 							<children>
-								<ListView fx:id="listViewMembre" prefHeight="227.0" prefWidth="348.0" /><TitledPane prefHeight="75.0" prefWidth="348.0" text="Editer ou supprimer un membre">
+								<ListView id="listViewMembre" fx:id="listViewMembre" prefHeight="228.0" prefWidth="352.0" /><TitledPane prefHeight="75.0" text="Editer ou supprimer un membre">
 <content>
-								<HBox fx:id="hboxNameBorder" prefHeight="84.0" prefWidth="346.0" spacing="10.0">
+								<HBox fx:id="hboxNameBorder" prefHeight="46.0" prefWidth="331.0" spacing="10.0">
 									<children>
 										<Button fx:id="btnEditer" mnemonicParsing="false" prefWidth="160.0" text="Editer" />
 										<Button fx:id="btnSupprimer" mnemonicParsing="false" prefWidth="160.0" text="Supprimer" />
 									</children>
-									<padding>
-										<Insets left="5.0" top="10.0" />
-									</padding>
 								</HBox>
 </content>
 <padding>
@@ -81,6 +78,6 @@
 					</children>
 				</Pane>
 			</children>
-		</HBox>
+		</HBox><Text id="grdTitle" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DAHIRA NOUROU DARAYNI SOPE SERIGNE FALLOU" textAlignment="CENTER" wrappingWidth="800.0" />
 	</children>
 </AnchorPane>
