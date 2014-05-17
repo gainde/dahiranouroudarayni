@@ -65,4 +65,12 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     	tx.commit();
     	return l;
 	}
+    
+    @Override
+	public List getAll(String query, String param) {
+    	tx.begin();
+    	List l = entityManager.createQuery(query).setParameter(1, param).getResultList();
+    	tx.commit();
+    	return l;
+	}
 }

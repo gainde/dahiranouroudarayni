@@ -34,15 +34,15 @@ public class CotisationEvenement implements Serializable{
 	private String idEven =  "Autre";
 	
 	
-	//private String idMembre = "Anonyme";
+	private String idMembre = "Anonyme";
 	
-	//@ManyToOne(fetch=FetchType.LAZY)
-    //@JoinColumn
-	private Evenement evenement;
+	/*@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn
+	private Evenement evenement;*/
 	
-	@ManyToOne
-    @JoinColumn(name="id")
-	private Membre membre;
+	/*@ManyToOne
+    @JoinColumn(name="idMembre")
+	private Membre membre;*/
 	
 	public CotisationEvenement() {
 		super();
@@ -76,15 +76,15 @@ public class CotisationEvenement implements Serializable{
 
 	public void setEvenement(Evenement evenement) {
 		this.evenement = evenement;
-	}
-
-	public Membre getMembre() {
-		return membre;
-	}
-
-	public void setMembre(Membre membre) {
-		this.membre = membre;
 	}*/
+
+	public String getIdMembre() {
+		return idMembre;
+	}
+
+	public void setIdMembre(String idM) {
+		this.idMembre = idM;
+	}
 
 	public String getIdEven() {
 		return idEven;
@@ -94,13 +94,13 @@ public class CotisationEvenement implements Serializable{
 		this.idEven = idEven;
 	}
 
-	public Membre getMembre() {
+	/*public Membre getMembre() {
 		return this.membre;
 	}
 
 	public void setMembre(Membre membre) {
 		this.membre = membre;
-	}
+	}*/
 	
 	
 	

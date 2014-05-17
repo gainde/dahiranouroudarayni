@@ -80,9 +80,9 @@ public class CotisationController implements Initializable{
     ObservableList<CotisationLoyer> loyerData = FXCollections.observableArrayList();
     ObservableList<CotisationKST> KSTData = FXCollections.observableArrayList();
     ObservableList<CotisationEvenement> EvenementData = FXCollections.observableArrayList();
-    private final String LIST_COTISATION_LOYER = "select c from CotisationLoyer c";
-    private final String LIST_COTISATION_KST = "select c from CotisationKST c";
-    private final String LIST_COTISATION_EVENEMENT = "select c from CotisationEvenement c";
+    private final String LIST_COTISATION_LOYER = "select c from CotisationLoyer c where c.idMembre = ?1";
+    private final String LIST_COTISATION_KST = "select c from CotisationKST c where c.idMembre = ?1";
+    private final String LIST_COTISATION_EVENEMENT = "select c from CotisationEvenement c where c.idMembre = ?1";
     
     final String LOYER_TAB_ID = "loyerTab";
 	final String KST_TAB_ID = "KSTTab";
@@ -93,6 +93,9 @@ public class CotisationController implements Initializable{
 	
 	private Membre membre;
 	
+	/****
+	 * Itiniatiliser les evenements et charger les données de la tables de cotisationLoyer
+	 */
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -100,7 +103,7 @@ public class CotisationController implements Initializable{
 		initialiserTabLoyer();
 		initialiserTabKST();
 		initialiserTabEvenement();
-		chargerCotisationLoyer();
+		
 	}
     
     public void setStage(Stage stage) {
@@ -112,6 +115,8 @@ public class CotisationController implements Initializable{
     
     public void setMembre(Membre m){
     	this.membre = m;
+    	lbMembre.setText(membre.getPrenom()+" "+membre.getNom());
+    	chargerCotisationLoyer();
     }
     
     private void HandleButtonAjouterLoyer(){
@@ -212,7 +217,7 @@ public class CotisationController implements Initializable{
 		CotisationLoyerDao cotisationLoyerDao = new CotisationLoyerImpl();
 		ArrayList<String> cmbData = new ArrayList<String>();
 		
-		for (Object p : cotisationLoyerDao.getAll(LIST_COTISATION_LOYER)) {
+		for (Object p : cotisationLoyerDao.getAll(LIST_COTISATION_LOYER, membre.getEmail())) {
 			CotisationLoyer loyer = (CotisationLoyer)p;
 			cotisationLoyerData.add(loyer);
 			cmbData.add(new SimpleDateFormat("yyyy").format(loyer.getDate()));
@@ -226,7 +231,7 @@ public class CotisationController implements Initializable{
 		CotisationKSTDao cotisationKSTDao = new CotisationKSTImpl();
 		ArrayList<String> cmbData = new ArrayList<String>();
 		
-		for (Object p : cotisationKSTDao.getAll(LIST_COTISATION_KST)) {
+		for (Object p : cotisationKSTDao.getAll(LIST_COTISATION_KST, membre.getEmail())) {
 			CotisationKST kst = (CotisationKST)p;
 			cotisationKSTData.add(kst);
 			cmbData.add(new SimpleDateFormat("yyyy").format(kst.getDateCotisationKST()));
@@ -240,7 +245,7 @@ public class CotisationController implements Initializable{
 		CotisationEvenementDao cotisationEvenementDao = new CotisationEvenementImpl();
 		ArrayList<String> cmbData = new ArrayList<String>();
 		
-		for (Object p : cotisationEvenementDao.getAll(LIST_COTISATION_EVENEMENT)) {
+		for (Object p : cotisationEvenementDao.getAll(LIST_COTISATION_EVENEMENT, membre.getEmail())) {
 			CotisationEvenement evenement = (CotisationEvenement)p;
 			cotisationEvenementData.add(evenement);
 			cmbData.add(new SimpleDateFormat("yyyy").format(evenement.getDateCotisation()));
@@ -258,6 +263,7 @@ public class CotisationController implements Initializable{
 		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
 		CotisationLoyer cotisation = new CotisationLoyer(montantLoyer, date);
+		cotisation.setIdMembre(membre.getEmail());
 		ajouterCotisationLoyer(cotisation);
 	}
 	private void ajouterCotisationLoyer(CotisationLoyer cotisation){
@@ -274,6 +280,7 @@ public class CotisationController implements Initializable{
 		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
 		CotisationKST cotisation = new CotisationKST(montantLoyer,type,  date);
+		cotisation.setIdMembre(membre.getEmail());
 		//TODO set Membre
 		ajouterCotisationKST(cotisation);
 	}
@@ -290,6 +297,7 @@ public class CotisationController implements Initializable{
 		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
 		CotisationEvenement cotisation = new CotisationEvenement(montantLoyer,date);
+		cotisation.setIdMembre(membre.getEmail());
 		ajouterCotisationEvenement(cotisation);
 	}
 	private void ajouterCotisationEvenement(CotisationEvenement cotisation){

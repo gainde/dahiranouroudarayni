@@ -9,4 +9,5 @@ public interface Dao<T, PK extends Serializable> {
     T update(T t);
     void delete(T t);
     List getAll(String query);
+    public List getAll(String query, String param);
 }

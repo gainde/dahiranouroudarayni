@@ -117,7 +117,7 @@ public class EditerMembreController implements Initializable{
 				 	    public void handle(ActionEvent event) {
 				 	    	enregistrerMembre();
 				 	    	membreController.makeDataMembre(editMembre);
-				 	    	membreController.getMembreDonnee().add(editMembre);
+				 	    	//membreController.getMembreDonnee().add(editMembre);
 				 	    	parentStage.show();
 				 	    	
 							//getMembreController().getIndex();

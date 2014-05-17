@@ -128,7 +128,7 @@ public class MembreController  implements Initializable{
 		//set bouton non actif
 		btnEditer.setDisable(true);
 		btnSupprimer.setDisable(true);
-		tableViewMembre.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);;
+		tableViewMembre.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		// c
 		tablePrenom.setCellValueFactory(new Callback<CellDataFeatures<Membre, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<Membre, String> m) {
@@ -273,6 +273,7 @@ public class MembreController  implements Initializable{
 		            scene.getStylesheets().add("META-INF/css/style.css");
 		            primaryStage.setScene(scene);
 		            //cotisation.setParentStage(primaryStage);
+		            cotisation.setMembre(membreActif);
 		            primaryStage.setResizable(false);
 		            primaryStage.show();
 		            
