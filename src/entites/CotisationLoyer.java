@@ -6,8 +6,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,7 +37,11 @@ public class CotisationLoyer implements Serializable{
 	//private Membre membre;
 	
 	@Column(nullable = false)
-	private int idMembre = 202;
+	private String idMembre = "";
+	
+	//@ManyToOne(fetch=FetchType.LAZY)
+    //@JoinColumn
+	//private Membre membre;
 	
 	public CotisationLoyer() {
 	}
@@ -58,10 +65,10 @@ public class CotisationLoyer implements Serializable{
 	public void setDatecotisation(Date datecotisation) {
 		this.datecotisation = datecotisation;
 	}
-	public int getIdMembre() {
+	public String getIdMembre() {
 		return idMembre;
 	}
-	public void setIdMembre(int idMembre) {
+	public void setIdMembre(String idMembre) {
 		this.idMembre = idMembre;
 	}
 	
@@ -77,10 +84,20 @@ public class CotisationLoyer implements Serializable{
 	public void setDate(Date date) {
 		this.datecotisation = date;
 	}
+	
+	
+	/*public Membre getMembre() {
+		return membre;
+	}
+
+	public void setMembre(Membre membre) {
+		this.membre = membre;
+	}*/
+
 	@Override
 	public String toString() {
 		return "CotisationMensDahira [id= "+id+" montant=" + montant 
 				+ ", date=" + /*new SimpleDateFormat("dd/MM/yyyy").format(*/datecotisation//) 
-				+ " idMembre= "+ idMembre+"]";
+				+ "]";
 	}
 }

@@ -184,6 +184,7 @@ public class EditerMembreController implements Initializable{
 							}else{
 								textErrMessage.setText("Veuillez corriger les champs invalides!");
 							}
+				 	    	
 				 	    }
 				 	});
 				 handleComboBoxProvince();
@@ -211,9 +212,7 @@ public class EditerMembreController implements Initializable{
 		//ajouter membre dans la base de donnée
 		public void enreisgitrerMembre(Membre member){
 			MembreDao membreDao =  new MembreDaoImpl();
-			membreDao.demarerTransaction();
 			membreDao.update(member);
-			membreDao.commitTransaction();
 		}
 		
 		//action sur le combox selection de province

@@ -6,6 +6,8 @@
 		<!-- classes persistantes -->
 		<class>entites.Membre</class>
 		<class>entites.CotisationLoyer</class>
+		<class>entites.CotisationKST</class>
+		<class>entites.CotisationEvenement</class>
 		<!-- propriétés de l'unité de persistance -->
 		<properties>
 			<!-- connexion JDBC -->

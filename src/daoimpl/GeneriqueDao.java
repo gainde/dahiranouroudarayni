@@ -14,13 +14,11 @@ import dao.Dao;
 public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T, PK> {
 	
 	protected Class<T> entityClass;
-	
 
     @PersistenceContext
     protected EntityManager entityManager = EMF.getEntityManager("jpa");
     protected EntityTransaction tx = entityManager.getTransaction();
-    
-
+    		
     @SuppressWarnings("unchecked")
 	public GeneriqueDao() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass()
@@ -30,40 +28,49 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
 
     @Override
     public T create(T t) {
+    	tx.begin();
         this.entityManager.persist(t);
+        tx.commit();
         return t;
     }
 
     @Override
     public T read(PK id) {
-        return this.entityManager.find(entityClass, id);
+    	tx.begin();
+        T t = this.entityManager.find(entityClass, id);
+        tx.commit();
+    	return t;
     }
 
     @Override
     public T update(T t) {
-        return this.entityManager.merge(t);
+    	tx.begin();
+        t = this.entityManager.merge(t);
+        tx.commit();
+        return t;
     }
 
     @Override
     public void delete(T t) {
-    	if(t != null){
+    	tx.begin();
         t = this.entityManager.merge(t);
         this.entityManager.remove(t);
-    	}
+        tx.commit();
     }
     
     @Override
 	public List getAll(String query) {
-    	return entityManager.createQuery(query).getResultList();
+    	tx.begin();
+    	List l = entityManager.createQuery(query).getResultList();
+    	tx.commit();
+    	return l;
 	}
     
-    public void demarerTransaction(){
+    @Override
+	public List getAll(String query, String param) {
     	tx.begin();
-    }
-	public void commitTransaction(){
-		tx.commit();
+    	List l = entityManager.createQuery(query).setParameter(1, param).getResultList();
+    	tx.commit();
+    	return l;
 	}
-	public void finirTransaction(){
-	}
-
 }

@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.itextpdf.text.DocumentException;
+
+import javafx.GenererPdf;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -128,11 +131,18 @@ public class MembreController  implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		
 		//mettre inactif les boutons
 		setUnvisibleButton(true);
 		
 		tableViewMembre.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);;
+
+		//set bouton non actif
+		btnEditer.setDisable(true);
+		btnSupprimer.setDisable(true);
+		tableViewMembre.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
 		// c
 		tablePrenom.setCellValueFactory(new Callback<CellDataFeatures<Membre, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<Membre, String> m) {
@@ -214,14 +224,22 @@ public class MembreController  implements Initializable{
 			 	    }
 			 	});
 				
-				//action sur bouton cotisation
+				//action sur bouton impot
 				btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
-			 	    	
+			 	    	String nameFile = membreActif.getPrenom() +
+			 	    			"_" + membreActif.getNom() + ".pdf";
+			 	    	GenererPdf impot = new GenererPdf();
+			 	    	try {
+							impot.createPdf(nameFile,membreActif,"",001);
+						} catch (DocumentException | IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 			 	    }
 			 	});
 				
-		//action sur bouton cotisation
+		//action sur bouton quitter
 		btnQuitter.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
 			 	    	stage.close();
@@ -295,6 +313,7 @@ public class MembreController  implements Initializable{
 		            scene.getStylesheets().add("META-INF/css/style.css");
 		            primaryStage.setScene(scene);
 		            //cotisation.setParentStage(primaryStage);
+		            cotisation.setMembre(membreActif);
 		            primaryStage.setResizable(false);
 		            primaryStage.show();
 		            
@@ -365,11 +384,10 @@ public class MembreController  implements Initializable{
 		// effacer l'affichage des données d un membre
 		public void clearUnMembre(){
 			MembreDao membreDao =  new MembreDaoImpl();
-			membreDao.demarerTransaction();
 			membreDao.delete(membreActif);
-			membreDao.commitTransaction();
 			listViewMembre.getItems().clear();
 			membreDonnee.remove(index.get());
+
 		}
 		
 		//fonction pour rechercher un membre en filtrant les membres

@@ -197,12 +197,11 @@ public class AjouterMembreController implements Initializable {
 		}
 	}
 
-	// ajouter membre dans la base de donnée
-	public void enreisgitrerMembre(Membre member) {
-		MembreDao membreDao = new MembreDaoImpl();
-		membreDao.demarerTransaction();
+
+	//ajouter membre dans la base de donnée
+	public void enreisgitrerMembre(Membre member){
+		MembreDao membreDao =  new MembreDaoImpl();
 		membreDao.create(member);
-		membreDao.commitTransaction();
 	}
 
 	// action sur le combox selection de province
@@ -220,132 +219,7 @@ public class AjouterMembreController implements Initializable {
 		});
 	}
 
-	/*// validation champ
-	public void validerChaine(TextField textField, Text labelErr, Boolean nullable) {
-		labelErr.setVisible(false);
-		textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable,
-					Boolean oldValue, Boolean newValue) {
-				boolean err = false;//pour fixer le texte erreur tant que c est pas corrigé
-				if (!newValue) {
-					ValidateurChaine valider = new ValidateurChaine(textField,
-							labelErr, nullable, ValidationErreur.CHAINE_ERR, 10);
-					if (!valider.valider()) {
-						err = true;
-						valider.getLabelErr().setVisible(true);
-					} else {
-						valider.getLabelErr().setVisible(false);
-						textField.setEditable(true);
-						err = false;
-					}
-				} else {
-					textField.getStyleClass().remove("error");
-					if (!oldValue && err)
-						labelErr.setVisible(true);
-					else
-						labelErr.setVisible(false);
-				}
-			}
-		});
-	}*/
-
-	/*// validation champ
-	public void validerTelephone() {
-		textErrTelephone.setVisible(false);
-		telephoneField.focusedProperty().addListener(
-				new ChangeListener<Boolean>() {
-					@Override
-					public void changed(
-							ObservableValue<? extends Boolean> observable,
-							Boolean oldValue, Boolean newValue) {
-						boolean err = false;//pour fixer le texte erreur tant que c est pas corrigé
-						if (!newValue) {
-							ValideurTelephone valider = new ValideurTelephone(
-									telephoneField, textErrTelephone, false,
-									ValidationErreur.TELEPHONE_ERR);
-							if (!valider.valider()) {
-								err = true;
-								valider.getLabelErr().setVisible(true);
-							} else {
-								valider.getLabelErr().setVisible(false);
-								err = false;
-							}
-						} else {
-							telephoneField.getStyleClass().remove("error");
-							if (!oldValue && err)
-								textErrTelephone.setVisible(true);
-							else
-								textErrTelephone.setVisible(false);
-						}
-
-					}
-				});
-	}
-*/
-	// validation champ email
-	/*public void validerEmail() {
-		textErrEmail.setVisible(false);
-		emailField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable,
-					Boolean oldValue, Boolean newValue) {
-				boolean err = false;//pour fixer le texte erreur tant que c est pas corrigé
-				if (!newValue) {
-					ValideurEmail valider = new ValideurEmail(emailField,
-							textErrEmail, false, ValidationErreur.EMAIL_ERR);
-					if (!valider.valider()) {
-						err = true;
-						valider.getLabelErr().setVisible(true);
-					} else {
-						err = false;
-						valider.getLabelErr().setVisible(false);
-					}
-				}else{
-					emailField.getStyleClass().remove("error");
-					if (!oldValue && err) {
-						textErrEmail.setVisible(true);
-					} else {
-						textErrEmail.setVisible(false);
-					}
-				}
-			}
-		});
-	}*/
-
-	/*// validation champ
-	public void validerCodePostal() {
-
-		textErrCodepostal.setVisible(false);
-		postalField.focusedProperty().addListener(
-				new ChangeListener<Boolean>() {
-					@Override
-					public void changed(
-							ObservableValue<? extends Boolean> observable,
-							Boolean oldValue, Boolean newValue) {
-						boolean err = false;//pour fixer le texte erreur tant que c est pas corrigé
-						if (!newValue) {
-							ValideurEmail valider = new ValideurEmail(
-									postalField, textErrCodepostal, true,
-									ValidationErreur.CODEPOSTALE_ERR);
-							if (!valider.valider()) {
-								err = true;
-								valider.getLabelErr().setVisible(true);
-							} else {
-								valider.getLabelErr().setVisible(false);
-								err = false;
-							}
-						} else {
-							emailField.getStyleClass().remove("error");
-							if (!oldValue && err)
-								textErrEmail.setVisible(true);
-							else
-								textErrEmail.setVisible(false);
-						}
-					}
-				});
-	}*/
-
+	
 	public void installEventHandler(final Node keyNode) {
 		// handler for enter key press / release events, other keys are
 		// handled by the parent (keyboard) node handler

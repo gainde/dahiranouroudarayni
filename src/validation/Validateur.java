@@ -85,6 +85,7 @@ public abstract  class Validateur {
 				texte.getStyleClass().remove("error");
 				labelErr.setVisible(false);
 			}
+			texte.getStyleClass().remove("error");
 		}
 		return valide;
 	}

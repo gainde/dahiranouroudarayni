@@ -53,6 +53,15 @@ public class Membre implements Serializable{
 		this.telephone = telephone;
 		this.email = email;
 	}
+	public Membre(Membre membreCopy) {
+		super();
+		this.nom = membreCopy.getNom();
+		this.prenom = membreCopy.getPrenom();
+		this.dateNaissance = membreCopy.getDateNaissance();
+		this.telephone = membreCopy.getTelephone();
+		this.email = membreCopy.getEmail();
+		this.adresse = membreCopy.getAdresse();
+	}
 
 	public String getNom() {
 		return nom;
