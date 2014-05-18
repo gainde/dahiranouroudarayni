@@ -34,11 +34,44 @@
 	-fx-border-color: white;
 }
 
-.list-cell{
+#listViewMembre{
 	-fx-font-size: 18px;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-text-fill: black;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
- 
+
+.error{
+	-fx-border-width: 2;
+	-fx-border-color: red;
+   /* -fx-background-color: red,linear-gradient(to bottom, derive(red,60%) 5%,derive(red,90%) 40%);*/
+}
+
+#hboxParent, .pane {
+	-fx-border-width: 10;
+	 -fx-text-fill: black;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #AAE0A2;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 2, 1 , 1 , 1 );
+}
+.pane {
+	-fx-border-width: 10;
+	 -fx-text-fill: black;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #AAE0A2;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 0, 1 , 1 , 1 );
+}
+#rechercheField{
+	-fx-background-image:url("zoom.png");
+	-fx-background-repeat: stretch;
+  -fx-background-position: right;
+}
+
+#grdTitle{
+	-fx-font-size: 24px;
+
+   -fx-fill:linear-gradient(palegreen, seagreen);
+}

@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 public class Validation {
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private static final String TELEPHONE_PATTERN = "[0-9]{10}";
+	private static final String TELEPHONE_PATTERN = "\\d{3}-\\d{3}-\\d{4}";
 	private static final String CODE_POSTALE_PATTERN = "^[ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ]( )?\\d[ABCEGHJKLMNPRSTVWXYZ]\\d$";
 	private static boolean valide = false; 
 	
@@ -17,8 +17,9 @@ public class Validation {
 	private static Matcher matcher;
 	
 	public static boolean validerEmail(String email, boolean nullable){
-		if(email == null || email.isEmpty())
+		if(email == null || email.isEmpty()){
 			return valide = nullable;
+		}
 		else{
 			//TODO check if pattern match
 			matcher = Pattern.compile(EMAIL_PATTERN).matcher(email);
@@ -26,12 +27,13 @@ public class Validation {
 		}
 	}
 	
-	public static boolean valideTelephone(String telephone, boolean nullable){
+	public static boolean validerTelephone(String telephone, boolean nullable){
 		if(telephone == null || telephone.isEmpty())
 			return valide = nullable;
 		else{
-			matcher = Pattern.compile(TELEPHONE_PATTERN).matcher(telephone);
-			return matcher.matches();
+			pattern = Pattern.compile(TELEPHONE_PATTERN);
+			matcher = pattern.matcher(telephone);
+			return  matcher.matches();
 		}
 	}
 	

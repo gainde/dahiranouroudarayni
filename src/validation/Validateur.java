@@ -1,16 +1,23 @@
 package validation;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public abstract  class Validateur {
-	protected JTextField texte;
-	protected JLabel labelErr;
+	protected TextField texte;
+	protected Text labelErr;
 	protected boolean nullable;
 	protected ValidationErreur validationErr;
 	
 	
-	public Validateur(JTextField texte, JLabel labelErr, boolean nullable,
+	public Validateur(TextField texte, Text labelErr, boolean nullable,
 			ValidationErreur validationErr) {
 		super();
 		this.texte = texte;
@@ -25,7 +32,7 @@ public abstract  class Validateur {
 		return texte.getText();
 	}
 
-	public JLabel getLabelErr() {
+	public Text getLabelErr() {
 		return labelErr;
 	}
 
@@ -41,7 +48,7 @@ public abstract  class Validateur {
 		this.texte.setText(texte);
 	}
 
-	public void setLabelErr(JLabel labelErr) {
+	public void setLabelErr(Text labelErr) {
 		this.labelErr = labelErr;
 	}
 
@@ -53,5 +60,34 @@ public abstract  class Validateur {
 		this.validationErr = validationErr;
 	}
 	
+	//
+	public  boolean valider(String textPatern){
+		boolean valide = false;
+		String email = texte.getText();
+		if(email == null || email.isEmpty()){
+			if(!nullable){
+				texte.getStyleClass().add("error");
+				labelErr.setText(validationErr.getMessageErr());
+				labelErr.setVisible(true);
+			}
+			valide = nullable;
+		}
+		else{
+			//TODO check if pattern match
+			Matcher matcher = Pattern.compile(textPatern).matcher(email);
+			valide = matcher.matches();
+			if(!valide){
+				texte.getStyleClass().add("error");
+				labelErr.setText(validationErr.getMessageErr2());
+				labelErr.setVisible(true);
+			}
+			if(valide){
+				texte.getStyleClass().remove("error");
+				labelErr.setVisible(false);
+			}
+			texte.getStyleClass().remove("error");
+		}
+		return valide;
+	}
 	
 }

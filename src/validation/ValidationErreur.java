@@ -1,16 +1,19 @@
 package validation;
 
 public enum ValidationErreur {
-	EMAIL_ERR("100","Email invalide"),
-	TELEPHONE_ERR("101", "Telephone invalide"),
-	CODEPOSTALE_ERR("102", "Code postale invalide");
+	EMAIL_ERR("100","Le champ ne doit pas être vide","Email invalide"),
+	TELEPHONE_ERR("101", "", "Telephone invalide"),
+	CODEPOSTALE_ERR("102","","Code postale invalide"),
+	CHAINE_ERR("103","Le champ ne doit pas être vide", "Invalide seulement alpha numerique");
 	
 	private String code;
 	private String messageErr;
+	private String messageErr2;
 	
-	ValidationErreur(String code, String message){
+	private ValidationErreur(String code, String message, String message2){
 		this.code = code;
 		messageErr = message;
+		messageErr2 = message2;
 	}
 	
 	public String getCodeErreur(){
@@ -19,6 +22,9 @@ public enum ValidationErreur {
 	
 	public String getMessageErr(){
 		return this.messageErr;
+	}
+	public String getMessageErr2(){
+		return this.messageErr2;
 	}
 	
 	public String toString(){
