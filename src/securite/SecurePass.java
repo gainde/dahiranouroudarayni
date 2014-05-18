@@ -9,10 +9,6 @@ import java.security.NoSuchAlgorithmException;
 
 
 public class SecurePass {
-	public static void main(String args[]){
-		String stringmd5 = "fqdc0740";
-		System.out.println(md5(stringmd5));
-	}
 	public static String md5(String pass){
         String generatedPassword = null;
         try {
@@ -31,7 +27,6 @@ public class SecurePass {
             }
             //Get complete hashed password in hex format
             generatedPassword = sb.toString();
-            MessageDigest md2 = MessageDigest.getInstance("MD5");
         } 
         catch (NoSuchAlgorithmException e) 
         {
