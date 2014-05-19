@@ -56,13 +56,13 @@
     -fx-background-color: #AAE0A2;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 2, 1 , 1 , 1 );
 }
-.pane {
+#hboxAjout, #tabPaneCotisation {
 	-fx-border-width: 10;
 	 -fx-text-fill: black;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-background-color: #AAE0A2;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 0, 1 , 1 , 1 );
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 2, 1 , 1 , 1 );
 }
 #rechercheField{
 	-fx-background-image:url("zoom.png");
@@ -72,6 +72,5 @@
 
 #grdTitle{
 	-fx-font-size: 24px;
-
    -fx-fill:linear-gradient(palegreen, seagreen);
 }

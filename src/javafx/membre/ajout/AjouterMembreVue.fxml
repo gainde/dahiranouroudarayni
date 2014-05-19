@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.ajout.AjouterMembreController">
 	<children>
-		<VBox prefHeight="550.0" prefWidth="600.0">
+		<VBox id="hboxAjout" prefHeight="550.0" prefWidth="600.0">
 			<children>
 				<GridPane>
 					<columnConstraints>

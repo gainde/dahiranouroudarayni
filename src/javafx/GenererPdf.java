@@ -39,14 +39,13 @@ public class GenererPdf {
 	    public GenererPdf() {
 	      
 	    }
-	 
-	   
+	    
 	    /**
 	     * Creates a PDF document.
 	     * @param filename the path to the new PDF document
 	     * @throws    DocumentException 
 	     * @throws    IOException 
-	     */
+	     ************/
 	    public void createPdf(String filename, Membre member, String signature, int numberRecu) throws DocumentException, IOException {
 	    	// creation de la page
 	        Document document = new Document();
@@ -64,7 +63,6 @@ public class GenererPdf {
 	        document.add(table1);
 	       
 	        document.close();
-	 
 	    }
 	 
 	    //fonction permettant de representer les données du membre dans un formulaire

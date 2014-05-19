@@ -82,7 +82,7 @@ public class Adresse implements Serializable{
 	}
 	
 	public String toString() {
-		return String.format("Adresse[%s,%s,%s,%s,%s]", getRue(), getVille(), getProvince(), getCodepostale(), getPays());
+		return String.format("%s, %s, %s, %s, %s", getRue(), getCodepostale(), getVille(), getProvince(), getPays());
 	}
 
 }

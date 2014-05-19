@@ -44,7 +44,7 @@ import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
 import entites.Membre;
 
-public class MembreController  implements Initializable{
+public class MembreController implements Initializable{
 	@FXML private SplitPane splitPaneVerticale;
 	
 	 @FXML private TextField rechercherField;
@@ -131,7 +131,6 @@ public class MembreController  implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		
 		//mettre inactif les boutons
 		setUnvisibleButton(true);
@@ -196,46 +195,37 @@ public class MembreController  implements Initializable{
 			    });
 		
 		//action sur bouton editer
-				btnEditer.setOnAction(new EventHandler<ActionEvent>() {
+		btnEditer.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
 			 	    	//System.out.println("Ok");
 			 	    	etatEdit = true;
-			 	    	btnSupprimer.setDisable(true);
-			 	    	btnEditer.setDisable(true);
+			 	    	//btnSupprimer.setDisable(true);
+			 	    	//btnEditer.setDisable(true);
 			 	    	afficherVueEditerMembre();
 			 	    }
 			 	});
 				
-				//action sur bouton supprimmer
-				btnSupprimer.setOnAction(new EventHandler<ActionEvent>() {
+		//action sur bouton supprimmer
+		btnSupprimer.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
 			 	    	clearUnMembre();
 			 	    	tableViewMembre.getSelectionModel().clearSelection();
 			 	    	listViewMembre.getItems().clear();
-			 	    	btnSupprimer.setDisable(true);
-			 	    	btnEditer.setDisable(true);
+			 	    	setUnvisibleButton(true);
 			 	    }
 			 	});
 		
 		//action sur bouton cotisation
-				btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
+		btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
 			 	    	afficherVueCotisation();
 			 	    }
-			 	});
+			 });
 				
-				//action sur bouton impot
-				btnImpot.setOnAction(new EventHandler<ActionEvent>() {
+		//action sur bouton impot
+		btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
-			 	    	String nameFile = membreActif.getPrenom() +
-			 	    			"_" + membreActif.getNom() + ".pdf";
-			 	    	GenererPdf impot = new GenererPdf();
-			 	    	try {
-							impot.createPdf(nameFile,membreActif,"",001);
-						} catch (DocumentException | IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+			 	    	afficherVueEmail();
 			 	    }
 			 	});
 				
@@ -324,6 +314,32 @@ public class MembreController  implements Initializable{
 		        
 		}
 		
+		//afficher la fenetre pour envoyer le message d impot
+		public void afficherVueEmail(){
+			 Stage primaryStage = new Stage();
+		     primaryStage.setTitle("Connexion");
+		     primaryStage.initModality(Modality.APPLICATION_MODAL);
+		        try {
+		            // Load the root layout from the fxml file
+		            FXMLLoader loader = new FXMLLoader(EmailController.class.getResource("EmailVue.fxml"));
+		            AnchorPane anc = (AnchorPane) loader.load();
+		            EmailController emailController = (EmailController)loader.getController();
+		            Scene scene = new Scene(anc);
+		            scene.getStylesheets().add("META-INF/css/style.css");
+		            primaryStage.setScene(scene);
+		            emailController.setStage(primaryStage);
+		            emailController.setMembreEnvoyer(membreActif);
+		           // emailController.setMembreController(this);
+		            primaryStage.setResizable(false);
+		            primaryStage.show();
+		            
+		        } catch (IOException e) {
+		            // Exception gets thrown if the fxml file could not be loaded
+		            e.printStackTrace();
+		        }
+		        
+		}
+		
 		//charger liste des membres
 		public void chargerMembres(){
 			ObservableList<Membre> memberData = FXCollections.observableArrayList();
@@ -400,6 +416,8 @@ public class MembreController  implements Initializable{
 	                    String oldValue, String newValue) {
 
 	                updateFilteredData();
+	                listViewMembre.getItems().clear();
+	                setUnvisibleButton(true);
 	            }
 	        });
 	    }
