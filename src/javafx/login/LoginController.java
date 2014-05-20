@@ -49,6 +49,8 @@ public class LoginController implements Initializable{
 				public void handle(Event event) {
 					System.out.println("click");
 					user = verifierLogin();
+					//creerUser();
+					
 				}
 			});
 	    }
@@ -72,5 +74,6 @@ public class LoginController implements Initializable{
 	    	UtilisateurDao userDao = new UtilisateurDaoImpl();
 	    	userDao.create(user);
 	    }
+	    
 
 }

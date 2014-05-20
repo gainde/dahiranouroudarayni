@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="utilisateur")
 public class Utilisateur implements Serializable{
+	@Id
 	@Column(length = 30, nullable = false, unique = true)
 	private String login;
 	
