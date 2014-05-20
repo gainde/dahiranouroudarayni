@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import persistance.EMF;
@@ -28,9 +29,15 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
 
     @Override
     public T create(T t) {
-    	tx.begin();
-        this.entityManager.persist(t);
-        tx.commit();
+    	try{
+	    	tx.begin();
+	        this.entityManager.persist(t);
+	        tx.commit();
+    	}catch(NoResultException e){
+    		return null;		
+    	}catch(Exception e){
+    		return null;
+    	}
         return t;
     }
 
