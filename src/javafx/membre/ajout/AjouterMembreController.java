@@ -134,7 +134,7 @@ public class AjouterMembreController implements Initializable {
 				textErrEmail, false, ValidationErreur.EMAIL_ERR);
 		validerEmail.validerEmail(emailField,textErrEmail);
 	
-		//Valider le mail
+		//Valider le code postal
 		ValideurCodePostale validerCodePostal = new ValideurCodePostale(postalField,
 				textErrCodepostal, true, ValidationErreur.CODEPOSTALE_ERR);
 		validerCodePostal.validerCodePostal(postalField,textErrCodepostal);
@@ -185,10 +185,10 @@ public class AjouterMembreController implements Initializable {
 			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId
 					.systemDefault()));
 			date = Date.from(instant);
-			membre = new Membre(nomField.getText(), prenomField.getText(),
-					date, telephoneField.getText(), emailField.getText());
-			Adresse adresse = new Adresse(adresseField.getText(),
-					villeField.getText(), province, postalField.getText(),
+			membre = new Membre(nomField.getText().trim(), prenomField.getText().trim(),
+					date, telephoneField.getText().trim(), emailField.getText().trim());
+			Adresse adresse = new Adresse(adresseField.getText().trim(),
+					villeField.getText().trim(), province, postalField.getText().trim(),
 					"Canada");
 			membre.setAdresse(adresse);
 			System.out.println(membre.toString());

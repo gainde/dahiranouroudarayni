@@ -196,16 +196,15 @@ public class EditerMembreController implements Initializable{
 			LocalDate localDate = dateNaissance.getValue();
 			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 			date = Date.from(instant);
-			editMembre.setNom(nomField.getText());
-			editMembre.setPrenom(prenomField.getText());
+			editMembre.setNom(nomField.getText().trim());
+			editMembre.setPrenom(prenomField.getText().trim());
 			editMembre.setDateNaissance(date);
-			editMembre.setTelephone(telephoneField.getText());
-			editMembre.setEmail(emailField.getText());
-				Adresse adresse = new Adresse(adresseField.getText(),
-						villeField.getText(),province,
-						postalField.getText(),"Canada");
+			editMembre.setTelephone(telephoneField.getText().trim());
+			editMembre.setEmail(emailField.getText().trim());
+				Adresse adresse = new Adresse(adresseField.getText().trim(),
+						villeField.getText().trim(),province,
+						postalField.getText().trim(),"Canada");
 				editMembre.setAdresse(adresse);
-				System.out.println(editMembre.toString());
 				enreisgitrerMembre(editMembre);
 				}
 		}

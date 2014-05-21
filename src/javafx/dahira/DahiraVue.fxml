@@ -7,9 +7,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.ajout.AjouterMembreController">
-	<children>
-		<VBox id="hboxAjout" prefHeight="550.0" prefWidth="600.0">
+<AnchorPane prefHeight="550.0" prefWidth="884.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.dahira.DahiraController">
+	<children><HBox id="hboxBorder" prefHeight="555.0" prefWidth="884.0">
+<children>
+		<VBox fx:id="hboxAjout" prefHeight="550.0" prefWidth="600.0">
 			<children>
 				<GridPane>
 					<columnConstraints>
@@ -20,7 +21,7 @@
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<Label id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="16.0" prefHeight="16.0" prefWidth="550.0" text="Formulaire membre" textAlignment="CENTER" />
+						<Label id="title" fx:id="textTitre" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="16.0" prefHeight="16.0" prefWidth="550.0" textAlignment="CENTER" />
 						<Text fx:id="textErrMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="549.2978515625" GridPane.rowIndex="1">
 							<font>
 								<Font size="11.0" />
@@ -53,11 +54,11 @@
 						<Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
 					</padding>
 					<children>
-						<Label alignment="TOP_LEFT" prefHeight="36.0" prefWidth="77.0" text="Prénom :" />
-						<Label alignment="TOP_LEFT" prefHeight="33.0" prefWidth="38.0" text="Nom :" GridPane.rowIndex="1" />
+						<Label alignment="TOP_LEFT" prefHeight="36.0" prefWidth="77.0" text="Nom :" />
+						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="91.0" text="Numéro NE :" GridPane.rowIndex="1" />
 						<Label alignment="TOP_LEFT" prefHeight="32.0" prefWidth="61.0" text="Courrier :" GridPane.rowIndex="2" />
 						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="75.0" text="Téléphone :" GridPane.rowIndex="3" />
-						<Label alignment="TOP_LEFT" prefHeight="19.0" prefWidth="124.0" text="Date de Naissance :" GridPane.rowIndex="4" />
+						<Label alignment="TOP_LEFT" prefHeight="19.0" prefWidth="124.0" text="Site web :" GridPane.rowIndex="4" />
 						<Label alignment="TOP_LEFT" prefHeight="32.0" prefWidth="59.0" text="Adresse :" GridPane.rowIndex="5" />
 						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="84.0" text="Code postal :" GridPane.rowIndex="6" />
 						<Label alignment="TOP_LEFT" prefHeight="34.0" prefWidth="36.0" text="Ville :" GridPane.rowIndex="7" />
@@ -89,11 +90,10 @@
 								<Button fx:id="btnEnregistrer" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Enregistrer" />
 							</children>
 						</HBox>
-						<DatePicker fx:id="dateNaissance" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
 							<children>
-								<TextField fx:id="prenomField" promptText="Entrer votre prénom" GridPane.columnIndex="1" />
-								<Text id="textErr" fx:id="textErrPrenom" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT">
+								<TextField fx:id="nomField" promptText="Entrer votre prénom" GridPane.columnIndex="1" />
+								<Text id="textErr" fx:id="textErrNom" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT">
 									<font>
 										<Font size="10.0" />
 									</font>
@@ -102,8 +102,8 @@
 						</VBox>
 						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
 							<children>
-								<TextField fx:id="nomField" promptText="Entrer votre nom de famille" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-								<Text id="textErr" fx:id="textErrNom" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
+								<TextField fx:id="numeroNEField" promptText="Entrer votre nom de famille" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+								<Text id="textErr" fx:id="textErrNumero" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
 									<font>
 										<Font size="10.0" />
 									</font>
@@ -159,10 +159,21 @@
 									</font>
 								</Text>
 							</children>
-						</VBox>
+						</VBox><VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+<children><TextField fx:id="siteWebField" promptText="www.xxxx.ca" /><Text fx:id="textErrSiteWeb" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
+<font>
+<Font size="10.0" />
+</font></Text>
+</children></VBox>
 					</children>
 				</GridPane>
 			</children>
-		</VBox>
+		</VBox><Pane prefHeight="555.0" prefWidth="285.0">
+<children><TextArea fx:id="descriptionArea" layoutY="99.0" prefHeight="300.0" prefWidth="244.0" /><Label layoutY="70.0" text="Description :" /><Text fx:id="textErrDescription" fill="RED" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0">
+<font>
+<Font size="10.0" />
+</font></Text>
+</children></Pane>
+</children></HBox>
 	</children>
 </AnchorPane>

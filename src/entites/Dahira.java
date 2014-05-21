@@ -4,23 +4,22 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+@Entity
 @SuppressWarnings("serial")
 @Table(name="dahira")
 public class Dahira implements Serializable{
 	@Id
-	@GeneratedValue
-	private int id;
-	@Column(length = 30, nullable = false)
+	@Column(name = "nom", length = 30, nullable = false)
 	private String nomDahira;// nom de la dahira
 	@Column(length = 1000, nullable = false)
 	private String description;//une petite description sur la dahira cote administratif
 	@Column(nullable = false)
-	private int numeroEnregistrement;//numero d'enregistrement de la dahira
+	private String numeroEnregistrement;//numero d'enregistrement de la dahira
 	private String telephone;
 	private String email;
 	private String siteWeb;
@@ -31,7 +30,7 @@ public class Dahira implements Serializable{
 	public Dahira() {
 	}
 	public Dahira(String nomDahira, String description,
-			int numeroEnregistrement, String telephone, String email,
+			String numeroEnregistrement, String telephone, String email,
 			String siteWeb, Adresse adresse) {
 		super();
 		this.nomDahira = nomDahira;
@@ -48,7 +47,7 @@ public class Dahira implements Serializable{
 	public String getDescription() {
 		return description;
 	}
-	public int getNumeroEnregistrement() {
+	public String getNumeroEnregistrement() {
 		return numeroEnregistrement;
 	}
 	public String getTelephone() {
@@ -69,7 +68,7 @@ public class Dahira implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public void setNumeroEnregistrement(int numeroEnregistrement) {
+	public void setNumeroEnregistrement(String numeroEnregistrement) {
 		this.numeroEnregistrement = numeroEnregistrement;
 	}
 	public void setTelephone(String telephone) {

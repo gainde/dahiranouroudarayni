@@ -31,23 +31,31 @@ import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.TextField;
 
+import entites.Dahira;
 import entites.Membre;
 
 
 public class GenererPdf {
-		 
-	    public GenererPdf() {
-	      
-	    }
-	 
+		private String dateIpmot;
+		private String dateDelivrance;
+		private String montant;
 	   
-	    /**
+	    
+	    public GenererPdf(String dateIpmot, String dateDelivrance,
+				String montant) {
+			super();
+			this.dateIpmot = dateIpmot;
+			this.dateDelivrance = dateDelivrance;
+			this.montant = montant;
+		}
+
+		/**
 	     * Creates a PDF document.
 	     * @param filename the path to the new PDF document
 	     * @throws    DocumentException 
 	     * @throws    IOException 
-	     */
-	    public void createPdf(String filename, Membre member, String signature, int numberRecu) throws DocumentException, IOException {
+	     ************/
+	    public void createPdf(String filename, Membre member,Dahira dahira, String signature, int numberRecu) throws DocumentException, IOException {
 	    	// creation de la page
 	        Document document = new Document();
 	        // indiquer le fichier à ecrire
@@ -55,8 +63,8 @@ public class GenererPdf {
 	        
 	        document.open();
 	     
-	        PdfPTable table = tableDAtaMember(member,signature,numberRecu);
-	        PdfPTable table1 = tableDAtaMember(member,signature,numberRecu);
+	        PdfPTable table = tableDAtaMember(member,dahira,signature,numberRecu);
+	        PdfPTable table1 = tableDAtaMember(member,dahira,signature,numberRecu);
 	        
 	        table.setSpacingAfter(25);table.setSpacingBefore(25);
 	        
@@ -64,20 +72,20 @@ public class GenererPdf {
 	        document.add(table1);
 	       
 	        document.close();
-	 
 	    }
 	 
 	    //fonction permettant de representer les données du membre dans un formulaire
-	    public PdfPTable tableDAtaMember(Membre member,String signature, int numberRecu) throws DocumentException, MalformedURLException, IOException{
-	    	String dateImpot = "";
+	    public PdfPTable tableDAtaMember(Membre member,Dahira dahira,String signature, int numberRecu) throws DocumentException, MalformedURLException, IOException{
+	    	
 	    	String donateur = member.getPrenom() + "  " + member.getNom();
 	    	String adresse = member.getAdresse().toString();
-	    	String montant = "";
-	    	String dateDelivrance = "";
 	    	String lieuDelivrance = member.getAdresse().toString();
-	  
+	    	String nomDahira = dahira.getNomDahira();
+	    	String numeroNE = dahira.getNumeroEnregistrement();
+	    	String adresseDahira = dahira.getAdresse().toString();
 	    	
-	    	Font font1 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+	    	Font font1 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
+	    	Font font2 = new Font(Font.FontFamily.TIMES_ROMAN, 10);
 	    	PdfPTable generalBig = new PdfPTable(1);
 	    	generalBig.getDefaultCell().setBorderWidth(1.5f);
 	    	
@@ -109,9 +117,9 @@ public class GenererPdf {
 	    	 t0.addCell(cell01);
 	    	
 	    	
-	    	t0.addCell(new Paragraph("Fondation Norou Darayni", font1));
-	    	t0.addCell(new Paragraph("NE : 84807 4597 PR0001", font1));
-	    	t0.addCell(new Paragraph("4255 Av. De Courtrai Montréal, Québec H3S 1B8", font1));
+	    	t0.addCell(new Paragraph(nomDahira, font1));
+	    	t0.addCell(new Paragraph("NE : "+numeroNE, font1));
+	    	t0.addCell(new Paragraph(adresseDahira, font1));
 	    	t0.setSpacingAfter(10);t0.setSpacingBefore(10);
 	    	
 	    	general.addCell(t0);
@@ -121,7 +129,7 @@ public class GenererPdf {
 	        t1.setWidths(columnWidths1);
 	        
 	        PdfPCell cell11 = new PdfPCell(new Paragraph("Date de réception du don :", font1));
-	        PdfPCell cell12 = new PdfPCell(new Paragraph(dateImpot, font1));
+	        PdfPCell cell12 = new PdfPCell(new Paragraph(dateIpmot, font1));
 	        cell11.setPaddingBottom(5);cell12.setPaddingBottom(5);
 	        cell11.setBorder(Rectangle.NO_BORDER);cell12.setBorder(Rectangle.NO_BORDER);
 	        cell12.setBorderWidthBottom(1);
@@ -176,7 +184,7 @@ public class GenererPdf {
 	        cell41.setBorder(Rectangle.NO_BORDER);cell42.setBorder(Rectangle.NO_BORDER);
 	        cell42.setBorderWidthBottom(1);
 	        PdfPCell cell43 = new PdfPCell(new Paragraph("Lieu de la délivrance du reçu	:", font1));
-	        PdfPCell cell44 = new PdfPCell(new Paragraph(lieuDelivrance, font1));
+	        PdfPCell cell44 = new PdfPCell(new Paragraph(lieuDelivrance, font2));
 	        cell43.setPaddingBottom(5);cell44.setPaddingBottom(5);
 	        cell43.setBorder(Rectangle.NO_BORDER);cell44.setBorder(Rectangle.NO_BORDER);
 	        cell44.setBorderWidthBottom(1);

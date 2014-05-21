@@ -10,6 +10,7 @@
 		<class>entites.CotisationEvenement</class>
 		<class>entites.Utilisateur</class>
 		<class>entites.Evenement</class>
+		<class>entites.Dahira</class>
 		<!-- propriétés de l'unité de persistance -->
 		<properties>
 			<!-- connexion JDBC -->

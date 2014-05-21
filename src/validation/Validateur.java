@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -15,7 +16,7 @@ public abstract  class Validateur {
 	protected Text labelErr;
 	protected boolean nullable;
 	protected ValidationErreur validationErr;
-	
+	protected String plus;
 	
 	public Validateur(TextField texte, Text labelErr, boolean nullable,
 			ValidationErreur validationErr) {
@@ -25,7 +26,14 @@ public abstract  class Validateur {
 		this.nullable = nullable;
 		this.validationErr = validationErr;
 	}
-
+	public Validateur(Text labelErr, boolean nullable,
+			ValidationErreur validationErr) {
+		super();
+		this.labelErr = labelErr;
+		this.nullable = nullable;
+		this.validationErr = validationErr;
+	}
+	
 	public abstract boolean valider();
 
 	public String getTexte() {
@@ -60,7 +68,7 @@ public abstract  class Validateur {
 		this.validationErr = validationErr;
 	}
 	
-	//
+	//validateur super classe
 	public  boolean valider(String textPatern){
 		boolean valide = false;
 		String email = texte.getText();
@@ -89,5 +97,6 @@ public abstract  class Validateur {
 		}
 		return valide;
 	}
+	
 	
 }

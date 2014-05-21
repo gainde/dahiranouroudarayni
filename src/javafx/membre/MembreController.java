@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.cotisation.CotisationController;
+import javafx.dahira.DahiraController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -40,11 +41,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import dao.DahiraDao;
 import dao.MembreDao;
+import daoimpl.DahiraDaoImpl;
 import daoimpl.MembreDaoImpl;
+import entites.Dahira;
 import entites.Membre;
 
-public class MembreController  implements Initializable{
+public class MembreController implements Initializable{
 	@FXML private SplitPane splitPaneVerticale;
 	
 	 @FXML private TextField rechercherField;
@@ -67,6 +71,9 @@ public class MembreController  implements Initializable{
 	  
 	 private Stage stage;
 	 private Membre membreActif;
+	 
+	 private Dahira dahira ;
+	 
 	 private static IntegerProperty index = new SimpleIntegerProperty();
 	 
 	 public static final ObservableList<String> dataMembre = 
@@ -78,6 +85,7 @@ public class MembreController  implements Initializable{
 	 public static ObservableList<Membre> filteredData =  FXCollections.observableArrayList();
 	 
 	 private final String LIST_MEMBRE = "select c from Membre c";
+	 private final String DAHIRA = "select c from Dahira c";
 	 
 	 boolean etatEdit = false;//dans etat editer membre çà donne true
 	 
@@ -131,7 +139,6 @@ public class MembreController  implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		
 		//mettre inactif les boutons
 		setUnvisibleButton(true);
@@ -166,7 +173,8 @@ public class MembreController  implements Initializable{
 		afficherUnMembre();
 		//action filtrer membre
 		filterMembre();
-		
+		//charger vue dahira
+		chargerDahira();
 		//filtrer les membres
 		membreDonnee.addListener(new ListChangeListener<Membre>() {
             @Override
@@ -196,53 +204,45 @@ public class MembreController  implements Initializable{
 			    });
 		
 		//action sur bouton editer
-				btnEditer.setOnAction(new EventHandler<ActionEvent>() {
+		btnEditer.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
 			 	    	//System.out.println("Ok");
 			 	    	etatEdit = true;
-			 	    	btnSupprimer.setDisable(true);
-			 	    	btnEditer.setDisable(true);
+			 	    	//btnSupprimer.setDisable(true);
+			 	    	//btnEditer.setDisable(true);
 			 	    	afficherVueEditerMembre();
 			 	    }
 			 	});
 				
-				//action sur bouton supprimmer
-				btnSupprimer.setOnAction(new EventHandler<ActionEvent>() {
+		//action sur bouton supprimmer
+		btnSupprimer.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
 			 	    	clearUnMembre();
 			 	    	tableViewMembre.getSelectionModel().clearSelection();
 			 	    	listViewMembre.getItems().clear();
-			 	    	btnSupprimer.setDisable(true);
-			 	    	btnEditer.setDisable(true);
+			 	    	setUnvisibleButton(true);
 			 	    }
 			 	});
 		
 		//action sur bouton cotisation
-				btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
+		btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
 			 	    	afficherVueCotisation();
 			 	    }
-			 	});
+			 });
 				
-				//action sur bouton impot
-				btnImpot.setOnAction(new EventHandler<ActionEvent>() {
+		//action sur bouton impot
+		btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
-			 	    	String nameFile = membreActif.getPrenom() +
-			 	    			"_" + membreActif.getNom() + ".pdf";
-			 	    	GenererPdf impot = new GenererPdf();
-			 	    	try {
-							impot.createPdf(nameFile,membreActif,"",001);
-						} catch (DocumentException | IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+			 	    	afficherVueEmail();
 			 	    }
 			 	});
 				
 		//action sur bouton quitter
 		btnQuitter.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
-			 	    	stage.close();
+			 	    	afficherVueDahira();
+			 	    	//stage.close();
 			 	    }
 			 	});
 				
@@ -314,6 +314,32 @@ public class MembreController  implements Initializable{
 		            primaryStage.setScene(scene);
 		            //cotisation.setParentStage(primaryStage);
 		            cotisation.setMembre(membreActif);
+		            primaryStage.setResizable(false);
+		            primaryStage.show();
+		            
+		        } catch (IOException e) {
+		            // Exception gets thrown if the fxml file could not be loaded
+		            e.printStackTrace();
+		        }
+		        
+		}
+		
+		//afficher la fenetre pour envoyer le message d impot
+		public void afficherVueEmail(){
+			 Stage primaryStage = new Stage();
+		     primaryStage.setTitle("Connexion");
+		     primaryStage.initModality(Modality.APPLICATION_MODAL);
+		        try {
+		            // Load the root layout from the fxml file
+		            FXMLLoader loader = new FXMLLoader(EmailController.class.getResource("EmailVue.fxml"));
+		            AnchorPane anc = (AnchorPane) loader.load();
+		            EmailController emailController = (EmailController)loader.getController();
+		            Scene scene = new Scene(anc);
+		            scene.getStylesheets().add("META-INF/css/style.css");
+		            primaryStage.setScene(scene);
+		            emailController.setStage(primaryStage);
+		            emailController.setMembreEnvoyer(membreActif);
+		           // emailController.setMembreController(this);
 		            primaryStage.setResizable(false);
 		            primaryStage.show();
 		            
@@ -400,6 +426,8 @@ public class MembreController  implements Initializable{
 	                    String oldValue, String newValue) {
 
 	                updateFilteredData();
+	                listViewMembre.getItems().clear();
+	                setUnvisibleButton(true);
 	            }
 	        });
 	    }
@@ -451,6 +479,8 @@ public class MembreController  implements Initializable{
 	        tableViewMembre.getSortOrder().clear();
 	        tableViewMembre.getSortOrder().addAll(sortOrder);
 	    }
+	
+	 //mettre a jour la table de view
 	public void updateMembreTableView(){
 		ObservableList<Membre> tempData = 
 				 FXCollections.observableArrayList();
@@ -458,4 +488,35 @@ public class MembreController  implements Initializable{
 		tableViewMembre.getItems().clear();
 		tableViewMembre.setItems(tempData);
 	}
+	
+	//afficher la fenetre de la dahira
+		public void afficherVueDahira(){
+			 Stage primaryStage = new Stage();
+		     primaryStage.setTitle("Dahira");
+		     primaryStage.initModality(Modality.APPLICATION_MODAL);
+		        try {
+		            // Load the root layout from the fxml file
+		            FXMLLoader loader = new FXMLLoader(DahiraController.class.getResource("DahiraVue.fxml"));
+		            AnchorPane anc = (AnchorPane) loader.load();
+		            DahiraController dahiraController = (DahiraController)loader.getController();
+		            Scene scene = new Scene(anc);
+		            scene.getStylesheets().add("META-INF/css/style.css");
+		            primaryStage.setScene(scene);
+		            dahiraController.setStage(primaryStage);
+		            dahiraController.setEditDahira(dahira);
+		            primaryStage.setResizable(false);
+		            primaryStage.show();
+		            
+		        } catch (IOException e) {
+		            // Exception gets thrown if the fxml file could not be loaded
+		            e.printStackTrace();
+		        }
+		        
+		}
+		
+		//charger les informations de la dahira
+				public void chargerDahira(){
+					DahiraDaoImpl dahiraDao = new DahiraDaoImpl();
+						dahira = dahiraDao.get(DAHIRA);
+				}
 }
