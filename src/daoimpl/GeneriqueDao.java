@@ -43,17 +43,30 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
 
     @Override
     public T read(PK id) {
-    	tx.begin();
-        T t = this.entityManager.find(entityClass, id);
-        tx.commit();
+    	T t;
+    	try{
+	    	tx.begin();
+	        t = this.entityManager.find(entityClass, id);
+	        tx.commit();
+    	}catch(NoResultException e){
+    		return null;		
+    	}catch(Exception e){
+    		return null;
+    	}
     	return t;
     }
 
     @Override
     public T update(T t) {
-    	tx.begin();
-        t = this.entityManager.merge(t);
-        tx.commit();
+    	try{
+	    	tx.begin();
+	        t = this.entityManager.merge(t);
+	        tx.commit();
+    	}catch(NoResultException e){
+    		return null;		
+    	}catch(Exception e){
+    		return null;
+    	}
         return t;
     }
 
@@ -67,17 +80,31 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     
     @Override
 	public List getAll(String query) {
-    	tx.begin();
-    	List l = entityManager.createQuery(query).getResultList();
-    	tx.commit();
+    	List l;
+    	try{
+	    	tx.begin();
+	    	l = entityManager.createQuery(query).getResultList();
+	    	tx.commit();
+    	}catch(NoResultException e){
+    		return null;		
+    	}catch(Exception e){
+    		return null;
+    	}
     	return l;
 	}
     
     @Override
 	public List getAll(String query, String param) {
-    	tx.begin();
-    	List l = entityManager.createQuery(query).setParameter(1, param).getResultList();
-    	tx.commit();
+    	List l;
+    	try{
+	    	tx.begin();
+	    	l = entityManager.createQuery(query).setParameter(1, param).getResultList();
+	    	tx.commit();
+    	}catch(NoResultException e){
+    		return null;		
+    	}catch(Exception e){
+    		return null;
+    	}
     	return l;
 	}
     

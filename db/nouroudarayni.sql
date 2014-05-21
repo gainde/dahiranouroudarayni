@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mar 20 Mai 2014 à 05:24
+-- Généré le: Mer 21 Mai 2014 à 06:43
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.12
 
@@ -28,7 +28,6 @@ USE `nouroudarayni`;
 -- Structure de la table `cotisationdiverse`
 --
 
-DROP TABLE IF EXISTS `cotisationdiverse`;
 CREATE TABLE IF NOT EXISTS `cotisationdiverse` (
   `montant` int(11) NOT NULL,
   `datecotisation` datetime NOT NULL,
@@ -41,7 +40,6 @@ CREATE TABLE IF NOT EXISTS `cotisationdiverse` (
 -- Structure de la table `cotisationevenement`
 --
 
-DROP TABLE IF EXISTS `cotisationevenement`;
 CREATE TABLE IF NOT EXISTS `cotisationevenement` (
   `id` int(11) NOT NULL,
   `montant` double NOT NULL,
@@ -69,7 +67,6 @@ INSERT INTO `cotisationevenement` (`id`, `montant`, `datecotisation`, `idEven`, 
 -- Structure de la table `cotisationkst`
 --
 
-DROP TABLE IF EXISTS `cotisationkst`;
 CREATE TABLE IF NOT EXISTS `cotisationkst` (
   `id` int(11) NOT NULL,
   `type` varchar(1) NOT NULL DEFAULT '0',
@@ -98,7 +95,6 @@ INSERT INTO `cotisationkst` (`id`, `type`, `montant`, `datecotisation`, `idMembr
 -- Structure de la table `cotisationmembre`
 --
 
-DROP TABLE IF EXISTS `cotisationmembre`;
 CREATE TABLE IF NOT EXISTS `cotisationmembre` (
   `id` int(11) NOT NULL COMMENT 'id cotisation membre',
   `montant` int(11) NOT NULL,
@@ -126,7 +122,6 @@ INSERT INTO `cotisationmembre` (`id`, `montant`, `datecotisation`, `idMembre`) V
 -- Structure de la table `dahira`
 --
 
-DROP TABLE IF EXISTS `dahira`;
 CREATE TABLE IF NOT EXISTS `dahira` (
   `id` int(11) NOT NULL,
   `nom` varchar(100) NOT NULL,
@@ -149,15 +144,23 @@ CREATE TABLE IF NOT EXISTS `dahira` (
 -- Structure de la table `evenement`
 --
 
-DROP TABLE IF EXISTS `evenement`;
 CREATE TABLE IF NOT EXISTS `evenement` (
-  `id` int(10) unsigned NOT NULL,
   `nom` varchar(100) NOT NULL,
   `budget` decimal(10,0) NOT NULL,
-  `depense` decimal(10,0) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  `depense` decimal(10,0) DEFAULT NULL,
+  `dateEvent` datetime NOT NULL,
+  PRIMARY KEY (`nom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `evenement`
+--
+
+INSERT INTO `evenement` (`nom`, `budget`, `depense`, `dateEvent`) VALUES
+('Thiant2011', '7000', NULL, '2011-05-01 00:00:00'),
+('Thiant2012', '4000', NULL, '2012-05-01 00:00:00'),
+('thiant2013', '5000', NULL, '2012-05-10 00:00:00'),
+('Thiant2014', '41000', '40000', '2014-04-30 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -165,7 +168,6 @@ CREATE TABLE IF NOT EXISTS `evenement` (
 -- Structure de la table `membre`
 --
 
-DROP TABLE IF EXISTS `membre`;
 CREATE TABLE IF NOT EXISTS `membre` (
   `nom` varchar(45) DEFAULT NULL,
   `prenom` varchar(45) DEFAULT NULL,
@@ -194,7 +196,6 @@ INSERT INTO `membre` (`nom`, `prenom`, `datenaissance`, `adresse`, `ville`, `pro
 -- Structure de la table `sequence`
 --
 
-DROP TABLE IF EXISTS `sequence`;
 CREATE TABLE IF NOT EXISTS `sequence` (
   `SEQ_NAME` varchar(50) NOT NULL,
   `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
@@ -206,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `sequence` (
 --
 
 INSERT INTO `sequence` (`SEQ_NAME`, `SEQ_COUNT`) VALUES
-('SEQ_GEN', '1451');
+('SEQ_GEN', '1751');
 
 -- --------------------------------------------------------
 
@@ -214,7 +215,6 @@ INSERT INTO `sequence` (`SEQ_NAME`, `SEQ_COUNT`) VALUES
 -- Structure de la table `utilisateur`
 --
 
-DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `login` varchar(20) NOT NULL,
   `pass` varchar(100) DEFAULT NULL,
