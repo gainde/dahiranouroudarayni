@@ -176,7 +176,16 @@ public class CotisationController implements Initializable{
 			public void changed(ObservableValue<? extends String> observable,
 					String oldValue, String newValue) {
 				// TODO Auto-generated method stub
-				
+				ObservableList<CotisationKST> filteredData = FXCollections.observableArrayList();
+				if(newValue != null && !newValue.isEmpty()){
+					filteredData.addAll(KSTData);
+					for(CotisationKST c : KSTData){
+						if(!newValue.equals(new SimpleDateFormat("yyyy").format(c.getDateCotisationKST()))){
+							filteredData.remove(c);
+						}
+					}
+					tableKST.setItems(filteredData);
+				}else tableKST.setItems(KSTData);
 			}
 		});
     }
@@ -187,7 +196,16 @@ public class CotisationController implements Initializable{
 			public void changed(ObservableValue<? extends String> observable,
 					String oldValue, String newValue) {
 				// TODO Auto-generated method stub
-				
+				ObservableList<CotisationEvenement> filteredData = FXCollections.observableArrayList();
+				if(newValue != null && !newValue.isEmpty()){
+					filteredData.addAll(EvenementData);
+					for(CotisationEvenement c : EvenementData){
+						if(!newValue.equals(new SimpleDateFormat("yyyy").format(c.getDateCotisation()))){
+							filteredData.remove(c);
+						}
+					}
+					tableEvenement.setItems(filteredData);
+				}else tableEvenement.setItems(EvenementData);
 			}
 		});
     }
@@ -220,7 +238,8 @@ public class CotisationController implements Initializable{
 		for (Object p : cotisationLoyerDao.getAll(LIST_COTISATION_LOYER, membre.getEmail())) {
 			CotisationLoyer loyer = (CotisationLoyer)p;
 			cotisationLoyerData.add(loyer);
-			cmbData.add(new SimpleDateFormat("yyyy").format(loyer.getDate()));
+			String annee = new SimpleDateFormat("yyyy").format(loyer.getDate());
+			if(!cmbData.contains(annee)) cmbData.add(annee);
 		}
 		loyerData = cotisationLoyerData;
 		tableLoyer.setItems(loyerData);
@@ -234,7 +253,8 @@ public class CotisationController implements Initializable{
 		for (Object p : cotisationKSTDao.getAll(LIST_COTISATION_KST, membre.getEmail())) {
 			CotisationKST kst = (CotisationKST)p;
 			cotisationKSTData.add(kst);
-			cmbData.add(new SimpleDateFormat("yyyy").format(kst.getDateCotisationKST()));
+			String annee = new SimpleDateFormat("yyyy").format(kst.getDateCotisationKST());
+			if(!cmbData.contains(annee)) cmbData.add(annee);
 		}
 		KSTData = cotisationKSTData;
 		tableKST.setItems(KSTData);
@@ -248,7 +268,8 @@ public class CotisationController implements Initializable{
 		for (Object p : cotisationEvenementDao.getAll(LIST_COTISATION_EVENEMENT, membre.getEmail())) {
 			CotisationEvenement evenement = (CotisationEvenement)p;
 			cotisationEvenementData.add(evenement);
-			cmbData.add(new SimpleDateFormat("yyyy").format(evenement.getDateCotisation()));
+			String annee = new SimpleDateFormat("yyyy").format(evenement.getDateCotisation());
+			if(!cmbData.contains(annee)) cmbData.add(annee);
 		}
 		EvenementData = cotisationEvenementData;
 		tableEvenement.setItems(EvenementData);
