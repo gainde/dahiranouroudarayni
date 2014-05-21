@@ -62,10 +62,6 @@ public class SendMessage {
 		File file = new File(pathFile);
         FileDataSource datasource1 = new FileDataSource(file);
         DataHandler handler1 = new DataHandler(datasource1);
-		
-        
-		final String username = "oussou.dieng@gmail.com";
-		final String password = "bismilah1";
  
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -76,7 +72,7 @@ public class SendMessage {
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
+				return new PasswordAuthentication(adressEmail, motDepasse);
 			}
 		  });
  
@@ -94,7 +90,7 @@ public class SendMessage {
 	        mimeMultipart.addBodyPart(autruche);
 	        
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(username));
+			message.setFrom(new InternetAddress(adressEmail));
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(emailDestination));
 			message.setSubject(objet);

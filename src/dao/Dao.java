@@ -10,4 +10,5 @@ public interface Dao<T, PK extends Serializable> {
     void delete(T t);
     List getAll(String query);
     public List getAll(String query, String param);
+	T get(String query);
 }

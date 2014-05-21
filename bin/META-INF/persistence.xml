@@ -8,6 +8,7 @@
 		<class>entites.CotisationLoyer</class>
 		<class>entites.CotisationKST</class>
 		<class>entites.CotisationEvenement</class>
+		<class>entites.Dahira</class>
 		<!-- propriétés de l'unité de persistance -->
 		<properties>
 			<!-- connexion JDBC -->
