@@ -4,7 +4,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +30,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import util.Utile;
 import dao.EvenementDao;
 import daoimpl.EvenementDaoImpl;
 import entites.Evenement;
@@ -226,9 +226,7 @@ public class EvenementController implements Initializable{
     private void ajouterEvenement(){
     	String nomEvenement = txtNomNouveauEven.getText();
         Double budget = Double.valueOf(txtBudgetNouveauEven.getText());
-        LocalDate localDate = dateNouveauEven.getValue();
-        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-		Date date = Date.from(instant);
+		Date date = Utile.getDate(dateNouveauEven.getValue());
 		Evenement even = new Evenement(nomEvenement, budget, date);
 		EvenementDao evenDao = new EvenementDaoImpl();
 		evenDao.create(even);
@@ -252,8 +250,7 @@ public class EvenementController implements Initializable{
     	txtNom.setText(even.getNomEvenement());
     	txtBudget.setText(even.getBudget().toString());
     	
-    	LocalDate date = LocalDateTime.ofInstant(even.getDateEvenement().toInstant(), ZoneId.systemDefault()).toLocalDate();
-    	dateEven.setValue(date);
+    	dateEven.setValue(Utile.getLocalDate(even.getDateEvenement()));
     	String depense = even.getDepense() == null ? "" : even.getDepense().toString();
     	txtDepense.setText(depense);
     }
@@ -262,9 +259,7 @@ public class EvenementController implements Initializable{
         Double budget = Double.parseDouble(txtBudget.getText());
         Double depense = txtDepense.getText() == null? null : Double.parseDouble(txtDepense.getText());
         //Double depense = Double.parseDouble(txtDepense.getText());
-        LocalDate localDate = dateEven.getValue();
-        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-		Date date = Date.from(instant);
+		Date date = Utile.getDate(dateEven.getValue());
 		Evenement even = new Evenement(nom,budget,depense,date);
 		EvenementDao eventDao = new EvenementDaoImpl();
 		eventDao.update(even);

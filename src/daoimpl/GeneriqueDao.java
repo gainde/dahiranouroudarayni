@@ -2,7 +2,9 @@ package daoimpl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Vector;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -79,8 +81,8 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     }
     
     @Override
-	public List getAll(String query) {
-    	List l;
+	public List<T> getAll(String query) {
+    	List<T> l;
     	try{
 	    	tx.begin();
 	    	l = entityManager.createQuery(query).getResultList();
@@ -94,8 +96,8 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
 	}
     
     @Override
-	public List getAll(String query, String param) {
-    	List l;
+	public List<T> getAll(String query, String param) {
+    	List<T> l;
     	try{
 	    	tx.begin();
 	    	l = entityManager.createQuery(query).setParameter(1, param).getResultList();
@@ -110,10 +112,35 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     
     @Override
     public T get(String query) {
+    	T t;
+    	try{
     	tx.begin();
-    	T t = (T) entityManager.createQuery(query).getSingleResult();
+    	t = (T) entityManager.createQuery(query).getSingleResult();
     	tx.commit();
+    	}catch(NoResultException e){
+    		return null;		
+    	}catch(Exception e){
+    		return null;
+    	}
     	return t;
 	}
+    
+    @Override
+    public Double getMontant(String query, String id, String annee){
+    	Double t;
+    	try{
+	    	tx.begin();
+	    	Vector singleResult = (Vector)entityManager.createNativeQuery(query).setParameter(1, id).setParameter(2, annee).getSingleResult();
+	    	t = (Double)singleResult.get(0);
+	    	tx.commit();
+    	}catch(NoResultException e){
+    		e.printStackTrace();
+    		return null;		
+    	}catch(Exception e){
+    		e.printStackTrace();
+    		return null;
+    	}
+    	return t;
+    }
     
 }

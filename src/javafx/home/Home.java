@@ -22,7 +22,7 @@ public class Home extends Application {
             // Load the root layout from the fxml file
             FXMLLoader loader = new FXMLLoader(Home.class.getResource("Home.fxml"));
             rootLayout = (AnchorPane) loader.load();
-            HomeController controlleur = loader.getController();
+            HomeController controlleur = (HomeController)loader.getController();
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             controlleur.setStage(primaryStage);
