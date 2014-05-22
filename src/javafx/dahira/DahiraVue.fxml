@@ -21,7 +21,7 @@
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<Label id="title" fx:id="textTitre" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="16.0" prefHeight="16.0" prefWidth="550.0" textAlignment="CENTER" />
+						<Label id="title" fx:id="textTitre" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="16.0" prefHeight="16.0" prefWidth="550.0" text="Dahira" textAlignment="CENTER" />
 						<Text fx:id="textErrMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="549.2978515625" GridPane.rowIndex="1">
 							<font>
 								<Font size="11.0" />
@@ -169,7 +169,7 @@
 				</GridPane>
 			</children>
 		</VBox><Pane prefHeight="555.0" prefWidth="285.0">
-<children><TextArea fx:id="descriptionArea" layoutY="99.0" prefHeight="300.0" prefWidth="244.0" /><Label layoutY="70.0" text="Description :" /><Text fx:id="textErrDescription" fill="RED" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0">
+<children><TextArea fx:id="descriptionArea" layoutX="8.0" layoutY="103.0" prefHeight="302.0" prefWidth="244.0" /><Label layoutX="14.0" layoutY="70.0" text="Description :" /><Text fx:id="textErrDescription" fill="RED" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0">
 <font>
 <Font size="10.0" />
 </font></Text>

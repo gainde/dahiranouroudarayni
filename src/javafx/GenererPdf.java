@@ -84,7 +84,7 @@ public class GenererPdf {
 	    	String numeroNE = dahira.getNumeroEnregistrement();
 	    	String adresseDahira = dahira.getAdresse().toString();
 	    	
-	    	Font font1 = new Font(Font.FontFamily.TIMES_ROMAN, 11);
+	    	Font font1 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
 	    	Font font2 = new Font(Font.FontFamily.TIMES_ROMAN, 10);
 	    	PdfPTable generalBig = new PdfPTable(1);
 	    	generalBig.getDefaultCell().setBorderWidth(1.5f);
@@ -140,7 +140,7 @@ public class GenererPdf {
 	        general.addCell(t1);
 	        
 	        PdfPTable t2 = new PdfPTable(2);
-	        float[] columnWidths2 = {1f, 5f};
+	        float[] columnWidths2 = {1f, 5.5f};
 	        t2.setWidths(columnWidths2);
 	        
 	        PdfPCell cell21 = new PdfPCell(new Paragraph("Donateur	:", font1));
@@ -162,7 +162,7 @@ public class GenererPdf {
 	        general.addCell(t2);
 	        
 	        PdfPTable t3 = new PdfPTable(2);
-	        float[] columnWidths3 = {4f, 1f};
+	        float[] columnWidths3 = {4f, 1.2f};
 	        t3.setWidths(columnWidths3);
 	        PdfPCell cell31 = new PdfPCell(new Paragraph("Montant admissible du don aux fins de l’impôt sur le revenu :", font1));
 	        PdfPCell cell32 = new PdfPCell(new Paragraph(montant, font1));
@@ -176,7 +176,7 @@ public class GenererPdf {
 	        general.addCell(t3);
 	        
 	        PdfPTable t4 = new PdfPTable(2);
-	        float[] columnWidths4 = {3f, 4f};
+	        float[] columnWidths4 = {3f, 4.5f};
 	        t4.setWidths(columnWidths4);
 	        PdfPCell cell41 = new PdfPCell(new Paragraph("Date de la délivrance du reçu	:", font1));
 	        PdfPCell cell42 = new PdfPCell(new Paragraph(dateDelivrance, font1));

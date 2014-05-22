@@ -73,11 +73,12 @@ public class EditerMembreController implements Initializable{
 	 private Membre   editMembre;
 	 private MembreController membreController;
 		String province = "Quebec";
-		Date date = null;
+		Date date = new Date();
 	
 	
 
 	public void setMembreActif() {
+		if( editMembre != null ){
 			this.prenomField.setText(editMembre.getPrenom());
 			this.nomField.setText(editMembre.getNom());
 			this.emailField.setText(editMembre.getEmail());
@@ -91,6 +92,7 @@ public class EditerMembreController implements Initializable{
 			this.dateNaissance.setValue(res);
 			
 			this.cmbProvince.setValue(editMembre.getAdresse().getProvince());
+		}
 		}
 
 	public Stage getStage() {
@@ -163,6 +165,7 @@ public class EditerMembreController implements Initializable{
 				 btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
 				 	    @Override public void handle(ActionEvent event) {
 				 	    	//parentStage.show();
+				 	    	membreController.updateMembreTableView();
 				 	    	stage.close();
 				 	    }
 				 	});
@@ -195,7 +198,7 @@ public class EditerMembreController implements Initializable{
 			if(dateNaissance.getValue() != null){
 			LocalDate localDate = dateNaissance.getValue();
 			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			date = Date.from(instant);
+			date = Date.from(instant);}
 			editMembre.setNom(nomField.getText().trim());
 			editMembre.setPrenom(prenomField.getText().trim());
 			editMembre.setDateNaissance(date);
@@ -206,7 +209,7 @@ public class EditerMembreController implements Initializable{
 						postalField.getText().trim(),"Canada");
 				editMembre.setAdresse(adresse);
 				enreisgitrerMembre(editMembre);
-				}
+				
 		}
 		//ajouter membre dans la base de donnée
 		public void enreisgitrerMembre(Membre member){

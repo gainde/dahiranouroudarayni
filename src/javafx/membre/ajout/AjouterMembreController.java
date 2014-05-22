@@ -88,7 +88,7 @@ public class AjouterMembreController implements Initializable {
 	private MembreController membreController;
 
 	String province = "Quebec";
-	Date date = null;
+	Date date = new Date();
 
 	public Stage getStage() {
 		return stage;
@@ -141,7 +141,7 @@ public class AjouterMembreController implements Initializable {
 		
 		//Valider le telephone
 		ValideurTelephone validerTelephone = new ValideurTelephone(telephoneField,
-						textErrTelephone, true, ValidationErreur.CODEPOSTALE_ERR);
+						textErrTelephone, true, ValidationErreur.TELEPHONE_ERR);
 		validerTelephone.validerTelephone(telephoneField,textErrTelephone);
 		
 		
@@ -157,7 +157,8 @@ public class AjouterMembreController implements Initializable {
 						stage.close();
 					}
 				});
-
+				if(membreController != null)
+					membreController.chargerMembres();
 				// action bouton enregistrer
 				btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -168,6 +169,7 @@ public class AjouterMembreController implements Initializable {
 												&&  validerPrenom.valider()){
 							enregistrerMembre();
 							// parentStage.show();
+							
 							stage.close();
 							
 						}else{
@@ -178,13 +180,14 @@ public class AjouterMembreController implements Initializable {
 				});
 	}
 
+	
 	// ajouter les informations dans la base de donnée
 	public void enregistrerMembre() {
 		if (dateNaissance.getValue() != null) {
 			LocalDate localDate = dateNaissance.getValue();
 			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId
 					.systemDefault()));
-			date = Date.from(instant);
+			date = Date.from(instant);}
 			membre = new Membre(nomField.getText().trim(), prenomField.getText().trim(),
 					date, telephoneField.getText().trim(), emailField.getText().trim());
 			Adresse adresse = new Adresse(adresseField.getText().trim(),
@@ -193,8 +196,8 @@ public class AjouterMembreController implements Initializable {
 			membre.setAdresse(adresse);
 			System.out.println(membre.toString());
 			enreisgitrerMembre(membre);
-			membreController.getTableViewMembre().getItems().add(membre);
-		}
+			membreController.getMembreDonnee().add(membre);
+		
 	}
 
 
