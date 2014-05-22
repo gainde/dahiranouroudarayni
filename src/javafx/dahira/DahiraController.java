@@ -87,9 +87,12 @@ public class DahiraController  implements Initializable{
 			
 		
 		public void setDahiraActif() {
+			if(editDahira != null){
+				textTitre.setText(editDahira.getNomDahira());
 				this.nomField.setText(editDahira.getNomDahira());
 				this.numeroNEField.setText(editDahira.getNumeroEnregistrement());
 				this.emailField.setText(editDahira.getEmail());
+				this.descriptionArea.setText(editDahira.getDescription());
 				this.siteWebField.setText(editDahira.getSiteWeb());
 				this.telephoneField.setText(editDahira.getTelephone());
 				this.adresseField.setText(editDahira.getAdresse().getRue());
@@ -97,6 +100,7 @@ public class DahiraController  implements Initializable{
 				this.villeField.setText(editDahira.getAdresse().getVille());
 				
 				this.cmbProvince.setValue(editDahira.getAdresse().getProvince());
+			}
 			}
 
 		public Stage getStage() {
@@ -127,7 +131,6 @@ public class DahiraController  implements Initializable{
 
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
-			textTitre.setText(editDahira.getNomDahira());
 			// Valider le champ prenom 
 					ValidateurChaine validerPrenom = new ValidateurChaine(nomField,
 							textErrNom, false, ValidationErreur.CHAINE_ERR,10);
@@ -150,7 +153,7 @@ public class DahiraController  implements Initializable{
 					
 					// Valider le champ description 
 					ValidateurChaine validerDescription = new ValidateurChaine(descriptionArea,
-									textErrDescription, true, ValidationErreur.CHAINE_ERR,10);
+									textErrDescription, true, ValidationErreur.CHAINE_ERR,100);
 					validerDescription.validerChaine(descriptionArea, textErrDescription);
 					
 					// Valider le champ ville 
@@ -218,6 +221,7 @@ public class DahiraController  implements Initializable{
 					editDahira.setAdresse(adresse);
 					enreisgitrerDahira(editDahira);
 			}
+			
 			//ajouter membre dans la base de donnée
 			public void enreisgitrerDahira(Dahira dahira){
 				DahiraDao dahiraDao =  new DahiraDaoImpl();
@@ -226,9 +230,7 @@ public class DahiraController  implements Initializable{
 			
 			//action sur le combox selection de province
 			public void handleComboBoxProvince(){
-				
 				cmbProvince.valueProperty().addListener(new ChangeListener<String>() {
-				
 					@Override
 					public void changed(ObservableValue<? extends String> observable,
 							String oldValue, String newValue) {

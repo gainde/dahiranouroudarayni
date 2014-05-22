@@ -116,6 +116,7 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     	try{
     	tx.begin();
     	t = (T) entityManager.createQuery(query).getSingleResult();
+    	 t = (T) entityManager.createQuery(query).getSingleResult();
     	tx.commit();
     	}catch(NoResultException e){
     		return null;		

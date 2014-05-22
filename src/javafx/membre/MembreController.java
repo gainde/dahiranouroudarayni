@@ -72,7 +72,6 @@ public class MembreController implements Initializable{
 	 private Stage stage;
 	 private Membre membreActif;
 	 
-	 private Dahira dahira ;
 	 
 	 private static IntegerProperty index = new SimpleIntegerProperty();
 	 
@@ -85,7 +84,6 @@ public class MembreController implements Initializable{
 	 public static ObservableList<Membre> filteredData =  FXCollections.observableArrayList();
 	 
 	 private final String LIST_MEMBRE = "select c from Membre c";
-	 private final String DAHIRA = "select c from Dahira c";
 	 
 	 boolean etatEdit = false;//dans etat editer membre çà donne true
 	 
@@ -97,29 +95,12 @@ public class MembreController implements Initializable{
 		this.stage = stage;
 	}
 
-	public TableView<Membre> getTableViewMembre() {
-		return tableViewMembre;
-	}
-
-	public void setTableViewMembre(TableView<Membre> tableViewMembre) {
-		this.tableViewMembre = tableViewMembre;
-	}
+	
 
 	public static ObservableList<Membre> getMembreDonnee() {
 		return membreDonnee;
 	}
 
-	public static void setMembreDonnee(ObservableList<Membre> membreDonnee) {
-		MembreController.membreDonnee = membreDonnee;
-	}
-
-	public static IntegerProperty getIndex() {
-		return index;
-	}
-
-	public void setIndex(IntegerProperty index) {
-		this.index = index;
-	}
 
 	public Membre getMembreActif() {
 		return membreActif;
@@ -173,12 +154,12 @@ public class MembreController implements Initializable{
 		afficherUnMembre();
 		//action filtrer membre
 		filterMembre();
-		//charger vue dahira
-		chargerDahira();
+		
 		//filtrer les membres
 		membreDonnee.addListener(new ListChangeListener<Membre>() {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Membre> change) {
+      
                 updateFilteredData();
             }
         });
@@ -241,8 +222,8 @@ public class MembreController implements Initializable{
 		//action sur bouton quitter
 		btnQuitter.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
-			 	    	afficherVueDahira();
-			 	    	//stage.close();
+			 	    	
+			 	    	stage.close();
 			 	    }
 			 	});
 				
@@ -360,7 +341,7 @@ public class MembreController implements Initializable{
 				memberData.add(member);
 			}
 			membreDonnee = memberData;
-			filteredData.addAll(membreDonnee);
+			//filteredData.addAll(membreDonnee);
 			tableViewMembre.getItems().clear();
 			tableViewMembre.setItems(membreDonnee);
 		}
@@ -394,9 +375,9 @@ public class MembreController implements Initializable{
 			if(membre != null){
 				String nomMembre = membre.getPrenom() + " " + membre.getNom();
 				String rueMembre = membre.getAdresse().getRue();
-				String codePostalMembre = membre.getAdresse().getCodepostale() + "," +
+				String codePostalMembre = membre.getAdresse().getCodepostale() + " " +
 						membre.getAdresse().getVille();
-				String paysMembre = membre.getAdresse().getProvince() + "," +
+				String paysMembre = membre.getAdresse().getProvince() + " " +
 						membre.getAdresse().getPays() ;
 				String telMembre = membre.getTelephone();
 				String emaillMembre =membre.getEmail();
@@ -418,13 +399,13 @@ public class MembreController implements Initializable{
 		
 		//fonction pour rechercher un membre en filtrant les membres
 		public void filterMembre(){
+			filteredData.addAll(membreDonnee);
 			 // Add filtered data to the table
 			tableViewMembre.setItems(filteredData);
 			rechercherField.textProperty().addListener(new ChangeListener<String>() {
 	            @Override
 	            public void changed(ObservableValue<? extends String> observable,
 	                    String oldValue, String newValue) {
-
 	                updateFilteredData();
 	                listViewMembre.getItems().clear();
 	                setUnvisibleButton(true);
@@ -489,34 +470,5 @@ public class MembreController implements Initializable{
 		tableViewMembre.setItems(tempData);
 	}
 	
-	//afficher la fenetre de la dahira
-		public void afficherVueDahira(){
-			 Stage primaryStage = new Stage();
-		     primaryStage.setTitle("Dahira");
-		     primaryStage.initModality(Modality.APPLICATION_MODAL);
-		        try {
-		            // Load the root layout from the fxml file
-		            FXMLLoader loader = new FXMLLoader(DahiraController.class.getResource("DahiraVue.fxml"));
-		            AnchorPane anc = (AnchorPane) loader.load();
-		            DahiraController dahiraController = (DahiraController)loader.getController();
-		            Scene scene = new Scene(anc);
-		            scene.getStylesheets().add("META-INF/css/style.css");
-		            primaryStage.setScene(scene);
-		            dahiraController.setStage(primaryStage);
-		            dahiraController.setEditDahira(dahira);
-		            primaryStage.setResizable(false);
-		            primaryStage.show();
-		            
-		        } catch (IOException e) {
-		            // Exception gets thrown if the fxml file could not be loaded
-		            e.printStackTrace();
-		        }
-		        
-		}
-		
-		//charger les informations de la dahira
-				public void chargerDahira(){
-					DahiraDaoImpl dahiraDao = new DahiraDaoImpl();
-						dahira = dahiraDao.get(DAHIRA);
-				}
+	
 }

@@ -9,6 +9,9 @@ import validation.ValideurEmail;
 
 import com.itextpdf.text.DocumentException;
 
+import dao.DahiraDao;
+import daoimpl.DahiraDaoImpl;
+import entites.Dahira;
 import entites.Membre;
 import javafx.GenererPdf;
 import javafx.SendMessage;
@@ -48,7 +51,10 @@ public class EmailController implements Initializable{
 
 		private Stage stage;
 		private Membre membreActif;
+		private Dahira dahira;
 		private Boolean bool = false;
+		
+		private final String DAHIRA = "select c from Dahira c";
 		
 		public Stage getStage() {
 			return stage;
@@ -68,7 +74,9 @@ public class EmailController implements Initializable{
 
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
-
+			//charger dahira
+			chargerDahira();
+			
 			//Valider le mail
 			ValideurEmail validerEmail = new ValideurEmail(emailConexionField,
 					connexionErr, false, ValidationErreur.EMAIL_ERR);
@@ -97,7 +105,7 @@ public class EmailController implements Initializable{
 	 	    	GenererPdf impot = new GenererPdf("2014", "10/12/2012",
 	 					"2000$");
 	 	    	try {
-	 	   		impot.createPdf(nameFile,membreActif,null,"",001);
+	 	   		impot.createPdf(nameFile,membreActif, dahira,"",001);
 	 	    	} catch (DocumentException | IOException e) {
 	 	   		// TODO Auto-generated catch block
 	 	   		e.printStackTrace();
@@ -112,4 +120,10 @@ public class EmailController implements Initializable{
 	 	    	stage.close();
 			}
 		} 
+		
+		//charger les informations de la dahira
+		public void chargerDahira(){
+			DahiraDaoImpl dahiraDao = new DahiraDaoImpl();
+				dahira = dahiraDao.get(DAHIRA);
+		}
 }

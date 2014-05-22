@@ -19,7 +19,8 @@ import validation.ValidationErreur;
 
 
 public class ValidateurChaine extends Validateur {
-	private static final String CHAINE_PATTERN = "(\\w|[éàèôù]|\\s)*";
+	private static final String CHAINE_PATTERN = "(\\w|[éàèôù.,;#-]|\\s)*";
+	private static final String CHAINE_PATTERN2 = "(\\w|[éàèôùç]|\\p{Punct}|\\s)*";
 	private int tailleMax;
 	private Boolean choice;
 	private TextArea texteArea;
@@ -85,7 +86,7 @@ public class ValidateurChaine extends Validateur {
 					}
 					else{
 						//TODO check if pattern match
-						Matcher matcher = Pattern.compile(CHAINE_PATTERN).matcher(email);
+						Matcher matcher = Pattern.compile(CHAINE_PATTERN2).matcher(email);
 						valide = matcher.matches();
 						if(!valide){
 							texteArea.getStyleClass().add("error");
