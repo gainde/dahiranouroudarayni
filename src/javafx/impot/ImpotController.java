@@ -16,8 +16,11 @@ import java.util.ResourceBundle;
 
 import javafx.GenererPdf;
 import javafx.SendMessage;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -54,6 +58,7 @@ public class ImpotController implements Initializable{
 	 @FXML private PasswordField txtMotDePasse;
 	 @FXML private Label lbDossier;
 	 @FXML private Label lbMembres;
+	 @FXML private Text lbMembre;
 	 @FXML private ProgressBar progressBar;
 	 @FXML private Button btnExecuter;
 	 @FXML private Button btnChoisir;
@@ -67,6 +72,7 @@ public class ImpotController implements Initializable{
 	 private final String COTISATION_KST = "select sum(k.montant) from cotisationkst k where k.idMembre=?1 and YEAR(K.datecotisation) = ?2";
 	 private final String COTISATION_EVENEMENT = "select sum(e.montant) from cotisationevenement e where e.idMembre=?1 and YEAR(e.datecotisation) = ?2";
 	 
+	 ArrayList<Impot> listImpot;
 	 
 	 @Override
 	 public void initialize(URL location, ResourceBundle resources) {
@@ -140,7 +146,7 @@ public class ImpotController implements Initializable{
 	 }
 	 
 	 private void loadData(int annee, Date date){
-		 ArrayList<Impot> listImpot =  new ArrayList<Impot>();
+		 listImpot =  new ArrayList<Impot>();
 		 MembreDao membreDao = new MembreDaoImpl();
 		 List<Membre> listMembre = membreDao.getAll(QUERY_ALL_MEMBRE);
 		 Double tmp;
@@ -183,7 +189,9 @@ public class ImpotController implements Initializable{
 	 }
 	 
 	 private void executer(ArrayList<Impot> listImpot){
-		 Double step = 0.0;
+
+			progressBar();
+		 /*Double step = 0.0;
 		 double i = 1;
 		 for(Impot impot : listImpot){
 			 envoyerEmail(impot);
@@ -193,7 +201,7 @@ public class ImpotController implements Initializable{
 			 System.out.println("listImpot.size() = "+listImpot.size());
 			 System.out.println("i = "+i);
 			 i++;
-		 }
+		 }*/
 	 }
 	 
 	 private void envoyerEmail(Impot impotMembre){
@@ -219,6 +227,43 @@ public class ImpotController implements Initializable{
 		 mess.setEmailDestination(impotMembre.getMembre().getEmail());
 		 mess.setPathFile(nameFile);
 		 mess.sendMessage(user.getLogin(),user.getPass());
+		 
+			
+			
+			
 		} 
+	 
+	 public void progressBar(){
+         progressBar.setProgress(0);
+        Task copyWorker = createWorker();
+         progressBar.progressProperty().unbind();
+         progressBar.progressProperty().bind(copyWorker.progressProperty());
+         lbMembres.textProperty().bind(copyWorker.messageProperty());
+        
+         copyWorker.messageProperty().addListener(new ChangeListener<String>() {
+             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                 System.out.println(newValue);
+             }
+         });
+         new Thread(copyWorker).start();
+	    }
 
+	    public Task createWorker() {
+	        return new Task() {
+	            protected Object call() throws Exception {
+	            	double i = 1;
+	       		 for(Impot impot : listImpot){
+	       			 envoyerEmail(impot);
+	       			String ch = impot.getMembre().getPrenom()+" "+impot.getMembre().getNom()
+							+" - Email : "+impot.getMembre().getEmail();
+	       			updateMessage(ch);
+	       			updateProgress(i, listImpot.size());
+	       			 i++;
+	       		 }
+	       		updateMessage("Envoie Terminee!");
+	                return true;
+	            }
+	    };
+	 }
+	 
 }

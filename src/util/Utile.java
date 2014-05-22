@@ -15,5 +15,11 @@ public class Utile {
 		LocalDate localDate = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalDate();
 		return localDate;
 	}
+	public static String formatNumber(int number){
+		String nb = String.valueOf(number);
+		for(int i = nb.length(); i<4; i++)
+			nb = '0'+nb;
+		return nb;
+	}
 
 }

@@ -15,7 +15,8 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
+CREATE DATABASE IF NOT EXISTS `nouroudarayni` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `nouroudarayni`;
 --
 -- Structure de la table `cotisationdiverse`
 --

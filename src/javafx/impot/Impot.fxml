@@ -6,21 +6,40 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.impot.ImpotController">
-<children><Label layoutX="320.0" layoutY="56.0" text="IMPOT">
-<font>
-<Font size="31.0" />
-</font></Label><Button fx:id="btnChoisir" layoutX="414.0" layoutY="157.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Choisir dossier" /><Label id="lbDossier" fx:id="lbDossier" layoutX="42.0" layoutY="157.0" prefHeight="25.0" prefWidth="194.0" text="Label" /><Button fx:id="btnExecuter" layoutX="423.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Executer" /><GridPane layoutX="39.0" layoutY="222.0" prefHeight="129.0" prefWidth="484.0">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="168.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="316.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-<children><Label layoutX="28.0" layoutY="390.0" text="Email" /><Label layoutX="70.0" layoutY="438.0" text="Mot de Passe" GridPane.rowIndex="1" /><TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="48.0" GridPane.columnIndex="1" /><PasswordField fx:id="txtMotDePasse" GridPane.columnIndex="1" GridPane.rowIndex="1" /><Label text="Annee" GridPane.rowIndex="2" /><ComboBox fx:id="cmbAnnee" prefHeight="25.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="2" /><DatePicker fx:id="datePickerDeliv" prefHeight="25.0" prefWidth="317.0" GridPane.columnIndex="1" GridPane.rowIndex="3" /><Label text="Date de délivrance" GridPane.rowIndex="3" />
-</children>
-</GridPane><Label fx:id="lbMembres" layoutX="39.0" layoutY="460.0" prefHeight="35.0" prefWidth="484.0" text="Label" /><ProgressBar fx:id="progressBar" layoutX="39.0" layoutY="413.0" prefHeight="25.0" prefWidth="484.0" progress="0.0" /><Separator layoutX="14.0" layoutY="394.0" prefHeight="0.0" prefWidth="703.0" /><Separator layoutX="14.0" layoutY="205.0" prefHeight="3.0" prefWidth="703.0" />
-</children></AnchorPane>
+	<children>
+		<Label layoutX="320.0" layoutY="56.0" text="IMPOT">
+			<font>
+				<Font size="31.0" />
+			</font>
+		</Label>
+		<Button fx:id="btnChoisir" layoutX="414.0" layoutY="157.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Choisir dossier" />
+		<Label id="lbDossier" fx:id="lbDossier" layoutX="42.0" layoutY="157.0" prefHeight="25.0" prefWidth="194.0" text="Label" />
+		<Button fx:id="btnExecuter" layoutX="423.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Executer" />
+		<GridPane layoutX="39.0" layoutY="222.0" prefHeight="129.0" prefWidth="484.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="168.0" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="316.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<Label layoutX="28.0" layoutY="390.0" text="Email" />
+				<Label layoutX="70.0" layoutY="438.0" text="Mot de Passe" GridPane.rowIndex="1" />
+				<TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="48.0" GridPane.columnIndex="1" />
+				<PasswordField fx:id="txtMotDePasse" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="Annee" GridPane.rowIndex="2" />
+				<ComboBox fx:id="cmbAnnee" prefHeight="25.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<DatePicker fx:id="datePickerDeliv" prefHeight="25.0" prefWidth="317.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Date de délivrance" GridPane.rowIndex="3" />
+			</children>
+		</GridPane>
+		<Label fx:id="lbMembres" layoutX="39.0" layoutY="450.0" prefHeight="35.0" prefWidth="484.0" />
+		<ProgressBar fx:id="progressBar" layoutX="39.0" layoutY="413.0" prefHeight="25.0" prefWidth="484.0" progress="0.0" />
+		<Separator layoutX="14.0" layoutY="394.0" prefHeight="0.0" prefWidth="703.0" />
+		<Separator layoutX="14.0" layoutY="205.0" prefHeight="3.0" prefWidth="703.0" />
+	</children>
+</AnchorPane>
