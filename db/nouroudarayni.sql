@@ -1,26 +1,18 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 4.1.9
 -- http://www.phpmyadmin.net
 --
--- Client: localhost
--- Généré le: Mer 21 Mai 2014 à 06:43
--- Version du serveur: 5.6.12-log
--- Version de PHP: 5.4.12
+-- Client :  localhost:8889
+-- Généré le :  Jeu 22 Mai 2014 à 21:15
+-- Version du serveur :  5.5.34
+-- Version de PHP :  5.5.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
 --
--- Base de données: `nouroudarayni`
+-- Base de données :  `nouroudarayni`
 --
-CREATE DATABASE IF NOT EXISTS `nouroudarayni` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `nouroudarayni`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +20,7 @@ USE `nouroudarayni`;
 -- Structure de la table `cotisationdiverse`
 --
 
-CREATE TABLE IF NOT EXISTS `cotisationdiverse` (
+CREATE TABLE `cotisationdiverse` (
   `montant` int(11) NOT NULL,
   `datecotisation` datetime NOT NULL,
   `commentaire` text NOT NULL
@@ -40,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `cotisationdiverse` (
 -- Structure de la table `cotisationevenement`
 --
 
-CREATE TABLE IF NOT EXISTS `cotisationevenement` (
+CREATE TABLE `cotisationevenement` (
   `id` int(11) NOT NULL,
   `montant` double NOT NULL,
   `datecotisation` datetime NOT NULL,
@@ -67,7 +59,7 @@ INSERT INTO `cotisationevenement` (`id`, `montant`, `datecotisation`, `idEven`, 
 -- Structure de la table `cotisationkst`
 --
 
-CREATE TABLE IF NOT EXISTS `cotisationkst` (
+CREATE TABLE `cotisationkst` (
   `id` int(11) NOT NULL,
   `type` varchar(1) NOT NULL DEFAULT '0',
   `montant` double NOT NULL,
@@ -95,7 +87,7 @@ INSERT INTO `cotisationkst` (`id`, `type`, `montant`, `datecotisation`, `idMembr
 -- Structure de la table `cotisationmembre`
 --
 
-CREATE TABLE IF NOT EXISTS `cotisationmembre` (
+CREATE TABLE `cotisationmembre` (
   `id` int(11) NOT NULL COMMENT 'id cotisation membre',
   `montant` int(11) NOT NULL,
   `datecotisation` date NOT NULL,
@@ -122,21 +114,27 @@ INSERT INTO `cotisationmembre` (`id`, `montant`, `datecotisation`, `idMembre`) V
 -- Structure de la table `dahira`
 --
 
-CREATE TABLE IF NOT EXISTS `dahira` (
-  `id` int(11) NOT NULL,
+CREATE TABLE `dahira` (
   `nom` varchar(100) NOT NULL,
   `description` text NOT NULL,
-  `numeroEnregistrement` int(10) unsigned NOT NULL,
+  `numeroEnregistrement` varchar(100) NOT NULL,
   `telephone` varchar(30) NOT NULL,
   `email` varchar(100) NOT NULL,
   `siteWeb` varchar(100) NOT NULL,
-  `rue` varchar(100) NOT NULL,
+  `adresse` varchar(100) NOT NULL,
   `ville` varchar(100) NOT NULL,
-  `codePostale` varchar(7) NOT NULL,
+  `codepostale` varchar(7) NOT NULL,
   `province` varchar(100) NOT NULL,
   `pays` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`nom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `dahira`
+--
+
+INSERT INTO `dahira` (`nom`, `description`, `numeroEnregistrement`, `telephone`, `email`, `siteWeb`, `adresse`, `ville`, `codepostale`, `province`, `pays`) VALUES
+('Fondation Norou Darayni', 'Expliquer...', '84807 4597 PR0001', '000 000 0000', 'xxxx@gmail.com', 'www.dahiranouroudarayni.ca', '4255 Av. De Courtrai', 'Montréal', 'H3S 1B8', 'Québec', 'Canada');
 
 -- --------------------------------------------------------
 
@@ -144,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `dahira` (
 -- Structure de la table `evenement`
 --
 
-CREATE TABLE IF NOT EXISTS `evenement` (
+CREATE TABLE `evenement` (
   `nom` varchar(100) NOT NULL,
   `budget` decimal(10,0) NOT NULL,
   `depense` decimal(10,0) DEFAULT NULL,
@@ -157,10 +155,10 @@ CREATE TABLE IF NOT EXISTS `evenement` (
 --
 
 INSERT INTO `evenement` (`nom`, `budget`, `depense`, `dateEvent`) VALUES
-('Thiant2011', '7000', NULL, '2011-05-01 00:00:00'),
-('Thiant2012', '4000', NULL, '2012-05-01 00:00:00'),
-('thiant2013', '5000', NULL, '2012-05-10 00:00:00'),
-('Thiant2014', '41000', '40000', '2014-04-30 00:00:00');
+('Thiant2011', 7000, NULL, '2011-05-01 00:00:00'),
+('Thiant2012', 4000, NULL, '2012-05-01 00:00:00'),
+('thiant2013', 5000, NULL, '2012-05-10 00:00:00'),
+('Thiant2014', 41000, 40000, '2014-04-30 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -168,7 +166,7 @@ INSERT INTO `evenement` (`nom`, `budget`, `depense`, `dateEvent`) VALUES
 -- Structure de la table `membre`
 --
 
-CREATE TABLE IF NOT EXISTS `membre` (
+CREATE TABLE `membre` (
   `nom` varchar(45) DEFAULT NULL,
   `prenom` varchar(45) DEFAULT NULL,
   `datenaissance` date DEFAULT NULL,
@@ -187,8 +185,36 @@ CREATE TABLE IF NOT EXISTS `membre` (
 --
 
 INSERT INTO `membre` (`nom`, `prenom`, `datenaissance`, `adresse`, `ville`, `province`, `codepostale`, `telephone`, `email`, `pays`) VALUES
-('Dieng', 'Mansour', '1984-07-04', 'arthur-peloquin', 'montreal', 'quebec', 'h3s1r7', '5148880001', 'address@gmail.com', 'Canada'),
-('Thimbo', 'Moussa', '1985-08-03', 'arthur-peloquin', 'montreal', 'quebec', 'h3s1r7', '5142960552', 'test@gmail.com', 'Canada');
+('Amar', 'Abdou khadre', '2014-05-22', '', '', 'Quebec', '', '', 'aba@gmail.com', 'Canada'),
+('Khouma', 'Babacar', '2014-05-22', '', '', 'Quebec', '', '666 372 8898', 'abcd@gmail.com', 'Canada'),
+('Diop', 'Cheikh Ibrahima', '2014-05-22', '', '', 'Quebec', '', '435 222 3212', 'ava@gmail.ca', 'Canada'),
+('Fall', 'Doumbia', '2014-05-22', '', '', 'Quebec', '', '333 344 2213', 'bayess@gmail.com', 'Canada'),
+('Bamba', 'Goor', '2014-05-22', '', '', 'Quebec', '', '444 553 4534', 'bdd@gmail.com', 'Canada'),
+('Mbodji', 'Abib', '2014-05-22', '', '', 'Quebec', '', '222 111 3323', 'ffss@gmail.com', 'Canada'),
+('Gueye', 'Malick', '2014-05-22', '', '', 'Quebec', '', '', 'gueyemalick1@hotmail.com', 'Canada'),
+('Mboup', 'Makhtar', '2014-05-22', 'De Courtrai', '', 'Quebec', '', '889 342 3323', 'idi@gmail.com', 'Canada'),
+('Sarr', 'Ahmadou', '2014-05-22', '', '', 'Quebec', '', '543 678 9879', 'kkkk@gmail.com', 'Canada'),
+('Mbengue', 'Mansour', '2009-05-15', '8190, rue Arthur Peloquin', 'Saint léonard', 'Quebec', 'H1R 2S8', '5147778888', 'mansour.tlse@gmail.com', 'Canada'),
+('Mboup', 'Mamadou', '2014-05-22', '8190, rue Arthur peloquin', 'Saint Léonard', 'Quebec', 'H1R 2S8', '000 000 0000', 'mboupmamadou@hotmail.com', 'Canada'),
+('Thimbo 2', 'Moussa', '2007-05-17', '1 er Av. Vane Horne', 'Montréal', 'Quebec', 'H2R 3S8', '514 555 6666', 'moussa.thimbo@gmail.com', 'Canada'),
+('Thimbo', 'Moussa', '2011-05-05', '8190, rue Arthur Peloquin', 'Saint Léonard', 'Quebec', 'H1R 2S8', '514 708 4444', 'moussa.thimbo@hotmail.com', 'Canada'),
+('Niang', 'Serigne Mbaye', '2014-05-22', '', '', 'Quebec', '', '', 'oudxxx@gmail.com', 'Canada'),
+('Ndiaye', 'Djiby Oumar', '2014-05-22', 'Vane Horne', 'Saint Laurent', 'Quebec', 'H1S 2K3', '514 666 7777', 'oumar@hotmail.ca', 'Canada'),
+('Dieng', 'Ousmane', '2011-05-12', '8190, rue Arthur Peloquin', 'Saint Léonard', 'Quebec', 'H1R 2S8', '5147084568', 'oussou.dieng@gmail.com', 'Canada'),
+('Dieng 2', 'Ousmane', '2014-05-14', '2890, rue Cote des Neiges', 'Montréal', 'Quebec', 'H1S 2K2', '4385679999', 'ouzdam@yahoo.fr', 'Canada'),
+('Mboup', 'Karim', '2014-05-22', '', '', 'Quebec', '', '', 'sasssa@gmail.ca', 'Canada'),
+('Khassaide', 'Kourel', '2014-05-22', '', '', 'Quebec', '', '333 333 3333', 'sedfff@gmail.com', 'Canada'),
+('Dieng', 'Khadim', '2014-05-22', 'Touba', 'Ndiarème', 'Quebec', 'H1E 2S3', '345 657 8899', 'sfe@gmail.com', 'Canada'),
+('mboup', 'Maguette', '2014-05-22', '', '', 'Quebec', '', '000 000 1111', 'x1@gmail.com', 'Canada'),
+('Kebe', 'Ousmane', '2014-05-22', '', '', 'Quebec', '', '000 333 4444', 'x2@gmail.com', 'Canada'),
+('Niang', 'Samba', '2014-05-22', '', '', 'Quebec', '', '333 000 3333', 'x3@gmail.com', 'Canada'),
+('Dioum', 'Djily', '2014-05-22', '', '', 'Quebec', '', '333 444 3333', 'x4@gmail.com', 'Canada'),
+('Dieng', 'Abo', '2014-05-22', '', '', 'Quebec', '', '000 111 3333', 'x5@gmail.com', 'Canada'),
+('Diouf', 'Ousseynou', '2014-05-22', '', '', 'Quebec', '', '000 222 1111', 'x6@yahoo.fr', 'Canada'),
+('Niang', 'Oumar', '2014-05-22', '', '', 'Quebec', '', '', 'x7@gamil.com', 'Canada'),
+('Ndiaye', 'Ibrahima', '2014-05-22', '', '', 'Quebec', '', '999 999 9999', 'x8@gmail.com', 'Canada'),
+('Ndao', 'Mamadou lamine', '2014-05-22', '', '', 'Quebec', '', '453 323 1112', 'xlm@gmail.com', 'Canada'),
+('Seck', 'Ousseynou', '2014-05-22', '', '', 'Quebec', '', '', 'xx@gmail.com', 'Canada');
 
 -- --------------------------------------------------------
 
@@ -196,7 +222,7 @@ INSERT INTO `membre` (`nom`, `prenom`, `datenaissance`, `adresse`, `ville`, `pro
 -- Structure de la table `sequence`
 --
 
-CREATE TABLE IF NOT EXISTS `sequence` (
+CREATE TABLE `sequence` (
   `SEQ_NAME` varchar(50) NOT NULL,
   `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
   PRIMARY KEY (`SEQ_NAME`)
@@ -207,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `sequence` (
 --
 
 INSERT INTO `sequence` (`SEQ_NAME`, `SEQ_COUNT`) VALUES
-('SEQ_GEN', '1751');
+('SEQ_GEN', 1751);
 
 -- --------------------------------------------------------
 
@@ -215,7 +241,7 @@ INSERT INTO `sequence` (`SEQ_NAME`, `SEQ_COUNT`) VALUES
 -- Structure de la table `utilisateur`
 --
 
-CREATE TABLE IF NOT EXISTS `utilisateur` (
+CREATE TABLE `utilisateur` (
   `login` varchar(20) NOT NULL,
   `pass` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`login`)
@@ -227,7 +253,3 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 
 INSERT INTO `utilisateur` (`login`, `pass`) VALUES
 ('moussa', '0cc85dab9975ab9f00c966a9666df97e');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
