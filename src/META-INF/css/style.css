@@ -83,7 +83,7 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 2, 1 , 1 , 1 );
 }
 #rechercheField{
-	-fx-background-image:url("zoom.png");
+	-fx-background-image:url("../images/zoom.png");
 	-fx-background-repeat: stretch;
   -fx-background-position: right;
 }

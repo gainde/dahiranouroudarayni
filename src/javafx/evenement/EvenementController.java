@@ -28,6 +28,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import util.Utile;
@@ -37,6 +38,8 @@ import entites.Evenement;
 
 public class EvenementController implements Initializable{
 	@FXML private TableView<Evenement> tableEvenement ;
+	
+	@FXML private ImageView imageViewHome;
 	
     @FXML private TableColumn<Evenement, String> colonneDate;
     @FXML private TableColumn<Evenement, String> colonneNom;
@@ -62,11 +65,15 @@ public class EvenementController implements Initializable{
    
     private Stage stage;
     private Evenement eventSelected;
+    private Stage parent;
     
     ObservableList<Evenement> evenementData = FXCollections.observableArrayList();
     
     private final String LIST_EVENEMENT = "select e from Evenement e";
     
+    public void setParentStage(Stage parent){
+    	this.parent = parent;
+    }
 	
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -74,6 +81,7 @@ public class EvenementController implements Initializable{
     	HandleButtonEditer();
     	HandleButtonSupprimer();
     	handleButtonEnregistrer();
+    	btnSupprimer.setDisable(true);
     	btnEnregistrer.setDisable(true);
     	btnEditer.setDisable(true);
     	handleComboBox();
@@ -105,20 +113,33 @@ public class EvenementController implements Initializable{
 					eventSelected = newValue;
 					chargerEvenement(newValue);
 					btnEditer.setDisable(false);
+					btnSupprimer.setDisable(false);
 				}
 				
 			}
 		});
     	
-    	
+    	HandleButtonHome();
     	enableFieldsEdit(true);
     	chargerListEvenement();
+    	
 	}
     
     public void setStage(Stage stage) {
         this.stage = stage;
     }
     
+    private void HandleButtonHome(){
+    	imageViewHome.setOnMouseReleased(new EventHandler<Event>() {
+    		
+			@Override
+			public void handle(Event event) {
+				System.out.println("Bouton ajouter click");
+				parent.show();
+				stage.close();
+			}
+		});
+    }
     private void HandleButtonAjouter(){
     	btnAjouter.setOnMouseReleased(new EventHandler<Event>() {
     		
@@ -245,6 +266,7 @@ public class EvenementController implements Initializable{
     	evenDao.delete(even);
     	clearEditEvenement();
     	btnEditer.setDisable(true);
+    	btnSupprimer.setDisable(true);
     }
     private void chargerEvenement(Evenement even){
     	txtNom.setText(even.getNomEvenement());

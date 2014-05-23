@@ -25,6 +25,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.loadview.LoadManagerView;
 import javafx.membre.ajout.AjouterMembreController;
 import javafx.membre.edit.EditerMembreController;
 import javafx.scene.Scene;
@@ -70,6 +71,7 @@ public class MembreController implements Initializable{
 	 @FXML private TableColumn<Membre, String> tableTelephone;
 	  
 	 private Stage stage;
+	 private Stage parent;
 	 private Membre membreActif;
 	 
 	 
@@ -94,7 +96,10 @@ public class MembreController implements Initializable{
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
-
+	
+	public void setParentStage(Stage parent){
+		this.parent = parent;
+	}
 	
 
 	public static ObservableList<Membre> getMembreDonnee() {
@@ -208,21 +213,21 @@ public class MembreController implements Initializable{
 		//action sur bouton cotisation
 		btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
-			 	    	afficherVueCotisation();
+			 	    	LoadManagerView.getInstance().afficherVueCotisation(membreActif);
 			 	    }
 			 });
 				
 		//action sur bouton impot
 		btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
-			 	    	afficherVueEmail();
+			 	    	LoadManagerView.getInstance().afficherVueEmail(membreActif);
 			 	    }
 			 	});
 				
 		//action sur bouton quitter
 		btnQuitter.setOnAction(new EventHandler<ActionEvent>() {
 			 	    @Override public void handle(ActionEvent event) {
-			 	    	
+			 	    	parent.show();
 			 	    	stage.close();
 			 	    }
 			 	});
@@ -231,106 +236,14 @@ public class MembreController implements Initializable{
 	
 	//afficher la fenetre pour ajouter des membres
 	public void afficherVueAjoutMembre(){
-		 Stage primaryStage = new Stage();
-	     primaryStage.setTitle("Membre");
-	     primaryStage.initModality(Modality.APPLICATION_MODAL);
-	        try {
-	            // Load the root layout from the fxml file
-	            FXMLLoader loader = new FXMLLoader(AjouterMembreController.class.getResource("AjouterMembreVue.fxml"));
-	            AnchorPane anc = (AnchorPane) loader.load();
-	            AjouterMembreController addMemberController = (AjouterMembreController)loader.getController();
-	            Scene scene = new Scene(anc);
-	            scene.getStylesheets().add("META-INF/css/style.css");
-	            primaryStage.setScene(scene);
-	            addMemberController.setStage(primaryStage);
-	            addMemberController.setMembreController(this);
-	            primaryStage.setResizable(false);
-	            primaryStage.show();
-	            
-	        } catch (IOException e) {
-	            // Exception gets thrown if the fxml file could not be loaded
-	            e.printStackTrace();
-	        }
-	        
+		LoadManagerView.getInstance().afficherVueAjoutMembre(this);
 	}
 	
 	//afficher la fenetre pour ajouter des membres
 	public void afficherVueEditerMembre(){
-		 Stage primaryStage = new Stage();
-	     primaryStage.setTitle("Membre");
-	     primaryStage.initModality(Modality.APPLICATION_MODAL);
-	        try {
-	            // Load the root layout from the fxml file
-	            FXMLLoader loader = new FXMLLoader(EditerMembreController.class.getResource("EditerMembreVue.fxml"));
-	            AnchorPane anc = (AnchorPane) loader.load();
-	            EditerMembreController editMemberController = (EditerMembreController)loader.getController();
-	            Scene scene = new Scene(anc);
-	            scene.getStylesheets().add("META-INF/css/style.css");
-	            primaryStage.setScene(scene);
-	            editMemberController.setStage(primaryStage);
-	            editMemberController.setEditMembre(membreActif);
-	            editMemberController.setMembreController(this);
-	            primaryStage.setResizable(false);
-	            primaryStage.show();
-	            
-	        } catch (IOException e) {
-	            // Exception gets thrown if the fxml file could not be loaded
-	            e.printStackTrace();
-	        }
-	        
+		LoadManagerView.getInstance().afficherVueEditerMembre(this,membreActif);
 	}
 	
-	//afficher la fenetre pour ajouter des membres
-		public void afficherVueCotisation(){
-			 Stage primaryStage = new Stage();
-		     primaryStage.setTitle("Cotisation");
-		     primaryStage.initModality(Modality.APPLICATION_MODAL);
-		        try {
-		            // Load the root layout from the fxml file
-		            FXMLLoader loader = new FXMLLoader(CotisationController.class.getResource("CotisationUI.fxml"));
-		            AnchorPane anc = (AnchorPane) loader.load();
-		            CotisationController cotisation = (CotisationController)loader.getController();
-		            Scene scene = new Scene(anc);
-		            scene.getStylesheets().add("META-INF/css/style.css");
-		            primaryStage.setScene(scene);
-		            //cotisation.setParentStage(primaryStage);
-		            cotisation.setMembre(membreActif);
-		            primaryStage.setResizable(false);
-		            primaryStage.show();
-		            
-		        } catch (IOException e) {
-		            // Exception gets thrown if the fxml file could not be loaded
-		            e.printStackTrace();
-		        }
-		        
-		}
-		
-		//afficher la fenetre pour envoyer le message d impot
-		public void afficherVueEmail(){
-			 Stage primaryStage = new Stage();
-		     primaryStage.setTitle("Connexion");
-		     primaryStage.initModality(Modality.APPLICATION_MODAL);
-		        try {
-		            // Load the root layout from the fxml file
-		            FXMLLoader loader = new FXMLLoader(EmailController.class.getResource("EmailVue.fxml"));
-		            AnchorPane anc = (AnchorPane) loader.load();
-		            EmailController emailController = (EmailController)loader.getController();
-		            Scene scene = new Scene(anc);
-		            scene.getStylesheets().add("META-INF/css/style.css");
-		            primaryStage.setScene(scene);
-		            emailController.setStage(primaryStage);
-		            emailController.setMembreEnvoyer(membreActif);
-		           // emailController.setMembreController(this);
-		            primaryStage.setResizable(false);
-		            primaryStage.show();
-		            
-		        } catch (IOException e) {
-		            // Exception gets thrown if the fxml file could not be loaded
-		            e.printStackTrace();
-		        }
-		        
-		}
-		
 		//charger liste des membres
 		public void chargerMembres(){
 			ObservableList<Membre> memberData = FXCollections.observableArrayList();

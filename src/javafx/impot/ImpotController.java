@@ -32,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -53,7 +54,8 @@ import entites.Membre;
 import entites.Utilisateur;
 
 public class ImpotController implements Initializable{
-	
+	 @FXML private ImageView imageViewHome;
+	 
 	 @FXML private TextField txtEmail;
 	 @FXML private PasswordField txtMotDePasse;
 	 @FXML private Label lbDossier;
@@ -66,6 +68,8 @@ public class ImpotController implements Initializable{
 	 @FXML private DatePicker datePickerDeliv;
 	  
 	 private Stage stage;
+	 private Stage parentStage;
+	 
 	 private Utilisateur user;
 	 private final String QUERY_ALL_MEMBRE = "select m from Membre m";
 	 private final String COTISATION_LOYER = "select sum(l.montant) from cotisationmembre l where l.idMembre=?1 and YEAR(l.datecotisation) = ?2";
@@ -74,12 +78,17 @@ public class ImpotController implements Initializable{
 	 
 	 ArrayList<Impot> listImpot;
 	 
+	 public void setParentStage(Stage parentStage){
+		 this.parentStage = parentStage;
+	 }
+	 
 	 @Override
 	 public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		handleButtonChoisir();
 		handleButtonExecuter();
 		fillComboBox();
+		handleButtonHome();
 		//TODO delete Test
 		Double v = new Double(0.0);
 		CotisationLoyerDao loyerDao = new CotisationLoyerImpl();
@@ -102,6 +111,18 @@ public class ImpotController implements Initializable{
         this.stage = stage;
      }
 	
+	 private void handleButtonHome(){
+		 imageViewHome.setOnMouseReleased(new EventHandler<Event>() {
+	    		
+				@Override
+				public void handle(Event event) {
+					System.out.println("click");
+					parentStage.show();
+					stage.close();
+				}
+			});
+	 }
+	 
 	 private void handleButtonChoisir(){
 		 btnChoisir.setOnMouseReleased(new EventHandler<Event>() {
 	    		
