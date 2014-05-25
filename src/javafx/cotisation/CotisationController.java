@@ -7,7 +7,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,6 +17,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,15 +35,19 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import logique.TypeCotisation;
+import util.Utile;
 import dao.CotisationEvenementDao;
 import dao.CotisationKSTDao;
 import dao.CotisationLoyerDao;
+import dao.EvenementDao;
 import daoimpl.CotisationEvenementImpl;
 import daoimpl.CotisationKSTImpl;
 import daoimpl.CotisationLoyerImpl;
+import daoimpl.EvenementDaoImpl;
 import entites.CotisationEvenement;
 import entites.CotisationKST;
 import entites.CotisationLoyer;
+import entites.Evenement;
 import entites.Membre;
 
 public class CotisationController implements Initializable{
@@ -55,6 +62,7 @@ public class CotisationController implements Initializable{
     @FXML private TableColumn<CotisationKST, Double> tableKSTMontant;
     @FXML private TableColumn<CotisationEvenement, String> tableEvenementDate;
     @FXML private TableColumn<CotisationEvenement, Double> tableEvenementMontant;
+    @FXML private TableColumn<CotisationEvenement, String> tableColumnEvenement;
     @FXML private DatePicker dateLoyer;
     @FXML private DatePicker dateKST;
     @FXML private DatePicker dateEvenement;
@@ -74,15 +82,21 @@ public class CotisationController implements Initializable{
     @FXML private Label lbMembre;
     
     @FXML private ComboBox<String> cmbTypeCotisation;
+    @FXML private ComboBox<Evenement> cmbEvenement;
     
+    @FXML private Button btnQuitter;
    
     private Stage stage;
+    
     ObservableList<CotisationLoyer> loyerData = FXCollections.observableArrayList();
     ObservableList<CotisationKST> KSTData = FXCollections.observableArrayList();
-    ObservableList<CotisationEvenement> EvenementData = FXCollections.observableArrayList();
+    ObservableList<CotisationEvenement> cotisationEvenementData = FXCollections.observableArrayList();
+    ObservableList<Evenement> evenementData = FXCollections.observableArrayList();
     private final String LIST_COTISATION_LOYER = "select c from CotisationLoyer c where c.idMembre = ?1";
     private final String LIST_COTISATION_KST = "select c from CotisationKST c where c.idMembre = ?1";
     private final String LIST_COTISATION_EVENEMENT = "select c from CotisationEvenement c where c.idMembre = ?1";
+    private final String LIST_EVENEMENT = "select e from Evenement e";
+    
     
     final String LOYER_TAB_ID = "loyerTab";
 	final String KST_TAB_ID = "KSTTab";
@@ -94,7 +108,7 @@ public class CotisationController implements Initializable{
 	private Membre membre;
 	
 	/****
-	 * Itiniatiliser les evenements et charger les données de la tables de cotisationLoyer
+	 * Itiniatiliser les evenements et charger les donnï¿½es de la tables de cotisationLoyer
 	 */
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -103,11 +117,15 @@ public class CotisationController implements Initializable{
 		initialiserTabLoyer();
 		initialiserTabKST();
 		initialiserTabEvenement();
-		
+		handleComboBoxEvenement();
+		handleBoutonQuitter();
 	}
     
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+    public Stage getStage() {
+        return this.stage;
     }
     public Membre getMembre(){
     	return this.membre;
@@ -150,7 +168,7 @@ public class CotisationController implements Initializable{
 		});
     }
     
-    private void handleComboBoxLoyer(){
+    private void handleComboBoxCotisationLoyer(){
     	cmbAnneeLoyer.valueProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -169,7 +187,7 @@ public class CotisationController implements Initializable{
 			}
 		});
     }
-    private void handleComboBoxKST(){
+    private void handleComboBoxCotisationKST(){
     	cmbAnneeKST.valueProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -189,7 +207,7 @@ public class CotisationController implements Initializable{
 			}
 		});
     }
-    private void handleComboBoxEvenement(){
+    private void handleComboBoxCotisationEvenement(){
     	cmbAnneeEvenement.valueProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -198,14 +216,29 @@ public class CotisationController implements Initializable{
 				// TODO Auto-generated method stub
 				ObservableList<CotisationEvenement> filteredData = FXCollections.observableArrayList();
 				if(newValue != null && !newValue.isEmpty()){
-					filteredData.addAll(EvenementData);
-					for(CotisationEvenement c : EvenementData){
+					filteredData.addAll(cotisationEvenementData);
+					for(CotisationEvenement c : cotisationEvenementData){
 						if(!newValue.equals(new SimpleDateFormat("yyyy").format(c.getDateCotisation()))){
 							filteredData.remove(c);
 						}
 					}
 					tableEvenement.setItems(filteredData);
-				}else tableEvenement.setItems(EvenementData);
+				}else tableEvenement.setItems(cotisationEvenementData);
+			}
+		});
+    }
+    private void handleComboBoxEvenement(){
+    	fillComboBoxEvenement();
+    	cmbEvenement.getSelectionModel().selectFirst();
+    	cmbEvenement.valueProperty().addListener(new ChangeListener<Evenement>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Evenement> observable,
+					Evenement oldValue, Evenement newValue) {
+				// TODO Auto-generated method stub
+				if(newValue != null){
+					System.out.println("Selected Evenement: " + newValue.getNomEvenement());
+				}
 			}
 		});
     }
@@ -230,10 +263,18 @@ public class CotisationController implements Initializable{
 		});
 	}
 	
+	private void handleBoutonQuitter(){
+		btnQuitter.setOnAction(new EventHandler<ActionEvent>() {
+	 	    @Override public void handle(ActionEvent event) {
+	 	    	stage.close();
+	 	    }
+	 	});
+	}
+	
 	private void chargerCotisationLoyer(){
 		ObservableList<CotisationLoyer> cotisationLoyerData = FXCollections.observableArrayList();
 		CotisationLoyerDao cotisationLoyerDao = new CotisationLoyerImpl();
-		ArrayList<String> cmbData = new ArrayList<String>();
+		Set<String> cmbData = new HashSet<String>();
 		
 		for (Object p : cotisationLoyerDao.getAll(LIST_COTISATION_LOYER, membre.getEmail())) {
 			CotisationLoyer loyer = (CotisationLoyer)p;
@@ -248,7 +289,7 @@ public class CotisationController implements Initializable{
 	private void chargerCotisationKST(){
 		ObservableList<CotisationKST> cotisationKSTData = FXCollections.observableArrayList();
 		CotisationKSTDao cotisationKSTDao = new CotisationKSTImpl();
-		ArrayList<String> cmbData = new ArrayList<String>();
+		Set<String> cmbData = new HashSet<String>();
 		
 		for (Object p : cotisationKSTDao.getAll(LIST_COTISATION_KST, membre.getEmail())) {
 			CotisationKST kst = (CotisationKST)p;
@@ -261,18 +302,16 @@ public class CotisationController implements Initializable{
 		fillComboBox(cmbAnneeKST, cmbData);
 	}
 	private void chargerCotisationEvenement(){
-		ObservableList<CotisationEvenement> cotisationEvenementData = FXCollections.observableArrayList();
 		CotisationEvenementDao cotisationEvenementDao = new CotisationEvenementImpl();
-		ArrayList<String> cmbData = new ArrayList<String>();
-		
+		Set<String> cmbData = new HashSet<String>();
+		cotisationEvenementData.clear();
 		for (Object p : cotisationEvenementDao.getAll(LIST_COTISATION_EVENEMENT, membre.getEmail())) {
 			CotisationEvenement evenement = (CotisationEvenement)p;
 			cotisationEvenementData.add(evenement);
 			String annee = new SimpleDateFormat("yyyy").format(evenement.getDateCotisation());
 			if(!cmbData.contains(annee)) cmbData.add(annee);
 		}
-		EvenementData = cotisationEvenementData;
-		tableEvenement.setItems(EvenementData);
+		tableEvenement.setItems(cotisationEvenementData);
 		fillComboBox(cmbAnneeEvenement, cmbData);
 	}
 	
@@ -311,13 +350,12 @@ public class CotisationController implements Initializable{
 		tableKST.getItems().add(cotisation);
 	}
 	private void ajouterCotisationEvenement(){
-		LocalDate localDate = dateEvenement.getValue();
 		String montant = txtMontantEvenement.getText();
 		Double montantLoyer;
 		montantLoyer = Double.parseDouble(montant);
-		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-		Date date = Date.from(instant);
-		CotisationEvenement cotisation = new CotisationEvenement(montantLoyer,date);
+		Date date = Utile.getDate(dateEvenement.getValue());
+		Evenement even = cmbEvenement.getValue();
+		CotisationEvenement cotisation = new CotisationEvenement(montantLoyer,date,even.getNomEvenement());
 		cotisation.setIdMembre(membre.getEmail());
 		ajouterCotisationEvenement(cotisation);
 	}
@@ -327,10 +365,9 @@ public class CotisationController implements Initializable{
 		tableEvenement.getItems().add(cotisation);
 	}
 	
-	private void fillComboBox(ComboBox<String> cmb, ArrayList data){
+	private void fillComboBox(ComboBox<String> cmb, Set<String> data){
     	ObservableList<String> options = 
     		    FXCollections.observableArrayList();
-    	SimpleDateFormat format = new SimpleDateFormat("yyyy");
     	options.addAll(data);
     	
     	cmb.setItems(options);
@@ -340,7 +377,6 @@ public class CotisationController implements Initializable{
 	private void fillComboBoxTypeCotisagtionKST(ComboBox<String> cmb){
     	ObservableList<String> options = 
     		    FXCollections.observableArrayList();
-    	SimpleDateFormat format = new SimpleDateFormat("yyyy");
     	options.add(TypeCotisation.MENSUEL.name());
     	options.add(TypeCotisation.AUTRE.name());
     	
@@ -348,10 +384,19 @@ public class CotisationController implements Initializable{
     	cmb.setValue(TypeCotisation.MENSUEL.name());
     	
     }
+	private void fillComboBoxEvenement(){
+		EvenementDao evenementDao = new EvenementDaoImpl();
+		evenementData.clear();
+		for (Evenement e : evenementDao.getAll(LIST_EVENEMENT)) {
+			Evenement evenement = e;
+			evenementData.add(evenement);
+		}
+		cmbEvenement.setItems(evenementData);
+	}
 	
 	private void initialiserTabLoyer(){
 		HandleButtonAjouterLoyer();
-		handleComboBoxLoyer();
+		handleComboBoxCotisationLoyer();
 		tableLoyer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CotisationLoyer>() {
 			
 			@Override
@@ -364,19 +409,19 @@ public class CotisationController implements Initializable{
 			}
 		});
 		tableLoyerDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationLoyer, String>, ObservableValue<String>>() {
-		     public ObservableValue<String> call(CellDataFeatures<CotisationLoyer, String> p) {
-		         return new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(p.getValue().getDate()));
+		     public ObservableValue<String> call(CellDataFeatures<CotisationLoyer, String> obj) {
+		         return new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(obj.getValue().getDate()));
 		     }
 		  });
 		tableLoyerMontant.setCellValueFactory(new Callback<CellDataFeatures<CotisationLoyer, Double>, ObservableValue<Double>>() {
-		     public ObservableValue<Double> call(CellDataFeatures<CotisationLoyer, Double> p) {
-		         return new ReadOnlyObjectWrapper(p.getValue().getMontant());
+		     public ObservableValue<Double> call(CellDataFeatures<CotisationLoyer, Double> obj) {
+		         return new ReadOnlyObjectWrapper<Double>(obj.getValue().getMontant());
 		     }
 		  });
 	}
 	private void initialiserTabKST(){
 		HandleButtonAjouterKST();
-		handleComboBoxKST();
+		handleComboBoxCotisationKST();
 		fillComboBoxTypeCotisagtionKST(cmbTypeCotisation);
 		tableKSTDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationKST, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<CotisationKST, String> o) {
@@ -385,13 +430,13 @@ public class CotisationController implements Initializable{
 		  });
 		tableKSTMontant.setCellValueFactory(new Callback<CellDataFeatures<CotisationKST, Double>, ObservableValue<Double>>() {
 		     public ObservableValue<Double> call(CellDataFeatures<CotisationKST, Double> p) {
-		         return new ReadOnlyObjectWrapper(p.getValue().getMontant());
+		         return new ReadOnlyObjectWrapper<Double>(p.getValue().getMontant());
 		     }
 		  });
 	}
 	private void initialiserTabEvenement(){
 		HandleButtonAjouterEvenement();
-		handleComboBoxEvenement();
+		handleComboBoxCotisationEvenement();
 		tableEvenementDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationEvenement, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<CotisationEvenement, String> o) {
 		         return new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(o.getValue().getDateCotisation()));
@@ -399,9 +444,20 @@ public class CotisationController implements Initializable{
 		  });
 		tableEvenementMontant.setCellValueFactory(new Callback<CellDataFeatures<CotisationEvenement, Double>, ObservableValue<Double>>() {
 		     public ObservableValue<Double> call(CellDataFeatures<CotisationEvenement, Double> p) {
-		         return new ReadOnlyObjectWrapper(p.getValue().getMontant());
+		         return new ReadOnlyObjectWrapper<Double>(p.getValue().getMontant());
 		     }
 		  });
+		tableColumnEvenement.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CotisationEvenement,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(
+					CellDataFeatures<CotisationEvenement, String> param) {
+				// TODO Auto-generated method stub
+				return new SimpleStringProperty(param.getValue().getIdEven());
+			}
+		});
 	}
+	
+	
 
 }

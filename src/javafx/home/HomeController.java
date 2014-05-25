@@ -67,7 +67,6 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Dahira");
 				LoadManagerView.getInstance().afficherVueDahira(dahira);
 			}
 		});
@@ -78,7 +77,6 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Evenement");
 				LoadManagerView.getInstance().afficherVueEvenement(stage);
 				stage.hide();
 			}
@@ -90,7 +88,6 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Impot");
 				LoadManagerView.getInstance().afficherVueImpot(stage);
 				stage.hide();
 			}

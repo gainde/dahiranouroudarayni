@@ -3,11 +3,11 @@ package javafx.evenement;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -89,7 +89,7 @@ public class EvenementController implements Initializable{
     	dateNouveauEven.setEditable(false);
     	colonneNom.setCellValueFactory(new Callback<CellDataFeatures<Evenement, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<Evenement, String> p) {
-		         return new ReadOnlyObjectWrapper(p.getValue().getNomEvenement());
+		         return new SimpleStringProperty(p.getValue().getNomEvenement());
 		     }
 		  });
     	colonneDate.setCellValueFactory(new Callback<CellDataFeatures<Evenement, String>, ObservableValue<String>>() {
@@ -99,7 +99,7 @@ public class EvenementController implements Initializable{
 		  });
     	colonneBudget.setCellValueFactory(new Callback<CellDataFeatures<Evenement, Double>, ObservableValue<Double>>() {
 		     public ObservableValue<Double> call(CellDataFeatures<Evenement, Double> p) {
-		         return new ReadOnlyObjectWrapper(p.getValue().getBudget());
+		         return new ReadOnlyObjectWrapper<Double>(p.getValue().getBudget());
 		     }
 		  });
     	tableEvenement.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Evenement>() {
@@ -122,6 +122,7 @@ public class EvenementController implements Initializable{
     	HandleButtonHome();
     	enableFieldsEdit(true);
     	chargerListEvenement();
+    	titledPaneNvEven.setExpanded(false);
     	
 	}
     
@@ -134,7 +135,6 @@ public class EvenementController implements Initializable{
     		
 			@Override
 			public void handle(Event event) {
-				System.out.println("Bouton ajouter click");
 				parent.show();
 				stage.close();
 			}
@@ -145,7 +145,6 @@ public class EvenementController implements Initializable{
     		
 			@Override
 			public void handle(Event event) {
-				System.out.println("Bouton ajouter click");
 				ajouterEvenement();
 			}
 		});
@@ -155,7 +154,6 @@ public class EvenementController implements Initializable{
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("Bouton editer click");
 				enableFieldsEdit(false);
 				btnEditer.setDisable(true);
 				btnEnregistrer.setDisable(false);
@@ -170,7 +168,6 @@ public class EvenementController implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				System.out.println("Bouton enregistrer click");
 				//TODO Valider
 				enregistrer();
 				enableFieldsEdit(true);
@@ -182,7 +179,6 @@ public class EvenementController implements Initializable{
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("Bouton supprimer click");	
 				supprimerEvenement(eventSelected);
 			}
 		});
@@ -211,7 +207,7 @@ public class EvenementController implements Initializable{
     private void chargerListEvenement(){
 		ObservableList<Evenement> evenementDatatmp = FXCollections.observableArrayList();
 		EvenementDao evenementDao = new EvenementDaoImpl();
-		ArrayList<String> cmbData = new ArrayList<String>();
+		Set<String> cmbData = new HashSet<String>();
 		System.out.println(evenementDao);
 		
 		for (Object p : evenementDao.getAll(LIST_EVENEMENT)) {
@@ -223,7 +219,7 @@ public class EvenementController implements Initializable{
 		tableEvenement.setItems(evenementData);
 		fillComboBox(cmbEvenement, cmbData);
 	}
-    private void fillComboBox(ComboBox<String> cmb, ArrayList<String> data){
+    private void fillComboBox(ComboBox<String> cmb, Set<String> data){
     	ObservableList<String> options = 
     		    FXCollections.observableArrayList();
     	options.addAll(data);

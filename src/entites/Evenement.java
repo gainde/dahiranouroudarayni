@@ -66,8 +66,9 @@ public class Evenement implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Evenement [nomEvenement=" + nom
+		return this.nom;
+				/*"Evenement [nomEvenement=" + nom
 				+ ", budget=" + budget + ", depenseTotale=" + depense
-				+ ", dateEvenement=" + dateEvent + "]";
+				+ ", dateEvenement=" + dateEvent + "]";*/
 	}
 }

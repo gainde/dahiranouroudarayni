@@ -228,7 +228,7 @@ public class ImpotController implements Initializable{
 	 private void envoyerEmail(Impot impotMembre){
 		 Dahira dahira = new Dahira("Nourou Darayni", "no description", "1234567890", "5149999999", "", "", new Adresse("", "", "", "", ""));
 		 
-		 String nameFile = impotMembre.getMembre().getPrenom() +
+		 String nameFile = lbMembre.getText()+"/"+impotMembre.getMembre().getPrenom() +
 				"_" + impotMembre.getMembre().getNom() + ".pdf";
 		 //GenererPdf(String dateIpmot, String dateDelivrance,String montant)
 		 String annee = String.valueOf(impotMembre.getAnnee());
@@ -242,12 +242,12 @@ public class ImpotController implements Initializable{
 			 e.printStackTrace();
 		 }
 		
-		 SendMessage mess = new SendMessage();
+		 /*SendMessage mess = new SendMessage();
 		 mess.setObjet("Impot");
 		 mess.setMessage("Bonjour, Voici votre releve d'impot.");
 		 mess.setEmailDestination(impotMembre.getMembre().getEmail());
 		 mess.setPathFile(nameFile);
-		 mess.sendMessage(user.getLogin(),user.getPass());
+		 mess.sendMessage(user.getLogin(),user.getPass());*/
 		 
 			
 			

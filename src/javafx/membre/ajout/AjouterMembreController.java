@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -178,9 +179,15 @@ public class AjouterMembreController implements Initializable {
 						
 					}
 				});
+				prenomField.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+					public void handle(final KeyEvent keyEvent) {
+						if (prenomField.getText().length()>10) {
+							keyEvent.consume();
+						}
+					}
+				});
 	}
 
-	
 	// ajouter les informations dans la base de donnée
 	public void enregistrerMembre() {
 		if (dateNaissance.getValue() != null) {

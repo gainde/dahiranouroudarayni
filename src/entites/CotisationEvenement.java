@@ -33,7 +33,7 @@ public class CotisationEvenement implements Serializable{
 	@Column
 	private String idEven =  "Autre";
 	
-	
+	@Column
 	private String idMembre = "Anonyme";
 	
 	/*@ManyToOne(fetch=FetchType.LAZY)
@@ -52,6 +52,10 @@ public class CotisationEvenement implements Serializable{
 		super();
 		this.montant = montantCotiser;
 		this.dateCotisation = dateCotisationEven;
+	}
+	public CotisationEvenement(Double montantCotiser, Date dateCotisationEven, String even) {
+		this(montantCotiser, dateCotisationEven);
+		this.idEven = even;
 	}
 
 	public Double getMontant() {
