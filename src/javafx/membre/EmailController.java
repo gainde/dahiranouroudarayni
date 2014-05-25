@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import validation.Validateur;
 import validation.ValidationErreur;
 import validation.ValideurEmail;
 
@@ -32,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -49,6 +51,9 @@ public class EmailController implements Initializable{
 		@FXML private Button btnEnvoyer;
 		@FXML private Button btnAnnuler;
 
+		@FXML
+		private AnchorPane anc;
+		
 		private Stage stage;
 		private Membre membreActif;
 		private Dahira dahira;
@@ -72,8 +77,16 @@ public class EmailController implements Initializable{
 			this.membreActif = membreActif;
 		}
 
+		public void setAnchorPane(AnchorPane anc) {
+			this.anc = anc;
+		}
+
+		
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
+			//set l anchorpane
+			Validateur.setAnc(anc);
+			
 			//charger dahira
 			chargerDahira();
 			

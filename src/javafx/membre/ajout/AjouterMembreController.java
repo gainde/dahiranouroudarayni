@@ -17,16 +17,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.membre.MembreController;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import validation.Validateur;
 import validation.ValidateurChaine;
 import validation.ValidationErreur;
 import validation.ValideurCodePostale;
@@ -83,9 +87,18 @@ public class AjouterMembreController implements Initializable {
 	@FXML
 	private Button btnEnregistrer;
 
+	@FXML
+	private AnchorPane anc;
+	
 	private Stage stage;
 	private Membre membre;
 	private MembreController membreController;
+	
+	
+	public void setAnchorPane(AnchorPane anc) {
+		this.anc = anc;
+	}
+
 
 	String province = "Quebec";
 	Date date = new Date();
@@ -109,11 +122,13 @@ public class AjouterMembreController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		
+		Validateur.setAnc(anc);
 		// Valider le champ prenom 
 		ValidateurChaine validerPrenom = new ValidateurChaine(prenomField,
 				textErrPrenom, false, ValidationErreur.CHAINE_ERR,10);
 		validerPrenom.validerChaine(prenomField, textErrPrenom);
-		
+		//if(validerPrenom.valider())imageViewValide.setVisible(true);
 		// Valider le champ nom 
 		ValidateurChaine validerNom = new ValidateurChaine(nomField,
 				textErrNom, false, ValidationErreur.CHAINE_ERR,10);

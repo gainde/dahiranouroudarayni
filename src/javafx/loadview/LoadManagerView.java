@@ -8,12 +8,16 @@ import javafx.cotisation.CotisationController;
 import javafx.dahira.DahiraController;
 import javafx.evenement.EvenementController;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.impot.ImpotController;
 import javafx.membre.EmailController;
 import javafx.membre.MembreController;
 import javafx.membre.ajout.AjouterMembreController;
 import javafx.membre.edit.EditerMembreController;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -147,6 +151,7 @@ public class LoadManagerView{
 				 Stage primaryStage = new Stage();
 			     primaryStage.setTitle("Membre");
 			     primaryStage.initModality(Modality.APPLICATION_MODAL);
+		        
 			        try {
 			            // Load the root layout from the fxml file
 			            FXMLLoader loader = new FXMLLoader(AjouterMembreController.class.getResource("AjouterMembreVue.fxml"));
@@ -157,6 +162,7 @@ public class LoadManagerView{
 			            primaryStage.setScene(scene);
 			            addMemberController.setStage(primaryStage);
 			            addMemberController.setMembreController(membreController);
+			            
 			            primaryStage.setResizable(false);
 			            primaryStage.show();
 			            
@@ -223,6 +229,7 @@ public class LoadManagerView{
 					 Stage primaryStage = new Stage();
 				     primaryStage.setTitle("Connexion");
 				     primaryStage.initModality(Modality.APPLICATION_MODAL);
+				    
 				        try {
 				            // Load the root layout from the fxml file
 				            FXMLLoader loader = new FXMLLoader(EmailController.class.getResource("EmailVue.fxml"));
