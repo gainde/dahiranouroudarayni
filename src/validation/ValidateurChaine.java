@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 import javax.swing.JLabel;
@@ -19,7 +20,7 @@ import validation.ValidationErreur;
 
 
 public class ValidateurChaine extends Validateur {
-	private static final String CHAINE_PATTERN = "(\\w|[éàèôù.,;#-]|\\s)*";
+	private static final String CHAINE_PATTERN = "(?=\\w)(\\w|[éàèôù.,;#-]|\\s)*";
 	private static final String CHAINE_PATTERN2 = "(\\w|[éàèôùç]|\\p{Punct}|\\s)*";
 	private int tailleMax;
 	private Boolean choice;
@@ -31,6 +32,7 @@ public class ValidateurChaine extends Validateur {
 		this.tailleMax = taille;
 		this.choice = false;
 	}
+	
 	public ValidateurChaine(TextArea texteArea, Text labelErr, boolean nullable,
 			ValidationErreur validationErr, int taille) {
 		super(labelErr, nullable, validationErr);
@@ -45,6 +47,22 @@ public class ValidateurChaine extends Validateur {
 		else
 			return super.valider(CHAINE_PATTERN);
 	}
+	
+	// validation champ
+			public void validerChaine(TextField textField, Text labelErr,ImageView imageView) {
+				labelErr.setVisible(false);
+				textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+					@Override
+					public void changed(ObservableValue<? extends Boolean> observable,
+							Boolean oldValue, Boolean newValue) {
+						if (!newValue) {
+							valider();
+							if(valider())
+								imageView.setVisible(true);
+							else imageView.setVisible(false);
+					}}
+				});
+			}
 	
 	// validation champ
 		public void validerChaine(TextField textField, Text labelErr) {

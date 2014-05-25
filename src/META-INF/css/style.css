@@ -59,7 +59,12 @@
     -fx-text-fill: black;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
-
+.error1{
+	-fx-background-image:url("../images/Valider.png");
+	 -fx-background-size:10px 10px;
+	-fx-background-repeat: stretch;
+  	-fx-background-position: top right;
+}
 .error{
 	-fx-border-width: 2;
 	-fx-border-color: red;
@@ -85,7 +90,7 @@
 #rechercheField{
 	-fx-background-image:url("../images/zoom.png");
 	-fx-background-repeat: stretch;
-  -fx-background-position: right;
+   	-fx-background-position: right;
 }
 
 #grdTitle{

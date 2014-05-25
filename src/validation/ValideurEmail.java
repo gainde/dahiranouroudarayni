@@ -7,6 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 import javax.swing.JLabel;
@@ -35,9 +36,26 @@ public class ValideurEmail extends Validateur {
 						Boolean oldValue, Boolean newValue) {
 					if (!newValue) {
 						valider();
+						
 					}
 				}
 			});
 		}
 
+		// validation champ email
+				public void validerEmail(TextField textField, Text textErr, ImageView imageView) {
+					textErr.setVisible(false);
+					textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+						@Override
+						public void changed(ObservableValue<? extends Boolean> observable,
+								Boolean oldValue, Boolean newValue) {
+							if (!newValue) {
+								valider();
+								if(valider())
+									imageView.setVisible(true);
+								else imageView.setVisible(false);
+							}
+						}
+					});
+				}
 }

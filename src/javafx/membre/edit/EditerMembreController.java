@@ -8,6 +8,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import validation.Validateur;
 import validation.ValidateurChaine;
 import validation.ValidationErreur;
 import validation.ValideurCodePostale;
@@ -29,6 +30,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -68,6 +70,9 @@ public class EditerMembreController implements Initializable{
 	 @FXML private Button btnAnnuler;
 	 @FXML private Button btnEnregistrer;
 	 
+	 @FXML
+	 private AnchorPane anc;
+	 
 	 private Stage stage;
 	
 	 private Membre   editMembre;
@@ -75,7 +80,9 @@ public class EditerMembreController implements Initializable{
 		String province = "Quebec";
 		Date date = new Date();
 	
-	
+	public void setAnchorPane(AnchorPane anc) {
+			this.anc = anc;
+	}
 
 	public void setMembreActif() {
 		if( editMembre != null ){
@@ -123,6 +130,9 @@ public class EditerMembreController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		//set l anchorpane
+		Validateur.setAnc(anc);
 		
 		// Valider le champ prenom 
 				ValidateurChaine validerPrenom = new ValidateurChaine(prenomField,

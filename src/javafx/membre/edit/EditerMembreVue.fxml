@@ -3,67 +3,48 @@
 <?import java.lang.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.edit.EditerMembreController">
+<AnchorPane fx:id="anc" prefHeight="532.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.membre.edit.EditerMembreController">
 	<children>
-		<VBox fx:id="hboxAjout" prefHeight="550.0" prefWidth="600.0">
-			<children>
-				<GridPane>
-					<columnConstraints>
-						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-					</columnConstraints>
-					<rowConstraints>
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-					</rowConstraints>
-					<children>
-						<Label id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="16.0" prefHeight="16.0" prefWidth="550.0" text="Informations du membre" textAlignment="CENTER" />
-						<Text fx:id="textErrMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="549.2978515625" GridPane.rowIndex="1">
-							<font>
-								<Font size="11.0" />
-							</font>
-						</Text>
-					</children>
-					<padding>
-						<Insets left="25.0" right="25.0" top="25.0" />
-					</padding>
-				</GridPane>
-				<GridPane fx:id="gridPane" hgap="10.0" layoutY="72.0" prefHeight="479.0" prefWidth="600.0" vgap="10.0">
+				<GridPane fx:id="gridPane" hgap="5.0" layoutY="6.0" prefHeight="539.0" prefWidth="600.0" vgap="5.0">
 					<columnConstraints>
 						<ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="126.0" />
 						<ColumnConstraints hgrow="SOMETIMES" maxWidth="430.0" minWidth="10.0" prefWidth="414.0" />
 					</columnConstraints>
 					<rowConstraints>
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<padding>
 						<Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
 					</padding>
 					<children>
-						<Label alignment="TOP_LEFT" prefHeight="36.0" prefWidth="77.0" text="Prénom :" />
-						<Label alignment="TOP_LEFT" prefHeight="33.0" prefWidth="38.0" text="Nom :" GridPane.rowIndex="1" />
-						<Label alignment="TOP_LEFT" prefHeight="32.0" prefWidth="61.0" text="Courrier :" GridPane.rowIndex="2" />
-						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="75.0" text="Téléphone :" GridPane.rowIndex="3" />
-						<Label alignment="TOP_LEFT" prefHeight="19.0" prefWidth="124.0" text="Date de Naissance :" GridPane.rowIndex="4" />
-						<Label alignment="TOP_LEFT" prefHeight="32.0" prefWidth="59.0" text="Adresse :" GridPane.rowIndex="5" />
-						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="84.0" text="Code postal :" GridPane.rowIndex="6" />
-						<Label alignment="TOP_LEFT" prefHeight="34.0" prefWidth="36.0" text="Ville :" GridPane.rowIndex="7" />
-						<Label text="Province :" GridPane.rowIndex="8" />
-						<Label prefHeight="32.0" prefWidth="37.0" text="Pays :" GridPane.rowIndex="9" />
-						<ComboBox fx:id="cmbProvince" prefWidth="200.0" value="Québec" GridPane.columnIndex="1" GridPane.rowIndex="8">
+						<Label alignment="TOP_LEFT" prefHeight="36.0" prefWidth="77.0" text="Prénom : *" GridPane.rowIndex="2" />
+						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="52.0" text="Nom : *" GridPane.rowIndex="3" />
+						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="80.0" text="Courrier : *" GridPane.rowIndex="4" />
+						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="75.0" text="Téléphone :" GridPane.rowIndex="5" />
+						<Label alignment="TOP_LEFT" prefHeight="19.0" prefWidth="124.0" text="Date de Naissance :" GridPane.rowIndex="6" />
+						<Label alignment="TOP_LEFT" prefHeight="32.0" prefWidth="59.0" text="Adresse :" GridPane.rowIndex="7" />
+						<Label alignment="TOP_LEFT" prefHeight="29.0" prefWidth="84.0" text="Code postal :" GridPane.rowIndex="8" />
+						<Label alignment="TOP_LEFT" prefHeight="34.0" prefWidth="36.0" text="Ville :" GridPane.rowIndex="9" />
+						<Label prefHeight="29.0" prefWidth="62.0" text="Province :" GridPane.rowIndex="10" GridPane.valignment="TOP" />
+						<Label prefHeight="32.0" prefWidth="37.0" text="Pays :" GridPane.rowIndex="11" />
+						<ComboBox fx:id="cmbProvince" prefWidth="200.0" value="Québec" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.valignment="TOP">
 							<items>
 								<FXCollections fx:factory="observableArrayList">
 									<String fx:value="Alberta" />
@@ -82,25 +63,31 @@
 								</FXCollections>
 							</items>
 						</ComboBox>
-						<Label text="Canada" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-						<HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="344.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+						<Label text="Canada" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+						<HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="344.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
 							<children>
 								<Button fx:id="btnAnnuler" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Annuler" />
 								<Button fx:id="btnEnregistrer" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Enregistrer" />
 							</children>
 						</HBox>
-						<DatePicker fx:id="dateNaissance" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+						<DatePicker fx:id="dateNaissance" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP">
+<cursor>
+<Cursor fx:constant="HAND" />
+</cursor></DatePicker>
+						<VBox prefHeight="38.0" prefWidth="417.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
 							<children>
-								<TextField fx:id="prenomField" promptText="Entrer votre prénom" GridPane.columnIndex="1" />
+								<TextField fx:id="prenomField" alignment="TOP_LEFT" promptText="Entrer votre prénom" GridPane.columnIndex="1" />
 								<Text id="textErr" fx:id="textErrPrenom" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT">
 									<font>
 										<Font size="10.0" />
 									</font>
 								</Text>
 							</children>
+<GridPane.margin>
+<Insets />
+</GridPane.margin>
 						</VBox>
-						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
 							<children>
 								<TextField fx:id="nomField" promptText="Entrer votre nom de famille" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 								<Text id="textErr" fx:id="textErrNom" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -110,7 +97,7 @@
 								</Text>
 							</children>
 						</VBox>
-						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
 							<children>
 								<TextField fx:id="emailField" promptText="xxxxx@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 								<Text id="textErr" fx:id="textErrEmail" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -120,7 +107,7 @@
 								</Text>
 							</children>
 						</VBox>
-						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
 							<children>
 								<TextField fx:id="telephoneField" promptText="514 708 4568" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 								<Text id="textErr" fx:id="textErrTelephone" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -130,9 +117,9 @@
 								</Text>
 							</children>
 						</VBox>
-						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
 							<children>
-								<TextField fx:id="adresseField" promptText="8190, rue Arthur Peloquin, #1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+								<TextField fx:id="adresseField" promptText="8190, rue Arthur Peloquin, apt1" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 								<Text id="textErr" fx:id="textErrAdresse" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
 									<font>
 										<Font size="10.0" />
@@ -140,7 +127,7 @@
 								</Text>
 							</children>
 						</VBox>
-						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
 							<children>
 								<TextField fx:id="postalField" promptText="H1R 2S8" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 								<Text id="textErr" fx:id="textErrCodepostal" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -150,7 +137,7 @@
 								</Text>
 							</children>
 						</VBox>
-						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
 							<children>
 								<TextField fx:id="villeField" promptText="Entrer votre ville" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 								<Text id="textErr" fx:id="textErrVille" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -160,9 +147,13 @@
 								</Text>
 							</children>
 						</VBox>
+						<Text fx:id="textErrMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="549.2978515625" GridPane.columnSpan="2" GridPane.rowIndex="1">
+							<font>
+								<Font size="11.0" />
+							</font>
+						</Text>
+						<Label id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="16.0" prefHeight="16.0" prefWidth="550.0" text="Formulaire membre" textAlignment="CENTER" GridPane.columnSpan="2" />
 					</children>
 				</GridPane>
-			</children>
-		</VBox>
 	</children>
 </AnchorPane>
