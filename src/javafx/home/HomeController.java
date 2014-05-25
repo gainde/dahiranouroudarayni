@@ -1,26 +1,17 @@
 package javafx.home;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import daoimpl.DahiraDaoImpl;
-import entites.Dahira;
-import javafx.dahira.DahiraController;
-import javafx.evenement.EvenementController;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.impot.ImpotController;
 import javafx.loadview.LoadManagerView;
-import javafx.membre.MembreController;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import daoimpl.DahiraDaoImpl;
+import entites.Dahira;
 
 public class HomeController implements Initializable {
 	@FXML

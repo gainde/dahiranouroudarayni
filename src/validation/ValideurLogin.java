@@ -1,11 +1,7 @@
 package validation;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 public class ValideurLogin extends Validateur {
 	private int tailleMax;

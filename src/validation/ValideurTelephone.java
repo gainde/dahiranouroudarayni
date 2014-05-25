@@ -1,16 +1,9 @@
 package validation;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 public class ValideurTelephone extends Validateur {
 	private static final String TELEPHONE_PATTERN = "\\d{3}[( )-/]?\\d{3}[( )-/]?\\d{4}";

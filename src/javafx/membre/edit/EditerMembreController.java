@@ -8,17 +8,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import validation.Validateur;
-import validation.ValidateurChaine;
-import validation.ValidationErreur;
-import validation.ValideurCodePostale;
-import validation.ValideurEmail;
-import validation.ValideurTelephone;
-import dao.MembreDao;
-import daoimpl.MembreDaoImpl;
-import entites.Adresse;
-import entites.Membre;
-import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -33,6 +22,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import validation.Validateur;
+import validation.ValidateurChaine;
+import validation.ValidationErreur;
+import validation.ValideurCodePostale;
+import validation.ValideurEmail;
+import validation.ValideurTelephone;
+import dao.MembreDao;
+import daoimpl.MembreDaoImpl;
+import entites.Adresse;
+import entites.Membre;
 
 public class EditerMembreController implements Initializable{
 	

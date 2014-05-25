@@ -1,26 +1,8 @@
 package javafx.dahira;
 
 	import java.net.URL;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-	import validation.ValidateurChaine;
-import validation.ValidationErreur;
-import validation.ValideurCodePostale;
-import validation.ValideurEmail;
-import validation.ValideurTelephone;
-import dao.DahiraDao;
-import dao.MembreDao;
-import daoimpl.DahiraDaoImpl;
-import daoimpl.MembreDaoImpl;
-import entites.Adresse;
-import entites.Dahira;
-import entites.Membre;
-import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -30,12 +12,20 @@ import javafx.fxml.Initializable;
 import javafx.membre.MembreController;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import validation.ValidateurChaine;
+import validation.ValidationErreur;
+import validation.ValideurCodePostale;
+import validation.ValideurEmail;
+import validation.ValideurTelephone;
+import dao.DahiraDao;
+import daoimpl.DahiraDaoImpl;
+import entites.Adresse;
+import entites.Dahira;
 
 public class DahiraController  implements Initializable{
 		

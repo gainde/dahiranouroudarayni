@@ -2,8 +2,6 @@ package javafx.loadview;
 
 import java.io.IOException;
 
-import entites.Dahira;
-import entites.Membre;
 import javafx.cotisation.CotisationController;
 import javafx.dahira.DahiraController;
 import javafx.evenement.EvenementController;
@@ -17,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import entites.Dahira;
+import entites.Membre;
 
 public class LoadManagerView {
 	/** Constructeur privé */

@@ -4,18 +4,10 @@ import java.util.regex.Pattern;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import validation.Validateur;
-import validation.Validation;
-import validation.ValidationErreur;
 
 
 

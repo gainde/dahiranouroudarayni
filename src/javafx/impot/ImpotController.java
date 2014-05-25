@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.GenererPdf;
-import javafx.SendMessage;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

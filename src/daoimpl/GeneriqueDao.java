@@ -2,7 +2,6 @@ package daoimpl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Vector;
 
