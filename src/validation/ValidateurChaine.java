@@ -4,10 +4,12 @@ import java.util.regex.Pattern;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
 import javax.swing.JLabel;
@@ -49,22 +51,6 @@ public class ValidateurChaine extends Validateur {
 	}
 	
 	// validation champ
-			public void validerChaine(TextField textField, Text labelErr,ImageView imageView) {
-				labelErr.setVisible(false);
-				textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-					@Override
-					public void changed(ObservableValue<? extends Boolean> observable,
-							Boolean oldValue, Boolean newValue) {
-						if (!newValue) {
-							valider();
-							if(valider())
-								imageView.setVisible(true);
-							else imageView.setVisible(false);
-					}}
-				});
-			}
-	
-	// validation champ
 		public void validerChaine(TextField textField, Text labelErr) {
 			labelErr.setVisible(false);
 			textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -74,6 +60,14 @@ public class ValidateurChaine extends Validateur {
 					if (!newValue) {
 						valider();
 				}}
+			});
+			
+			textField.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+				public void handle(final KeyEvent keyEvent) {
+					if (textField.getText().length() >= tailleMax - 4) {
+						keyEvent.consume();
+					}
+				}
 			});
 		}
 		
