@@ -3,6 +3,7 @@ package javafx.dahira;
 	import java.net.URL;
 import java.util.ResourceBundle;
 
+import validation.Validateur;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import validation.ValidateurChaine;
@@ -68,13 +70,19 @@ public class DahiraController  implements Initializable{
 		 @FXML private Button btnAnnuler;
 		 @FXML private Button btnEnregistrer;
 		 
+		 @FXML
+		 private AnchorPane anc;
+		 
 		 private Stage stage;
 		
 		 private Dahira   editDahira;
 		 private MembreController membreController;
 		 
 		 String province = "Quebec";
-			
+		
+		 public void setAnchorPane(AnchorPane anc) {
+				this.anc = anc;
+		}
 		
 		public void setDahiraActif() {
 			if(editDahira != null){
@@ -121,24 +129,28 @@ public class DahiraController  implements Initializable{
 
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
+			
+			//set l anchorpane
+			Validateur.setAnc(anc);
+			
 			// Valider le champ prenom 
 					ValidateurChaine validerPrenom = new ValidateurChaine(nomField,
-							textErrNom, false, ValidationErreur.CHAINE_ERR,10);
+							textErrNom, false, ValidationErreur.CHAINE_ERR,45);
 					validerPrenom.validerChaine(nomField, textErrNom);
 					
 					// Valider le champ nom 
 					ValidateurChaine validerNom = new ValidateurChaine(numeroNEField,
-							textErrNumero, false, ValidationErreur.CHAINE_ERR,10);
+							textErrNumero, false, ValidationErreur.CHAINE_ERR,45);
 					validerNom.validerChaine(numeroNEField, textErrNumero);
 							
 					// Valider le champ adresse 
 					ValidateurChaine validerAdresse = new ValidateurChaine(adresseField,
-									textErrAdresse, true, ValidationErreur.CHAINE_ERR,10);
+									textErrAdresse, true, ValidationErreur.CHAINE_ERR,100);
 					validerAdresse.validerChaine(adresseField, textErrAdresse);
 					
 					// Valider le champ site web 
 					ValidateurChaine validerSiteWeb = new ValidateurChaine(siteWebField,
-									textErrSiteWeb, true, ValidationErreur.CHAINE_ERR,10);
+									textErrSiteWeb, true, ValidationErreur.CHAINE_ERR,45);
 					validerSiteWeb.validerChaine(siteWebField, textErrSiteWeb);
 					
 					// Valider le champ description 
@@ -148,12 +160,12 @@ public class DahiraController  implements Initializable{
 					
 					// Valider le champ ville 
 							ValidateurChaine validerVille = new ValidateurChaine(villeField,
-											textErrVille, true, ValidationErreur.CHAINE_ERR,10);
+											textErrVille, true, ValidationErreur.CHAINE_ERR,45);
 							validerVille.validerChaine(villeField, textErrVille);
 					
 					//Valider le mail
 					ValideurEmail validerEmail = new ValideurEmail(emailField,
-							textErrEmail, false, ValidationErreur.EMAIL_ERR);
+							textErrEmail, false, ValidationErreur.EMAIL_ERR,45);
 					validerEmail.validerEmail(emailField,textErrEmail);
 				
 					//Valider le mail

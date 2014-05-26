@@ -76,7 +76,7 @@ public class EmailController implements Initializable{
 			
 			//Valider le mail
 			ValideurEmail validerEmail = new ValideurEmail(emailConexionField,
-					connexionErr, false, ValidationErreur.EMAIL_ERR);
+					connexionErr, false, ValidationErreur.EMAIL_ERR,45);
 			validerEmail.validerEmail(emailConexionField,connexionErr);
 			//action sur bouton envoyer
 			btnEnvoyer.setOnAction(new EventHandler<ActionEvent>() {

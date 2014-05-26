@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.impot.ImpotController">
+<AnchorPane fx:id="anc" prefHeight="600.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.impot.ImpotController">
 	<children>
 		<Label layoutX="320.0" layoutY="56.0" text="IMPOT">
 			<font>
 				<Font size="31.0" />
 			</font>
 		</Label>
-		<Button fx:id="btnChoisir" layoutX="414.0" layoutY="157.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Choisir dossier" />
-		<Label id="lbDossier" fx:id="lbDossier" layoutX="42.0" layoutY="157.0" prefHeight="25.0" prefWidth="194.0" text="Label" />
+		<Button fx:id="btnChoisir" layoutX="414.0" layoutY="157.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Parcourir" />
+		<Label id="lbDossier" fx:id="lbDossier" layoutX="42.0" layoutY="157.0" prefHeight="25.0" prefWidth="194.0" />
 		<Button fx:id="btnExecuter" layoutX="423.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Executer" />
 		<GridPane layoutX="39.0" layoutY="222.0" prefHeight="129.0" prefWidth="484.0">
 			<columnConstraints>
@@ -30,12 +31,17 @@
 			<children>
 				<Label layoutX="28.0" layoutY="390.0" text="Email" />
 				<Label layoutX="70.0" layoutY="438.0" text="Mot de Passe" GridPane.rowIndex="1" />
-				<TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="48.0" GridPane.columnIndex="1" />
 				<PasswordField fx:id="txtMotDePasse" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<Label text="Annee" GridPane.rowIndex="2" />
 				<ComboBox fx:id="cmbAnnee" prefHeight="25.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 				<DatePicker fx:id="datePickerDeliv" prefHeight="25.0" prefWidth="317.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-				<Label text="Date de délivrance" GridPane.rowIndex="3" />
+				<Label text="Date de délivrance" GridPane.rowIndex="3" /><VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+<children>
+				<TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="48.0" GridPane.columnIndex="1" /><Text fx:id="textErrEmail" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
+<font>
+<Font size="8.0" />
+</font></Text>
+</children></VBox>
 			</children>
 		</GridPane>
 		<Label fx:id="lbMembres" layoutX="39.0" layoutY="450.0" prefHeight="35.0" prefWidth="484.0" />
@@ -44,6 +50,9 @@
 		<Separator layoutX="14.0" layoutY="205.0" prefHeight="3.0" prefWidth="703.0" /><ImageView fx:id="imageViewHome" fitHeight="64.0" fitWidth="70.0" layoutX="628.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
 <image>
 <Image url="@../../META-INF/images/home.png" />
-</image></ImageView>
+</image>
+<cursor>
+<Cursor fx:constant="HAND" />
+</cursor></ImageView>
 	</children>
 </AnchorPane>

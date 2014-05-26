@@ -14,16 +14,21 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import validation.Validateur;
+import validation.ValidationErreur;
+import validation.ValideurEmail;
 import javafx.GenererPdf;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.membre.MembreController;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -32,6 +37,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -54,7 +60,7 @@ import entites.Utilisateur;
 
 public class ImpotController implements Initializable{
 	 @FXML private ImageView imageViewHome;
-	 
+	 @FXML private Text textErrEmail;
 	 @FXML private TextField txtEmail;
 	 @FXML private PasswordField txtMotDePasse;
 	 @FXML private Label lbDossier;
@@ -65,7 +71,17 @@ public class ImpotController implements Initializable{
 	 @FXML private Button btnChoisir;
 	 @FXML private ComboBox<Integer> cmbAnnee;
 	 @FXML private DatePicker datePickerDeliv;
-	  
+	 
+	 @FXML
+	 private AnchorPane anc;
+		
+		
+		
+		
+	public void setAnchorPane(AnchorPane anc) {
+		this.anc = anc;
+	}
+	 
 	 private Stage stage;
 	 private Stage parentStage;
 	 
@@ -83,6 +99,10 @@ public class ImpotController implements Initializable{
 	 
 	 @Override
 	 public void initialize(URL location, ResourceBundle resources) {
+		 //inactif le bouton executer
+		 btnExecuter.setDisable(true);
+		 //set anchorPane
+		 Validateur.setAnc(anc);
 		// TODO Auto-generated method stub
 		handleButtonChoisir();
 		handleButtonExecuter();
@@ -104,6 +124,12 @@ public class ImpotController implements Initializable{
 		v = kstDao.getMontant(COTISATION_EVENEMENT, "address@gmail.com", "2013");
 		//Double montant2 = v.get(0);
 		System.out.println("Montant kst = "+v);
+		
+		//Valider le mail
+				ValideurEmail validerEmail = new ValideurEmail(txtEmail,
+						textErrEmail, false, ValidationErreur.EMAIL_ERR,45);
+				validerEmail.validerEmail(txtEmail,textErrEmail);
+			
 	 }
 	
 	 public void setStage(Stage stage) {
@@ -159,9 +185,16 @@ public class ImpotController implements Initializable{
 		 DirectoryChooser chooser = new DirectoryChooser();
 		 chooser.setTitle("JavaFX Projects");
 		 File selectedDirectory = chooser.showDialog(stage);
-		 lbDossier.setText("");
-		 lbDossier.setText(selectedDirectory.getPath());
-         System.out.println("chemin : "+selectedDirectory.getName());
+		 //lbDossier.setText("");
+		 if(selectedDirectory != null){
+			 lbDossier.setText(selectedDirectory.getPath());
+			 btnExecuter.setDisable(false);
+			 }
+		 else if(lbDossier.getText().length() != 0)
+			 btnExecuter.setDisable(false);
+		 else
+			 btnExecuter.setDisable(true);
+         //System.out.println("chemin : "+selectedDirectory.getName());
 	 }
 	 
 	 private void loadData(int annee, Date date){

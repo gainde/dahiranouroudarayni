@@ -120,27 +120,27 @@ public class AjouterMembreController implements Initializable {
 		Validateur.setAnc(anc);
 		// Valider le champ prenom 
 		ValidateurChaine validerPrenom = new ValidateurChaine(prenomField,
-				textErrPrenom, false, ValidationErreur.CHAINE_ERR,10);
+				textErrPrenom, false, ValidationErreur.CHAINE_ERR,45);
 		validerPrenom.validerChaine(prenomField, textErrPrenom);
 		//if(validerPrenom.valider())imageViewValide.setVisible(true);
 		// Valider le champ nom 
 		ValidateurChaine validerNom = new ValidateurChaine(nomField,
-				textErrNom, false, ValidationErreur.CHAINE_ERR,10);
+				textErrNom, false, ValidationErreur.CHAINE_ERR,45);
 		validerNom.validerChaine(nomField, textErrNom);
 				
 		// Valider le champ adresse 
 		ValidateurChaine validerAdresse = new ValidateurChaine(adresseField,
-						textErrAdresse, true, ValidationErreur.CHAINE_ERR,10);
+						textErrAdresse, true, ValidationErreur.CHAINE_ERR,100);
 		validerAdresse.validerChaine(adresseField, textErrAdresse);
 		
 		// Valider le champ ville 
 				ValidateurChaine validerVille = new ValidateurChaine(villeField,
-								textErrVille, true, ValidationErreur.CHAINE_ERR,10);
+								textErrVille, true, ValidationErreur.CHAINE_ERR,45);
 				validerVille.validerChaine(villeField, textErrVille);
 		
 		//Valider le mail
 		ValideurEmail validerEmail = new ValideurEmail(emailField,
-				textErrEmail, false, ValidationErreur.EMAIL_ERR);
+				textErrEmail, false, ValidationErreur.EMAIL_ERR,45);
 		validerEmail.validerEmail(emailField,textErrEmail);
 	
 		//Valider le code postal
@@ -187,14 +187,8 @@ public class AjouterMembreController implements Initializable {
 						
 					}
 				});
-				prenomField.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-					public void handle(final KeyEvent keyEvent) {
-						if (prenomField.getText().length()>10) {
-							keyEvent.consume();
-						}
-					}
-				});
-	}
+				
+	}//fin d'initialistion
 
 	// ajouter les informations dans la base de donnée
 	public void enregistrerMembre() {
