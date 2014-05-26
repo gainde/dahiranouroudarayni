@@ -63,7 +63,7 @@ public class ImpotController implements Initializable{
 	 @FXML private ProgressBar progressBar;
 	 @FXML private Button btnExecuter;
 	 @FXML private Button btnChoisir;
-	 @FXML private ComboBox cmbAnnee;
+	 @FXML private ComboBox<Integer> cmbAnnee;
 	 @FXML private DatePicker datePickerDeliv;
 	  
 	 private Stage stage;
@@ -145,7 +145,6 @@ public class ImpotController implements Initializable{
 	 private void fillComboBox(){
 	    	ObservableList<Integer> options = 
 	    		    FXCollections.observableArrayList();
-	    	SimpleDateFormat format = new SimpleDateFormat("yyyy");
 	    	Calendar calendar = new GregorianCalendar();
 	    	int annee = calendar.get(Calendar.YEAR);
 	    	for(int i = 1; i<5; i++){
@@ -211,7 +210,7 @@ public class ImpotController implements Initializable{
 	 private void executer(ArrayList<Impot> listImpot){
 
 			progressBar();
-		 /*Double step = 0.0;
+		 Double step = 0.0;
 		 double i = 1;
 		 for(Impot impot : listImpot){
 			 envoyerEmail(impot);
@@ -221,7 +220,7 @@ public class ImpotController implements Initializable{
 			 System.out.println("listImpot.size() = "+listImpot.size());
 			 System.out.println("i = "+i);
 			 i++;
-		 }*/
+		 }
 	 }
 	 
 	 private void envoyerEmail(Impot impotMembre){
