@@ -1,9 +1,7 @@
 package dao;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Vector;
 
 public interface Dao<T, PK extends Serializable> {
     T create(T t);

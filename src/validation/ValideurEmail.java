@@ -1,19 +1,13 @@
 package validation;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.scene.control.Label;
+
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 public class ValideurEmail extends Validateur {
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

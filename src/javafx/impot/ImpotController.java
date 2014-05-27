@@ -18,7 +18,6 @@ import validation.Validateur;
 import validation.ValidationErreur;
 import validation.ValideurEmail;
 import javafx.GenererPdf;
-import javafx.SendMessage;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

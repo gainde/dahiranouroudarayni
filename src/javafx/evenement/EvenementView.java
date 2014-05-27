@@ -3,8 +3,6 @@ package javafx.evenement;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.cotisation.CotisationController;
-import javafx.cotisation.CotisationView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
