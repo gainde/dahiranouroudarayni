@@ -65,7 +65,7 @@
 						</ComboBox>
 						<Label text="Canada" GridPane.columnIndex="1" GridPane.rowIndex="12" />
 						<HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="344.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="13">
-							<children>
+							<children><Button fx:id="btnEditer" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Editer" />
 								<Button fx:id="btnAnnuler" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Annuler" />
 								<Button fx:id="btnEnregistrer" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Enregistrer" />
 							</children>

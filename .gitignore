@@ -3,10 +3,7 @@
 *.jar
 *.war
 *.ear
-.classpath
 bin/*
-
-src/META-INF/persistence.xml
 
 #netbeans specific
 core

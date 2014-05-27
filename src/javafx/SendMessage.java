@@ -82,7 +82,7 @@ public class SendMessage {
 				return new PasswordAuthentication(adressEmail, motDepasse);
 			}
 		  });
- 
+		
 		try {
 			MimeMultipart mimeMultipart = new MimeMultipart();
 

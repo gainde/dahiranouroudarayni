@@ -69,6 +69,7 @@ public class DahiraController  implements Initializable{
 		 
 		 @FXML private Button btnAnnuler;
 		 @FXML private Button btnEnregistrer;
+		 @FXML private Button btnEditer;
 		 
 		 @FXML
 		 private AnchorPane anc;
@@ -129,7 +130,7 @@ public class DahiraController  implements Initializable{
 
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
-			
+			btnEnregistrer.disableProperty().bind(btnEditer.disableProperty().not());
 			//set l anchorpane
 			Validateur.setAnc(anc);
 			
@@ -206,6 +207,14 @@ public class DahiraController  implements Initializable{
 					 	    	
 					 	    }
 					 	});
+					 btnEditer.setOnAction(new EventHandler<ActionEvent>() {
+						
+						@Override
+						public void handle(ActionEvent event) {
+							btnEditer.setDisable(true);
+							
+						}
+					});
 					 handleComboBoxProvince();
 		}
 		
