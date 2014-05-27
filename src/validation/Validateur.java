@@ -19,8 +19,7 @@ public abstract  class Validateur {
 	protected ValidationErreur validationErr;
 	protected String plus;
 	protected static AnchorPane anc;
-	protected ImageView imageView;
-	
+	private ImageView iv1;
 	
 	public static void setAnc(AnchorPane anc) {
 		Validateur.anc = anc;
@@ -77,6 +76,7 @@ public abstract  class Validateur {
 	
 	//validateur super classe
 	public  boolean valider(String textPatern){
+		AfficherImageValider();
 		boolean valide = false;
 		String email = texte.getText();
 		if(email == null || email.isEmpty()){
@@ -105,20 +105,22 @@ public abstract  class Validateur {
 				labelErr.setVisible(false);
 			}
 			texte.getStyleClass().remove("error");
-			
 		}
-
+		iv1.setVisible(valide);
 		return valide;
 	}
+	
 	public void AfficherImageValider(){
+		if(iv1 != null)
+			return;
 		Image image = new Image("@../../META-INF/images/Valider.png");
 	    //simple displays ImageView the image as is
-        imageView = new ImageView();
-        imageView.setFitWidth(10);imageView.setFitHeight(10);
+        iv1 = new ImageView();
+        iv1.setFitWidth(10);iv1.setFitHeight(10);
         Bounds b = texte.localToScene(texte.getBoundsInLocal());
-        imageView.setX(b.getMaxX());imageView.setY(b.getMinY());
-        imageView.setImage(image);
-        anc.getChildren().add(imageView);
+        iv1.setX(b.getMaxX());iv1.setY(b.getMinY());
+        iv1.setImage(image);
+        anc.getChildren().add(iv1);
 	}
 	
 }
