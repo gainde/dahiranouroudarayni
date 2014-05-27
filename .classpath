@@ -8,7 +8,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/itextpdf-5.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/javamail-mail-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/junit-4.11-sources.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
