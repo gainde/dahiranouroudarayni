@@ -1,9 +1,19 @@
 package javafx.dahira;
 
-	import java.net.URL;
+import java.net.URL;
 import java.util.ResourceBundle;
 
+
 import validation.Validateur;
+	import validation.ValidateurChaine;
+import validation.ValidationErreur;
+import validation.ValideurCodePostale;
+import validation.ValideurEmail;
+import validation.ValideurTelephone;
+import dao.DahiraDao;
+import daoimpl.DahiraDaoImpl;
+import entites.Adresse;
+import entites.Dahira;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,15 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import validation.ValidateurChaine;
-import validation.ValidationErreur;
-import validation.ValideurCodePostale;
-import validation.ValideurEmail;
-import validation.ValideurTelephone;
-import dao.DahiraDao;
-import daoimpl.DahiraDaoImpl;
-import entites.Adresse;
-import entites.Dahira;
 
 public class DahiraController  implements Initializable{
 		
@@ -69,7 +70,6 @@ public class DahiraController  implements Initializable{
 		 
 		 @FXML private Button btnAnnuler;
 		 @FXML private Button btnEnregistrer;
-		 @FXML private Button btnEditer;
 		 
 		 @FXML
 		 private AnchorPane anc;
@@ -130,7 +130,7 @@ public class DahiraController  implements Initializable{
 
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
-			btnEnregistrer.disableProperty().bind(btnEditer.disableProperty().not());
+			
 			//set l anchorpane
 			Validateur.setAnc(anc);
 			
@@ -207,14 +207,6 @@ public class DahiraController  implements Initializable{
 					 	    	
 					 	    }
 					 	});
-					 btnEditer.setOnAction(new EventHandler<ActionEvent>() {
-						
-						@Override
-						public void handle(ActionEvent event) {
-							btnEditer.setDisable(true);
-							
-						}
-					});
 					 handleComboBoxProvince();
 		}
 		

@@ -1,6 +1,7 @@
 package logique;
 
 import javafx.application.Application;
+import javafx.home.Home;
 import javafx.membre.Membres;
 
 public class Main {
@@ -15,7 +16,7 @@ public class Main {
 		
 		//Authentification auth = new Authentification(null, true);
 		//.setVisible(true);
-		Application.launch(Membres.class);
+		Application.launch(Home.class);
 		/*
 		try {
             FileOutputStream file = new FileOutputStream(new File("Test.pdf"));
