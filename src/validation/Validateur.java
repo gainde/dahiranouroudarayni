@@ -109,6 +109,7 @@ public abstract  class Validateur {
 		iv1.setVisible(valide);
 		return valide;
 	}
+	
 	public void AfficherImageValider(){
 		if(iv1 != null)
 			return;

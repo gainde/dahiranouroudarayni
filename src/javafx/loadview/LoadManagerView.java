@@ -100,7 +100,7 @@ public class LoadManagerView {
 			EvenementController evenementController = (EvenementController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			// scene.getStylesheets().add("META-INF/css/style.css");
+			//scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			evenementController.setStage(primaryStage);
 			evenementController.setParentStage(stage);
@@ -154,7 +154,7 @@ public class LoadManagerView {
 			AjouterMembreController addMemberController = (AjouterMembreController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			// scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			addMemberController.setStage(primaryStage);
 			addMemberController.setMembreController(membreController);
