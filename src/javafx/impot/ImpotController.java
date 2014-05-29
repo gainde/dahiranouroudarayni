@@ -35,6 +35,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -69,8 +70,10 @@ public class ImpotController implements Initializable{
 	 @FXML private ProgressBar progressBar;
 	 @FXML private Button btnExecuter;
 	 @FXML private Button btnChoisir;
-	 @FXML private ComboBox cmbAnnee;
+	 @FXML private ComboBox<Integer> cmbAnnee;
 	 @FXML private DatePicker datePickerDeliv;
+	 @FXML private TextField txtObjet;
+	 @FXML private TextArea txtAMsg;
 	 
 	 @FXML
 	 private AnchorPane anc;
@@ -171,7 +174,6 @@ public class ImpotController implements Initializable{
 	 private void fillComboBox(){
 	    	ObservableList<Integer> options = 
 	    		    FXCollections.observableArrayList();
-	    	SimpleDateFormat format = new SimpleDateFormat("yyyy");
 	    	Calendar calendar = new GregorianCalendar();
 	    	int annee = calendar.get(Calendar.YEAR);
 	    	for(int i = 1; i<5; i++){
