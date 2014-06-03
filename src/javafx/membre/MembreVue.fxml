@@ -19,7 +19,7 @@
 							<columns>
 								<TableColumn fx:id="tablePrenom" prefWidth="120.0" text="Prénom" />
 								<TableColumn fx:id="tableNom" prefWidth="121.0" text="Nom" />
-								<TableColumn fx:id="tableTelephone" prefWidth="138.0" text="Téléphone" />
+								<TableColumn fx:id="tableTelephone" prefWidth="130.0" text="Téléphone" />
 							</columns>
 						</TableView>
 								<TextField id="rechercheField" fx:id="rechercherField" layoutX="14.0" layoutY="101.0" prefHeight="26.0" prefWidth="193.0" promptText="Rechercher membre" HBox.hgrow="ALWAYS" />
@@ -83,12 +83,14 @@
 					</children>
 				</Pane>
 			</children>
-		</HBox><Text id="grdTitle" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DAHIRA NOUROU DARAYNI SOPE SERIGNE FALLOU" textAlignment="CENTER" wrappingWidth="800.0" /><ImageView fx:id="imageViewHome" fitHeight="64.0" fitWidth="70.0" layoutX="690.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+		</HBox><Text id="grdTitle" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DAHIRA NOUROU DARAYNI SOPE SERIGNE FALLOU" textAlignment="CENTER" wrappingWidth="800.0" /><Button fx:id="btnHome" layoutX="694.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="66.0">
+<graphic><ImageView fx:id="imageViewHome" fitHeight="48.0" fitWidth="64.0" layoutX="636.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
 <image>
 <Image url="@../../META-INF/images/home.png" />
 </image>
 <cursor>
 <Cursor fx:constant="HAND" />
 </cursor></ImageView>
+</graphic></Button>
 	</children>
 </AnchorPane>

@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.loadview.LoadManagerView;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
@@ -26,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -60,6 +62,9 @@ public class MembreController implements Initializable {
 	private Button btnAnnuler;
 	@FXML
 	private Button btnQuitter;
+	@FXML
+	private Button btnHome;
+
 
 	@FXML
 	private TableView<Membre> tableViewMembre;
@@ -130,19 +135,15 @@ public class MembreController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-		// mettre inactif les boutons
-		setUnvisibleButton(true);
-
-		tableViewMembre.getSelectionModel().setSelectionMode(
-				SelectionMode.SINGLE);
-		;
 
 		// set bouton non actif
-		btnEditer.setDisable(true);
-		btnSupprimer.setDisable(true);
 		tableViewMembre.getSelectionModel().setSelectionMode(
 				SelectionMode.SINGLE);
-
+		
+		btnEditer.disableProperty().bind(tableViewMembre.getSelectionModel().selectedItemProperty().isNull());
+		btnSupprimer.disableProperty().bind(tableViewMembre.getSelectionModel().selectedItemProperty().isNull());
+		btnCotisation.disableProperty().bind(tableViewMembre.getSelectionModel().selectedItemProperty().isNull());
+		btnImpot.disableProperty().bind(tableViewMembre.getSelectionModel().selectedItemProperty().isNull());
 		// c
 		tablePrenom
 				.setCellValueFactory(new Callback<CellDataFeatures<Membre, String>, ObservableValue<String>>() {
@@ -173,7 +174,17 @@ public class MembreController implements Initializable {
 		afficherUnMembre();
 		// action filtrer membre
 		filterMembre();
-		HandleButtonHome();
+		
+		toolTipButton(btnHome, "Home");
+
+		// handle button
+		handleBtnQuitter(btnHome);
+		handleBtnQuitter(btnQuitter);
+		handleBtnAjouter();
+		handleBtnEditer();
+		handleBtnSupprimer();
+		handleBtnCotisation();
+		handleBtnImpot();
 		// filtrer les membres
 		membreDonnee.addListener(new ListChangeListener<Membre>() {
 			@Override
@@ -184,6 +195,25 @@ public class MembreController implements Initializable {
 			}
 		});
 
+			
+	}// fin de la fonction initialiser
+	
+
+	// action pour quitter
+	public void handleBtnQuitter(Button t) {
+		// action sur bouton quitter
+		t.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+
+				parent.show();
+				stage.close();
+			}
+		});
+	}
+
+	// action pour Ajouter
+	public void handleBtnAjouter() {
 		// action sur bouton ajouter
 		btnAjouter.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -191,19 +221,10 @@ public class MembreController implements Initializable {
 				afficherVueAjoutMembre();
 			}
 		});
+	}
 
-		tableViewMembre.getSelectionModel().getSelectedIndices()
-				.addListener(new ListChangeListener<Integer>() {
-					@Override
-					public void onChanged(Change<? extends Integer> change) {
-						if (etatEdit) {
-							setUnvisibleButton(true);
-							etatEdit = false;
-						}
-					}
-
-				});
-
+	// action pour Editer
+	public void handleBtnEditer() {
 		// action sur bouton editer
 		btnEditer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -213,7 +234,10 @@ public class MembreController implements Initializable {
 				afficherVueEditerMembre();
 			}
 		});
+	}
 
+	// action pour Supprimer
+	public void handleBtnSupprimer() {
 		// action sur bouton supprimmer
 		btnSupprimer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -221,10 +245,12 @@ public class MembreController implements Initializable {
 				clearUnMembre();
 				tableViewMembre.getSelectionModel().clearSelection();
 				listViewMembre.getItems().clear();
-				setUnvisibleButton(true);
 			}
 		});
+	}
 
+	// action pour Cotisation
+	public void handleBtnCotisation() {
 		// action sur bouton cotisation
 		btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -233,7 +259,10 @@ public class MembreController implements Initializable {
 						.afficherVueCotisation(membreActif);
 			}
 		});
+	}
 
+	// action pour Impot
+	public void handleBtnImpot() {
 		// action sur bouton impot
 		btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -241,19 +270,8 @@ public class MembreController implements Initializable {
 				LoadManagerView.getInstance().afficherVueEmail(membreActif);
 			}
 		});
+	}
 
-		// action sur bouton quitter
-		btnQuitter.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				parent.show();
-				stage.close();
-			}
-		});
-		
-		
-	}// fin de la fonction initialiser
-	
 	
 	//action sur l image home
 	private void HandleButtonHome() {
@@ -302,7 +320,6 @@ public class MembreController implements Initializable {
 					public void changed(
 							ObservableValue<? extends Membre> observable,
 							Membre oldValue, Membre newValue) {
-						setUnvisibleButton(false);
 						index.set(membreDonnee.indexOf(newValue));
 						membreActif = newValue;
 						makeDataMembre(newValue);
@@ -310,13 +327,6 @@ public class MembreController implements Initializable {
 				});
 	}
 
-	// mettre les boutons inactifs
-	public void setUnvisibleButton(Boolean actif) {
-		btnEditer.setDisable(actif);
-		btnSupprimer.setDisable(actif);
-		btnCotisation.setDisable(actif);
-		btnImpot.setDisable(actif);
-	}
 
 	// preparer les donnees d un membre pour l'affcihage
 	public void makeDataMembre(Membre membre) {
@@ -359,7 +369,6 @@ public class MembreController implements Initializable {
 							String oldValue, String newValue) {
 						updateFilteredData();
 						listViewMembre.getItems().clear();
-						setUnvisibleButton(true);
 					}
 				});
 	}
@@ -421,4 +430,10 @@ public class MembreController implements Initializable {
 		tableViewMembre.setItems(tempData);
 	}
 
+	public void toolTipButton(Control node, String text) {
+		Tooltip tooltip = new Tooltip();
+		tooltip.setHeight(14);tooltip.setWidth(10);
+		tooltip.setText(text);
+		node.setTooltip(tooltip);
+	}
 }
