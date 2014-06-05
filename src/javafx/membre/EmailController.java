@@ -23,6 +23,7 @@ import com.itextpdf.text.DocumentException;
 
 import daoimpl.DahiraDaoImpl;
 import entites.Dahira;
+import entites.ManagerEntite;
 import entites.Membre;
 
 public class EmailController implements Initializable{
@@ -72,7 +73,7 @@ public class EmailController implements Initializable{
 			Validateur.setAnc(anc);
 			
 			//charger dahira
-			chargerDahira();
+			dahira = ManagerEntite.getInstance().loadDahira();
 			
 			//Valider le mail
 			ValideurEmail validerEmail = new ValideurEmail(emailConexionField,
@@ -118,9 +119,4 @@ public class EmailController implements Initializable{
 			}
 		} 
 		
-		//charger les informations de la dahira
-		public void chargerDahira(){
-			DahiraDaoImpl dahiraDao = new DahiraDaoImpl();
-				dahira = dahiraDao.get(DAHIRA);
-		}
 }

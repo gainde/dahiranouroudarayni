@@ -17,8 +17,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import validation.ManagerValidation;
 import validation.ValidateurChaine;
 import validation.ValidationErreur;
 import validation.ValideurCodePostale;
@@ -28,6 +30,7 @@ import dao.DahiraDao;
 import daoimpl.DahiraDaoImpl;
 import entites.Adresse;
 import entites.Dahira;
+import entites.ManagerEntite;
 
 public class DahiraController implements Initializable {
 
@@ -147,53 +150,27 @@ public class DahiraController implements Initializable {
 		// set l anchorpane
 		Validateur.setAnc(anc);
 
-		// Valider le champ prenom
-		ValidateurChaine validerPrenom = new ValidateurChaine(nomField,
-				textErrNom, false, ValidationErreur.CHAINE_ERR, 45);
-		validerPrenom.validerChaine(nomField, textErrNom);
+		// validation
+		ManagerValidation.getInstance().validerChaine(nomField, textErrNom,
+				false, 30);
+		ManagerValidation.getInstance().validerChaine(numeroNEField,
+				textErrNumero, false, 30);
+		ManagerValidation.getInstance().validerChaine(adresseField,
+				textErrAdresse, false, 90);
+		ManagerValidation.getInstance().validerChaine(siteWebField,
+				textErrSiteWeb, true, 30);
+		ManagerValidation.getInstance().validerChaine(descriptionArea,
+				textErrDescription, true, 100);
+		ManagerValidation.getInstance().validerChaine(villeField, textErrVille,
+				true, 30);
 
-		// Valider le champ nom
-		ValidateurChaine validerNom = new ValidateurChaine(numeroNEField,
-				textErrNumero, false, ValidationErreur.CHAINE_ERR, 45);
-		validerNom.validerChaine(numeroNEField, textErrNumero);
+		ManagerValidation.getInstance().validerEmail(emailField, textErrEmail,
+				false, 30);
 
-		// Valider le champ adresse
-		ValidateurChaine validerAdresse = new ValidateurChaine(adresseField,
-				textErrAdresse, true, ValidationErreur.CHAINE_ERR, 100);
-		validerAdresse.validerChaine(adresseField, textErrAdresse);
-
-		// Valider le champ site web
-		ValidateurChaine validerSiteWeb = new ValidateurChaine(siteWebField,
-				textErrSiteWeb, true, ValidationErreur.CHAINE_ERR, 45);
-		validerSiteWeb.validerChaine(siteWebField, textErrSiteWeb);
-
-		// Valider le champ description
-		ValidateurChaine validerDescription = new ValidateurChaine(
-				descriptionArea, textErrDescription, true,
-				ValidationErreur.CHAINE_ERR, 100);
-		validerDescription.validerChaine(descriptionArea, textErrDescription);
-
-		// Valider le champ ville
-		ValidateurChaine validerVille = new ValidateurChaine(villeField,
-				textErrVille, true, ValidationErreur.CHAINE_ERR, 45);
-		validerVille.validerChaine(villeField, textErrVille);
-
-		// Valider le mail
-		ValideurEmail validerEmail = new ValideurEmail(emailField,
-				textErrEmail, false, ValidationErreur.EMAIL_ERR, 45);
-		validerEmail.validerEmail(emailField, textErrEmail);
-
-		// Valider le mail
-		ValideurCodePostale validerCodePostal = new ValideurCodePostale(
-				postalField, textErrCodepostal, true,
-				ValidationErreur.CODEPOSTALE_ERR);
-		validerCodePostal.validerCodePostal(postalField, textErrCodepostal);
-
-		// Valider le telephone
-		ValideurTelephone validerTelephone = new ValideurTelephone(
-				telephoneField, textErrTelephone, true,
-				ValidationErreur.CODEPOSTALE_ERR);
-		validerTelephone.validerTelephone(telephoneField, textErrTelephone);
+		ManagerValidation.getInstance().validerCodePostal(postalField,
+				textErrCodepostal, true);
+		ManagerValidation.getInstance().validerTelephone(telephoneField,
+				textErrTelephone, true);
 
 		// action bouton annuler
 		btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
@@ -208,11 +185,10 @@ public class DahiraController implements Initializable {
 		btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (validerTelephone.valider() && validerCodePostal.valider()
-						&& validerEmail.valider() && validerVille.valider()
-						&& validerAdresse.valider() && validerNom.valider()
-						&& validerPrenom.valider()) {
-
+				Boolean valide = ManagerValidation.getInstance()
+						.toutEstValide();
+				if (valide) {
+					System.out.println("Tout est valide :" + valide);
 					enregistrerDahira();
 					stage.close();
 
@@ -246,13 +222,7 @@ public class DahiraController implements Initializable {
 				.getText().trim(), province, postalField.getText().trim(),
 				"Canada");
 		editDahira.setAdresse(adresse);
-		enreisgitrerDahira(editDahira);
-	}
-
-	// ajouter membre dans la base de donnée
-	public void enreisgitrerDahira(Dahira dahira) {
-		DahiraDao dahiraDao = new DahiraDaoImpl();
-		dahiraDao.update(dahira);
+		ManagerEntite.getInstance().updateDahira(editDahira);
 	}
 
 	// action sur le combox selection de province

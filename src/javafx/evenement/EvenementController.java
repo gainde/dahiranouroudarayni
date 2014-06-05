@@ -4,10 +4,16 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,18 +24,29 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import util.Utile;
+import validation.ManagerValidation;
+import validation.Validateur;
 import dao.EvenementDao;
 import daoimpl.EvenementDaoImpl;
 import entites.Evenement;
@@ -37,17 +54,26 @@ import entites.Evenement;
 public class EvenementController implements Initializable{
 	@FXML private TableView<Evenement> tableEvenement ;
 	
-	@FXML private ImageView imageViewHome;
+	@FXML private HBox hboxErr;
 	
     @FXML private TableColumn<Evenement, String> colonneDate;
     @FXML private TableColumn<Evenement, String> colonneNom;
     @FXML private TableColumn<Evenement, Double> colonneBudget;
     @FXML private DatePicker dateEven;
     
+   // @FXML private Text textErrMsg;
+    @FXML private Text textErrNom;
+    @FXML private Text textErrNom1;
+    @FXML private Text textErrDepense;
+    @FXML private Text textErrBudget;
+    @FXML private Text textErrBudget1;
+    
     @FXML private TextField txtNom;
     @FXML private TextField txtDepense;
     @FXML private TextField txtBudget;
     
+    @FXML private Button btnHome;
+    @FXML private Button btnErr;
     @FXML private Button btnAjouter;
     @FXML private Button btnEditer;
     @FXML private Button btnSupprimer;
@@ -60,21 +86,60 @@ public class EvenementController implements Initializable{
     
     @FXML private ComboBox<String> cmbEvenement;
     
+    @FXML private AnchorPane anc;
    
+    @FXML private ImageView closeShape;
+    
     private Stage stage;
     private Evenement eventSelected;
     private Stage parent;
+    private Timeline  timeline;
+    private int nbChilds;
     
     ObservableList<Evenement> evenementData = FXCollections.observableArrayList();
     
     private final String LIST_EVENEMENT = "select e from Evenement e";
     
+    private static IntegerProperty index = new SimpleIntegerProperty();
+    
     public void setParentStage(Stage parent){
     	this.parent = parent;
     }
 	
+    public void setAnchorPane(AnchorPane anc) {
+		this.anc = anc;
+	}
+    
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+    	nbChilds = anc.getChildren().size();
+    	// set l anchorpane
+    	Validateur.setAnc(anc);
+    	
+    	toolTipButton(btnHome,"Home");
+    	hboxErr.setVisible(false);
+    	//btnErr.setVisible(false);
+    	//closeShape.setVisible(false);
+    	// validation
+    	initValidation(txtNom);
+    	initValidation(txtBudget);
+    	initValidation(txtDepense);
+    	
+    	initValidation1(txtNomNouveauEven);
+    	initValidation1(txtBudgetNouveauEven);
+   
+    	closeShape.setCursor(Cursor.CLOSED_HAND);
+    	
+    	closeShape.setOnMousePressed(new EventHandler<Event>() {
+			
+			@Override
+			public void handle(Event event) {
+				System.out.println("Dans Croix");
+				hboxErr.setVisible(false);
+			}
+		});
+    	
+    	
     	HandleButtonAjouter();
     	HandleButtonEditer();
     	HandleButtonSupprimer();
@@ -109,9 +174,12 @@ public class EvenementController implements Initializable{
 				// TODO Auto-generated method stub
 				if(newValue != null){
 					eventSelected = newValue;
+					index.set(evenementData.indexOf(newValue));
 					chargerEvenement(newValue);
 					btnEditer.setDisable(false);
 					btnSupprimer.setDisable(false);
+					btnEnregistrer.setDisable(true);
+					enableFieldsEdit(true);
 				}
 				
 			}
@@ -123,13 +191,60 @@ public class EvenementController implements Initializable{
     	titledPaneNvEven.setExpanded(false);
     	
 	}
-    
+    //initialiser la validation des champs d edition d evenement
+    public void initValidation(Node node){
+    	node.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable,
+					Boolean oldValue, Boolean newValue) {
+				if (newValue) {
+					ManagerValidation.getInstance().clearListOfValidation();
+					ManagerValidation.getInstance().validerChaine(txtNom,
+	    					textErrNom, false, 30);
+					ManagerValidation.getInstance().validerMontant(txtBudget,
+					textErrBudget, false);
+					ManagerValidation.getInstance().validerMontant(txtDepense,
+					textErrDepense, true);
+					
+				}
+				
+			}
+		});
+    }
+    //initialiser la validation des champs d ajout d evenement
+    public void initValidation1(Node node){
+    	node.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable,
+					Boolean oldValue, Boolean newValue) {
+				if (newValue) {
+					ManagerValidation.getInstance().clearListOfValidation();
+					ManagerValidation.getInstance().validerChaine(txtNomNouveauEven,
+	    					textErrNom1, false, 30);
+					ManagerValidation.getInstance().validerMontant(txtBudgetNouveauEven,
+					textErrBudget1, false);
+				}
+				
+			}
+		});
+    }
+    //animation message d erreur
+    public void animate(Node node){
+        	timeline = new Timeline();
+    		timeline.getKeyFrames().addAll(
+    		    new KeyFrame(Duration.ZERO, new KeyValue(node.scaleXProperty(), 0)),
+    		    new KeyFrame(new Duration(1000), new KeyValue(node.scaleXProperty(), 1))
+    		);
+    		//timeline.setCycleCount(10);
+    		//timeline.setAutoReverse(false);
+    		timeline.play();
+    }
     public void setStage(Stage stage) {
         this.stage = stage;
     }
     
     private void HandleButtonHome(){
-    	imageViewHome.setOnMouseReleased(new EventHandler<Event>() {
+    	btnHome.setOnMouseReleased(new EventHandler<Event>() {
     		
 			@Override
 			public void handle(Event event) {
@@ -140,10 +255,22 @@ public class EvenementController implements Initializable{
     }
     private void HandleButtonAjouter(){
     	btnAjouter.setOnMouseReleased(new EventHandler<Event>() {
-    		
+			
 			@Override
 			public void handle(Event event) {
-				ajouterEvenement();
+				Boolean valide = ManagerValidation.getInstance()
+						.toutEstValide();
+				if(valide){
+					ajouterEvenement();
+					btnErr.setText("Évènement ajouté avec succés!");
+					hboxErr.setVisible(true);
+					titledPaneNvEven.setExpanded(false);
+				}else{
+					btnErr.setText("Veuillez corriger les champs invalides!");
+					//textErrMsg.setText("Veuillez corriger les champs invalides!");
+					hboxErr.setVisible(true);
+				}
+				animate(hboxErr);
 			}
 		});
     }
@@ -165,11 +292,25 @@ public class EvenementController implements Initializable{
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				//TODO Valider
-				enregistrer();
-				enableFieldsEdit(true);
-			}
+				Boolean valide = ManagerValidation.getInstance()
+						.toutEstValide();
+				if(valide){
+					
+					enregistrer();
+					tableEvenement.getSelectionModel().clearSelection();
+					btnErr.setText("Modification enregistrée avec succés!");
+					hboxErr.setVisible(true);
+					clearEditEvenement();
+			    	btnEditer.setDisable(true);
+			    	btnSupprimer.setDisable(true);
+					enableFieldsEdit(true);
+				}else{
+					btnErr.setText("Veuillez corriger les champs invalides!");
+					//textErrMsg.setText("Veuillez corriger les champs invalides!");
+					hboxErr.setVisible(true);
+				}
+				animate(hboxErr);
+				}
 		});
     }
     private void HandleButtonSupprimer(){
@@ -247,6 +388,7 @@ public class EvenementController implements Initializable{
 		evenDao.create(even);
 		evenementData.add(even);
 		clearNewEvenement();
+		updateAnchorePane();
     }
     private void enableFieldsEdit(boolean value){
     	txtNom.setDisable(value);
@@ -273,13 +415,33 @@ public class EvenementController implements Initializable{
     private void enregistrer(){
     	String nom = txtNom.getText();
         Double budget = Double.parseDouble(txtBudget.getText());
-        Double depense = txtDepense.getText() == null? null : Double.parseDouble(txtDepense.getText());
+        Double depense = txtDepense.getText().length() == 0? null : Double.parseDouble(txtDepense.getText());
         //Double depense = Double.parseDouble(txtDepense.getText());
 		Date date = Utile.getDate(dateEven.getValue());
 		Evenement even = new Evenement(nom,budget,depense,date);
 		EvenementDao eventDao = new EvenementDaoImpl();
 		eventDao.update(even);
+		evenementData.set(index.get(), even);
 		//btnEditer.setDisable(false);
 		btnEnregistrer.setDisable(true);
+		updateAnchorePane();
     }
+    
+  //caption pour indique le bouton home
+    public void toolTipButton(Control node, String text) {
+		Tooltip tooltip = new Tooltip();
+		tooltip.setHeight(14);tooltip.setWidth(10);
+		tooltip.setText(text);
+		node.setTooltip(tooltip);
+	}
+    
+ // mettre a jour la table de view
+ 	public void updateAnchorePane() {
+ 		List<Node> listChilds = anc.getChildren();
+ 		for(Node p :listChilds.subList(nbChilds, listChilds.size())){
+ 				p.setVisible(false);
+ 		}
+ 		
+ 	}
+ 
 }

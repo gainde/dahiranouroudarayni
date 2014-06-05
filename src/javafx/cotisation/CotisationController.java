@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -31,10 +33,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import logique.TypeCotisation;
 import util.Utile;
+import validation.ManagerValidation;
+import validation.Validateur;
 import dao.CotisationEvenementDao;
 import dao.CotisationKSTDao;
 import dao.CotisationLoyerDao;
@@ -70,6 +76,10 @@ public class CotisationController implements Initializable{
     @FXML private TextField montantKST;
     @FXML private TextField txtMontantEvenement;
     
+    @FXML private Text textErrLoyer;
+    @FXML private Text textErrKST;
+    @FXML private Text textErrEvenement;
+    
     @FXML private Button btnAjouterLoyer;
     @FXML private Button btnAjouterKST;
     @FXML private Button btnAjouterEvenement;
@@ -84,6 +94,9 @@ public class CotisationController implements Initializable{
     @FXML private ComboBox<Evenement> cmbEvenement;
     
     @FXML private Button btnQuitter;
+    
+    @FXML
+	private AnchorPane anc;	
    
     private Stage stage;
     
@@ -105,19 +118,42 @@ public class CotisationController implements Initializable{
 	final char COTISATION_KST_AUTRE = '0';
 	
 	private Membre membre;
+	private Boolean valide = false;
 	
+	private int nbChilds;
+	
+	Validateur valideurLoyer;
+	Validateur valideurKST;
+	Validateur valideurEvent;
+	
+	public void setAnchorPane(AnchorPane anc) {
+		this.anc = anc;
+	}
 	/****
 	 * Itiniatiliser les evenements et charger les donn�es de la tables de cotisationLoyer
 	 */
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+    	nbChilds = anc.getChildren().size();
+    	// set l anchorpane
+    	Validateur.setAnc(anc);
+
+		 //iniialiser à la date d aujourd hui
+    	dateLoyer.setValue(LocalDate.now());
+    	dateKST.setValue(LocalDate.now());
+    	dateEvenement.setValue(LocalDate.now());
+    	
     	handleTabPaneCotisation();
 		initialiserTabLoyer();
 		initialiserTabKST();
 		initialiserTabEvenement();
 		handleComboBoxEvenement();
 		handleBoutonQuitter();
+		
+		HandleButtonAjouterLoyer();
+		HandleButtonAjouterKST();
+		HandleButtonAjouterEvenement();
 	}
     
     public void setStage(Stage stage) {
@@ -141,7 +177,12 @@ public class CotisationController implements Initializable{
     		
 			@Override
 			public void handle(Event event) {
-				ajouterCotisationLoyer();
+				valide = ManagerValidation.getInstance()
+						.unEstValide(valideurLoyer);
+				if(valide){
+					System.out.println("Ok Loyer");
+					ajouterCotisationLoyer();
+				}
 				
 			}
 		});
@@ -151,7 +192,12 @@ public class CotisationController implements Initializable{
 
 			@Override
 			public void handle(Event event) {
-				ajouterCotisationKST();
+				valide = ManagerValidation.getInstance()
+						.unEstValide(valideurKST);
+				if(valide){
+					System.out.println("Ok KST");
+					ajouterCotisationKST();
+				}
 				
 			}
 		});
@@ -161,7 +207,12 @@ public class CotisationController implements Initializable{
 
 			@Override
 			public void handle(Event event) {
-				ajouterCotisationEvenement();
+				valide = ManagerValidation.getInstance()
+						.unEstValide(valideurEvent);
+				if(valide){
+					System.out.println("Ok Evenement");
+					ajouterCotisationEvenement();
+				}
 				
 			}
 		});
@@ -248,8 +299,7 @@ public class CotisationController implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends Tab> observable,
 					Tab oldValue, Tab newValue) {
-				
-				
+				updateAnchorePane();
 				if(newValue.getId().equals(LOYER_TAB_ID)){
 					chargerCotisationLoyer();
 				}else if(newValue.getId().equals(KST_TAB_ID)){
@@ -324,6 +374,7 @@ public class CotisationController implements Initializable{
 		CotisationLoyer cotisation = new CotisationLoyer(montantLoyer, date);
 		cotisation.setIdMembre(membre.getEmail());
 		ajouterCotisationLoyer(cotisation);
+		updateAnchorePane();
 	}
 	private void ajouterCotisationLoyer(CotisationLoyer cotisation){
 		CotisationLoyerDao cotisationLoyerDao =  new CotisationLoyerImpl();
@@ -342,6 +393,7 @@ public class CotisationController implements Initializable{
 		cotisation.setIdMembre(membre.getEmail());
 		//TODO set Membre
 		ajouterCotisationKST(cotisation);
+		updateAnchorePane();
 	}
 	private void ajouterCotisationKST(CotisationKST cotisation){
 		CotisationKSTDao cotisationKSTDao =  new CotisationKSTImpl();
@@ -357,6 +409,7 @@ public class CotisationController implements Initializable{
 		CotisationEvenement cotisation = new CotisationEvenement(montantLoyer,date,even.getNomEvenement());
 		cotisation.setIdMembre(membre.getEmail());
 		ajouterCotisationEvenement(cotisation);
+		updateAnchorePane();
 	}
 	private void ajouterCotisationEvenement(CotisationEvenement cotisation){
 		CotisationEvenementDao cotisationEvenementDao =  new CotisationEvenementImpl();
@@ -394,7 +447,10 @@ public class CotisationController implements Initializable{
 	}
 	
 	private void initialiserTabLoyer(){
-		HandleButtonAjouterLoyer();
+		//validation
+    	valideurLoyer = ManagerValidation.getInstance().validerUnMontant(txtMontantLoyer,
+				textErrLoyer, true);
+		//HandleButtonAjouterLoyer();
 		handleComboBoxCotisationLoyer();
 		tableLoyer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CotisationLoyer>() {
 			
@@ -419,7 +475,11 @@ public class CotisationController implements Initializable{
 		  });
 	}
 	private void initialiserTabKST(){
-		HandleButtonAjouterKST();
+		//validation
+		valideurKST = ManagerValidation.getInstance().validerUnMontant(montantKST,
+				textErrKST, true);
+    	
+		//HandleButtonAjouterKST();
 		handleComboBoxCotisationKST();
 		fillComboBoxTypeCotisagtionKST(cmbTypeCotisation);
 		tableKSTDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationKST, String>, ObservableValue<String>>() {
@@ -434,7 +494,11 @@ public class CotisationController implements Initializable{
 		  });
 	}
 	private void initialiserTabEvenement(){
-		HandleButtonAjouterEvenement();
+		//validation
+		valideurEvent = ManagerValidation.getInstance().validerUnMontant(txtMontantEvenement,
+				textErrEvenement, true);
+    	
+		//HandleButtonAjouterEvenement();
 		handleComboBoxCotisationEvenement();
 		tableEvenementDate.setCellValueFactory(new Callback<CellDataFeatures<CotisationEvenement, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<CotisationEvenement, String> o) {
@@ -457,6 +521,13 @@ public class CotisationController implements Initializable{
 		});
 	}
 	
-	
+	// mettre a jour la table de view
+	 	public void updateAnchorePane() {
+	 		List<Node> listChilds = anc.getChildren();
+	 		for(Node p :listChilds.subList(nbChilds, listChilds.size())){
+	 				p.setVisible(false);
+	 		}
+	 		
+	 	}
 
 }

@@ -7,6 +7,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -24,12 +26,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import validation.ManagerValidation;
 import validation.Validateur;
-import validation.ValidateurChaine;
-import validation.ValidationErreur;
-import validation.ValideurCodePostale;
-import validation.ValideurEmail;
-import validation.ValideurTelephone;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
 import entites.Adresse;
@@ -88,7 +86,6 @@ public class AjouterMembreController implements Initializable {
 	private Membre membre;
 	private MembreController membreController;
 	
-	
 	public void setAnchorPane(AnchorPane anc) {
 		this.anc = anc;
 	}
@@ -118,40 +115,24 @@ public class AjouterMembreController implements Initializable {
 		
 		
 		Validateur.setAnc(anc);
-		// Valider le champ prenom 
-		ValidateurChaine validerPrenom = new ValidateurChaine(prenomField,
-				textErrPrenom, false, ValidationErreur.CHAINE_ERR,45);
-		validerPrenom.validerChaine(prenomField, textErrPrenom);
-		//if(validerPrenom.valider())imageViewValide.setVisible(true);
-		// Valider le champ nom 
-		ValidateurChaine validerNom = new ValidateurChaine(nomField,
-				textErrNom, false, ValidationErreur.CHAINE_ERR,45);
-		validerNom.validerChaine(nomField, textErrNom);
-				
-		// Valider le champ adresse 
-		ValidateurChaine validerAdresse = new ValidateurChaine(adresseField,
-						textErrAdresse, true, ValidationErreur.CHAINE_ERR,100);
-		validerAdresse.validerChaine(adresseField, textErrAdresse);
+		// validation
+		ManagerValidation.getInstance().validerChaine(prenomField,
+				textErrPrenom, false, 30);
+		ManagerValidation.getInstance().validerChaine(nomField, textErrNom,
+				false, 30);
+		ManagerValidation.getInstance().validerChaine(adresseField,
+				textErrAdresse, true, 90);
+		ManagerValidation.getInstance().validerChaine(villeField, textErrVille,
+				true, 30);
+
+		ManagerValidation.getInstance().validerEmail(emailField, textErrEmail,
+				false, 30);
+
+		ManagerValidation.getInstance().validerCodePostal(postalField,
+				textErrCodepostal, true);
 		
-		// Valider le champ ville 
-				ValidateurChaine validerVille = new ValidateurChaine(villeField,
-								textErrVille, true, ValidationErreur.CHAINE_ERR,45);
-				validerVille.validerChaine(villeField, textErrVille);
-		
-		//Valider le mail
-		ValideurEmail validerEmail = new ValideurEmail(emailField,
-				textErrEmail, false, ValidationErreur.EMAIL_ERR,45);
-		validerEmail.validerEmail(emailField,textErrEmail);
-	
-		//Valider le code postal
-		ValideurCodePostale validerCodePostal = new ValideurCodePostale(postalField,
-				textErrCodepostal, true, ValidationErreur.CODEPOSTALE_ERR);
-		validerCodePostal.validerCodePostal(postalField,textErrCodepostal);
-		
-		//Valider le telephone
-		ValideurTelephone validerTelephone = new ValideurTelephone(telephoneField,
-						textErrTelephone, true, ValidationErreur.TELEPHONE_ERR);
-		validerTelephone.validerTelephone(telephoneField,textErrTelephone);
+		ManagerValidation.getInstance().validerTelephone(telephoneField,
+				textErrTelephone, true);
 		
 		
 		// installEventHandler(telephoneField);
@@ -172,15 +153,12 @@ public class AjouterMembreController implements Initializable {
 				btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						if(validerTelephone.valider() && validerCodePostal.valider()
-								&& validerEmail.valider()  &&  validerVille.valider()
-										 &&  validerAdresse.valider() && validerNom.valider()
-												&&  validerPrenom.valider()){
+						Boolean valide = ManagerValidation.getInstance()
+								.toutEstValide();
+						if(valide){
 							enregistrerMembre();
-							// parentStage.show();
-							
+							ManagerValidation.getInstance().clearListOfValidation();
 							stage.close();
-							
 						}else{
 							textErrMessage.setText("Veuillez corriger les champs invalides!");
 						}

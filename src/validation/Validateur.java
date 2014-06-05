@@ -1,14 +1,19 @@
 package validation;
 
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 
@@ -18,11 +23,19 @@ public abstract  class Validateur {
 	protected boolean nullable;
 	protected ValidationErreur validationErr;
 	protected String plus;
-	protected static AnchorPane anc;
-	private ImageView iv1;
+	private static AnchorPane anc;
+	protected ImageView iv1;
 	
+	public  ImageView getIv1() {
+		return iv1;
+	}
 	public static void setAnc(AnchorPane anc) {
 		Validateur.anc = anc;
+	}
+	
+	public Validateur() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	public Validateur(TextField texte, Text labelErr, boolean nullable,
 			ValidationErreur validationErr) {
@@ -103,6 +116,7 @@ public abstract  class Validateur {
 			if(valide){
 				texte.getStyleClass().remove("error");
 				labelErr.setVisible(false);
+				
 			}
 			texte.getStyleClass().remove("error");
 		}
@@ -111,8 +125,10 @@ public abstract  class Validateur {
 	}
 	
 	public void AfficherImageValider(){
+		
 		if(iv1 != null)
 			return;
+		
 		Image image = new Image("@../../META-INF/images/Valider.png");
 	    //simple displays ImageView the image as is
         iv1 = new ImageView();
@@ -123,4 +139,7 @@ public abstract  class Validateur {
         anc.getChildren().add(iv1);
 	}
 	
+	public void setTransparentTextField(TextField textField){
+		textField.setBackground(Background.EMPTY);
+	}
 }

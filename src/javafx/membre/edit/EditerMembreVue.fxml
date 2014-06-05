@@ -70,7 +70,7 @@
 								<Button fx:id="btnEnregistrer" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Enregistrer" />
 							</children>
 						</HBox>
-						<DatePicker fx:id="dateNaissance" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP">
+						<DatePicker fx:id="dateNaissance" editable="false" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP">
 <cursor>
 <Cursor fx:constant="HAND" />
 </cursor></DatePicker>
@@ -109,7 +109,10 @@
 						</VBox>
 						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
 							<children>
-								<TextField fx:id="telephoneField" promptText="514 708 4568" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+								<TextField fx:id="telephoneField" promptText="514 708 4568" GridPane.columnIndex="1" GridPane.rowIndex="3">
+<VBox.margin>
+<Insets right="217.0" />
+</VBox.margin></TextField>
 								<Text id="textErr" fx:id="textErrTelephone" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
 									<font>
 										<Font size="10.0" />
@@ -129,7 +132,10 @@
 						</VBox>
 						<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
 							<children>
-								<TextField fx:id="postalField" promptText="H1R 2S8" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+								<TextField fx:id="postalField" promptText="H1R 2S8" GridPane.columnIndex="1" GridPane.rowIndex="6">
+<VBox.margin>
+<Insets right="217.0" />
+</VBox.margin></TextField>
 								<Text id="textErr" fx:id="textErrCodepostal" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
 									<font>
 										<Font size="10.0" />
