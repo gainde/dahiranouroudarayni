@@ -7,6 +7,7 @@ import javafx.dahira.DahiraController;
 import javafx.evenement.EvenementController;
 import javafx.fxml.FXMLLoader;
 import javafx.impot.ImpotController;
+import javafx.kst.KSTController;
 import javafx.membre.EmailController;
 import javafx.membre.MembreController;
 import javafx.membre.ajout.AjouterMembreController;
@@ -253,4 +254,31 @@ public class LoadManagerView {
 		}
 
 	}
+	
+	// afficher la fenetre Keur Serigne Touba
+		public void afficherVueKST(Stage stage) {
+			Stage primaryStage = new Stage();
+			primaryStage.setTitle("Keur Serigne Touba");
+			primaryStage.initModality(Modality.WINDOW_MODAL);
+			try {
+				// Load the root layout from the fxml file
+				FXMLLoader loader = new FXMLLoader(
+						KSTController.class.getResource("KST.fxml"));
+				AnchorPane anc = (AnchorPane) loader.load();
+				KSTController kstController = (KSTController) loader
+						.getController();
+				Scene scene = new Scene(anc);
+				//scene.getStylesheets().add("META-INF/css/style.css");
+				primaryStage.setScene(scene);
+				kstController.setStage(primaryStage);
+				kstController.setParentStage(stage);
+				primaryStage.setResizable(false);
+				primaryStage.show();
+
+			} catch (IOException e) {
+				// Exception gets thrown if the fxml file could not be loaded
+				e.printStackTrace();
+			}
+
+		}
 }

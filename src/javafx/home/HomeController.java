@@ -103,6 +103,7 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Parametre");
+				
 			}
 		});
 	}
@@ -113,6 +114,8 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Keur Serigne Touba");
+				LoadManagerView.getInstance().afficherVueKST(stage);
+				stage.hide();
 			}
 		});
 	}
