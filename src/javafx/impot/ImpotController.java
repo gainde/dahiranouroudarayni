@@ -18,6 +18,7 @@ import validation.Validateur;
 import validation.ValidationErreur;
 import validation.ValideurEmail;
 import javafx.GenererPdf;
+import javafx.SendMessage;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -31,12 +32,14 @@ import javafx.fxml.Initializable;
 import javafx.membre.MembreController;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -56,11 +59,13 @@ import daoimpl.MembreDaoImpl;
 import entites.Adresse;
 import entites.Dahira;
 import entites.Impot;
+import entites.ManagerEntite;
 import entites.Membre;
 import entites.Utilisateur;
 
 public class ImpotController implements Initializable{
 	 @FXML private ImageView imageViewHome;
+	 @FXML private Text textErr;
 	 @FXML private Text textErrEmail;
 	 @FXML private TextField txtEmail;
 	 @FXML private PasswordField txtMotDePasse;
@@ -70,6 +75,7 @@ public class ImpotController implements Initializable{
 	 @FXML private ProgressBar progressBar;
 	 @FXML private Button btnExecuter;
 	 @FXML private Button btnChoisir;
+	 @FXML private Button btnHome;
 	 @FXML private ComboBox<Integer> cmbAnnee;
 	 @FXML private DatePicker datePickerDeliv;
 	 @FXML private TextField txtObjet;
@@ -102,13 +108,15 @@ public class ImpotController implements Initializable{
 	 
 	 @Override
 	 public void initialize(URL location, ResourceBundle resources) {
-		 //inactif le bouton executer
-		 btnExecuter.setDisable(true);
+		
+		 //iniialiser à la date d aujourd hui
+		 datePickerDeliv.setValue(LocalDate.now());
 		 //set anchorPane
 		 Validateur.setAnc(anc);
+		 toolTipButton(btnHome,"Home");
 		// TODO Auto-generated method stub
 		handleButtonChoisir();
-		handleButtonExecuter();
+		
 		fillComboBox();
 		handleButtonHome();
 		//TODO delete Test
@@ -129,27 +137,16 @@ public class ImpotController implements Initializable{
 		System.out.println("Montant kst = "+v);
 		
 		//Valider le mail
-				ValideurEmail validerEmail = new ValideurEmail(txtEmail,
-						textErrEmail, false, ValidationErreur.EMAIL_ERR,45);
-				validerEmail.validerEmail(txtEmail,textErrEmail);
-			
+		ValideurEmail validerEmail = new ValideurEmail(txtEmail,
+		textErrEmail, false, ValidationErreur.EMAIL_ERR,45);
+		validerEmail.validerEmail(txtEmail,textErrEmail);
+		handleButtonExecuter(validerEmail);
+		btnExecuter.disableProperty().bind(lbDossier.textProperty().isEmpty());
 	 }
 	
 	 public void setStage(Stage stage) {
         this.stage = stage;
      }
-	
-	 private void handleButtonHome(){
-		 imageViewHome.setOnMouseReleased(new EventHandler<Event>() {
-	    		
-				@Override
-				public void handle(Event event) {
-					System.out.println("click");
-					parentStage.show();
-					stage.close();
-				}
-			});
-	 }
 	 
 	 private void handleButtonChoisir(){
 		 btnChoisir.setOnMouseReleased(new EventHandler<Event>() {
@@ -161,13 +158,31 @@ public class ImpotController implements Initializable{
 				}
 			});
 	 }
-	 private void handleButtonExecuter(){
+	 
+	 private void handleButtonHome(){
+		 btnHome.setOnAction(new EventHandler<ActionEvent>() {
+	    		
+				@Override
+				public void handle(ActionEvent event) {
+					System.out.println("click");
+					parentStage.show();
+					stage.close();
+				}
+			});
+	 }
+	 
+	 private void handleButtonExecuter(ValideurEmail validerEmail){
 		 btnExecuter.setOnMouseReleased(new EventHandler<Event>() {
 	    		
 				@Override
 				public void handle(Event event) {
 					System.out.println("click");
-					getInfo();
+					if(validerEmail.valider()){
+						getInfo();
+					}else
+					{
+					textErr.setText("Veuillez corriger les champs invalides!");
+					}
 				}
 			});
 	 }
@@ -191,12 +206,7 @@ public class ImpotController implements Initializable{
 		 //lbDossier.setText("");
 		 if(selectedDirectory != null){
 			 lbDossier.setText(selectedDirectory.getPath());
-			 btnExecuter.setDisable(false);
 			 }
-		 else if(lbDossier.getText().length() != 0)
-			 btnExecuter.setDisable(false);
-		 else
-			 btnExecuter.setDisable(true);
          //System.out.println("chemin : "+selectedDirectory.getName());
 	 }
 	 
@@ -260,7 +270,7 @@ public class ImpotController implements Initializable{
 	 }
 	 
 	 private void envoyerEmail(Impot impotMembre){
-		 Dahira dahira = new Dahira("Nourou Darayni", "no description", "1234567890", "5149999999", "", "", new Adresse("", "", "", "", ""));
+		 Dahira dahira = ManagerEntite.getInstance().loadDahira();
 		 
 		 String nameFile = lbMembre.getText()+"/"+impotMembre.getMembre().getPrenom() +
 				"_" + impotMembre.getMembre().getNom() + ".pdf";
@@ -276,12 +286,12 @@ public class ImpotController implements Initializable{
 			 e.printStackTrace();
 		 }
 		
-		 /*SendMessage mess = new SendMessage();
-		 mess.setObjet("Impot");
-		 mess.setMessage("Bonjour, Voici votre releve d'impot.");
+		 SendMessage mess = new SendMessage();
+		 mess.setObjet(txtObjet.getText());
+		 mess.setMessage(txtAMsg.getText());
 		 mess.setEmailDestination(impotMembre.getMembre().getEmail());
 		 mess.setPathFile(nameFile);
-		 mess.sendMessage(user.getLogin(),user.getPass());*/
+		 mess.sendMessage(user.getLogin(),user.getPass());
 		 
 			
 			
@@ -290,7 +300,7 @@ public class ImpotController implements Initializable{
 	 
 	 public void progressBar(){
          progressBar.setProgress(0);
-        Task copyWorker = createWorker();
+         Task copyWorker = createWorker();
          progressBar.progressProperty().unbind();
          progressBar.progressProperty().bind(copyWorker.progressProperty());
          lbMembres.textProperty().bind(copyWorker.messageProperty());
@@ -320,5 +330,11 @@ public class ImpotController implements Initializable{
 	            }
 	    };
 	 }
-	 
+	 //caption pour indique le bouton home
+	    public void toolTipButton(Control node, String text) {
+			Tooltip tooltip = new Tooltip();
+			tooltip.setHeight(14);tooltip.setWidth(10);
+			tooltip.setText(text);
+			node.setTooltip(tooltip);
+		}
 }

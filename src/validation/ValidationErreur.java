@@ -4,7 +4,8 @@ public enum ValidationErreur {
 	EMAIL_ERR("100","Le champ ne doit pas être vide","Email invalide"),
 	TELEPHONE_ERR("101", "", "Telephone invalide"),
 	CODEPOSTALE_ERR("102","","Code postale invalide"),
-	CHAINE_ERR("103","Le champ ne doit pas être vide", "Invalide seulement alpha numerique");
+	CHAINE_ERR("103","Le champ ne doit pas être vide", "Invalide seulement alpha numerique"), 
+	MONTANT_ERR("104","", "Montant invalide Ex : 20.00 ou 20");
 	
 	private String code;
 	private String messageErr;
