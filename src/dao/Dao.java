@@ -11,5 +11,6 @@ public interface Dao<T, PK extends Serializable> {
     List<T> getAll(String query);
     public List<T> getAll(String query, String param);
 	T get(String query);
+	T get(String query, String param);
 	Double getMontant(String query, String id, String annee);
 }
