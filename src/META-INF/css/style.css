@@ -1,7 +1,15 @@
 .root{
     -fx-font-size: 12px;
     -fx-font-family: "Times New Roman";
-    -fx-background-color:  rgb(255, 255, 255);
+    /*-fx-background-color:  rgb(125, 125, 125);*/
+    -fx-background-color: 
+        #c3c4c4,
+        linear-gradient(#d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200% , #e6e6e6 45%, rgba(230,230,230,0) 50%); 
+    -fx-background-radius: 10;
+    -fx-background-insets: 10,10,10,10;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
 
 .label {
@@ -20,28 +28,26 @@
    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
 
-.button,.combo-box {
+.button,.combo-box,.date-picker {
 	-fx-cursor:hand;
     -fx-text-fill: black;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-background-color: white;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 0, 1 , 1 , 1 );
+   	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1  );
 }
 
-.button:hover,.combo-box:hover {
+.button:hover,.combo-box:hover,.date-picker:hover {
      -fx-background-color:
-        linear-gradient(#f0ff35, #a9ff00),
+        linear-gradient(#f0ff35, #a9fa00),
         radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: black;
-    -fx-border-width: 2;
-	-fx-border-color: white;
 }
 
-.button{
+.button:focused,.combo-box:focused,.date-picker:focused {
 	-fx-cursor:hand;
     -fx-background-color:
         linear-gradient(#008835, #a98800),
@@ -53,6 +59,14 @@
     
 }
 
+#lbDossier {
+	-fx-background-color:white;
+}
+
+
+#btnErr {
+	-fx-text-fill:red;
+}
 
 #listViewMembre{
 	-fx-cursor:hand;
@@ -78,6 +92,15 @@
 }
 
 #grdTitle{
-	-fx-font-size: 24px;
+	-fx-font-size: 20px;
    -fx-fill:linear-gradient(palegreen, seagreen);
+}
+
+.tooltip{
+	-fx-background-color:transparent ;
+	-fx-font-size: 12px;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }

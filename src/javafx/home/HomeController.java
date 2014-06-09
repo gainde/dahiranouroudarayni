@@ -1,17 +1,30 @@
 package javafx.home;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.loadview.LoadManagerView;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import daoimpl.DahiraDaoImpl;
 import entites.Dahira;
+import entites.ManagerEntiteDahira;
 
 public class HomeController implements Initializable {
 	@FXML
@@ -25,28 +38,66 @@ public class HomeController implements Initializable {
 	@FXML
 	private Button btnImpot;
 	@FXML
-	private Button btnParametre;
+	private Button btnAide;
 	@FXML
 	private Button btnQuitter;
 
 	private Stage stage;
 	private Dahira dahira;
 
-	private final String DAHIRA = "select c from Dahira c";
-
+	private MediaPlayer mediaPlayer;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		HandleButtonDahira();
+		File file = new File("src/javafx/home/audioStart.mp3");
+		try {
+			final String mediaLocation = file.toURI().toURL().toExternalForm();
+			Media media = new Media(mediaLocation);
+		    mediaPlayer = new MediaPlayer(media);
+		    mediaPlayer.setStopTime(new Duration(200));
+		    mediaPlayer.play();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		platform();
+		/*playSound.setScaleX(1.5);
+		
+		mediaPlayer.setOnEndOfMedia(new Runnable() {
+		      @Override public void run() {
+		    	
+		      }
+		    });
+		stopSound.setOnMouseReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				playSound.setScaleX(1);
+				stopSound.setScaleX(1.5);
+				mediaPlayer.stop();
+			}
+		});
+		playSound.setOnMouseReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				stopSound.setScaleX(1);
+				playSound.setScaleX(1.5);
+				mediaPlayer.play();
+			}
+		});*/
+		
+		//AudioClip sound = new AudioClip(mediaLocation);
+		//sound.play();
+		/*HandleButtonDahira();
 		HandleButtonEvenement();
 		HandleButtonImpot();
 		HandleButtonMembre();
 		HandleButtonParametre();
 		HandleButtonKeurSerigneTouba();
 		HandleButtonQuitter();
-		// charger les vues
-		chargerDahira();
-
+		dahira = ManagerEntiteDahira.getInstance().loadDahira();*/
 	}
 
 	public void setStage(Stage stage) {
@@ -68,8 +119,9 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				LoadManagerView.getInstance().afficherVueEvenement(stage);
-				stage.hide();
+				
+			        	LoadManagerView.getInstance().afficherVueEvenement(stage);
+			        	stage.hide();
 			}
 		});
 	}
@@ -98,11 +150,11 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonParametre() {
-		btnParametre.setOnMouseReleased(new EventHandler<Event>() {
+		btnAide.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Parametre");
+				System.out.println("click Aide");
 				
 			}
 		});
@@ -126,14 +178,30 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Quitter");
+				stage.hide();
+				
 			}
+	
+			
 		});
 	}
+	public void platform(){
+		Platform.runLater(new Runnable(){
 
-	// charger les informations de la dahira
-	public void chargerDahira() {
-		DahiraDaoImpl dahiraDao = new DahiraDaoImpl();
-		dahira = dahiraDao.get(DAHIRA);
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				HandleButtonDahira();
+				HandleButtonEvenement();
+				HandleButtonImpot();
+				HandleButtonMembre();
+				HandleButtonParametre();
+				HandleButtonKeurSerigneTouba();
+				HandleButtonQuitter();
+				dahira = ManagerEntiteDahira.getInstance().loadDahira();
+			}
+			
+		});
 	}
-
+	
 }

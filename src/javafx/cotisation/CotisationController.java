@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -33,7 +34,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -56,6 +59,11 @@ import entites.Evenement;
 import entites.Membre;
 
 public class CotisationController implements Initializable{
+	
+	@FXML private HBox hboxErr;
+	@FXML private Button btnErr;
+	@FXML private ImageView closeShape;
+	
 	@FXML private TabPane tabPaneCotisation;
 	@FXML private TableView<CotisationLoyer> tableLoyer ;
 	@FXML private TableView<CotisationKST> tableKST ;
@@ -121,6 +129,7 @@ public class CotisationController implements Initializable{
 	private Boolean valide = false;
 	
 	private int nbChilds;
+	private Timeline timeline;
 	
 	Validateur valideurLoyer;
 	Validateur valideurKST;
@@ -138,7 +147,9 @@ public class CotisationController implements Initializable{
     	nbChilds = anc.getChildren().size();
     	// set l anchorpane
     	Validateur.setAnc(anc);
-
+    	hboxErr.setVisible(false);
+		timeline = new Timeline();
+		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
 		 //iniialiser à la date d aujourd hui
     	dateLoyer.setValue(LocalDate.now());
     	dateKST.setValue(LocalDate.now());
@@ -182,8 +193,12 @@ public class CotisationController implements Initializable{
 				if(valide){
 					System.out.println("Ok Loyer");
 					ajouterCotisationLoyer();
+					btnErr.setText("Cotisation ajoutée avec succés!");
+				}else{
+					btnErr.setText("Veuillez corriger les champs invalides!");
 				}
-				
+				ManagerValidation.getInstance().animate(hboxErr, timeline);
+				hboxErr.setVisible(true);
 			}
 		});
     }
@@ -197,8 +212,12 @@ public class CotisationController implements Initializable{
 				if(valide){
 					System.out.println("Ok KST");
 					ajouterCotisationKST();
+					btnErr.setText("Cotisation ajoutée avec succés!");
+				}else{
+					btnErr.setText("Veuillez corriger les champs invalides!");
 				}
-				
+				ManagerValidation.getInstance().animate(hboxErr, timeline);
+				hboxErr.setVisible(true);
 			}
 		});
     }
@@ -212,7 +231,12 @@ public class CotisationController implements Initializable{
 				if(valide){
 					System.out.println("Ok Evenement");
 					ajouterCotisationEvenement();
+					btnErr.setText("Cotisation ajoutée avec succés!");
+				}else{
+					btnErr.setText("Veuillez corriger les champs invalides!");
 				}
+				ManagerValidation.getInstance().animate(hboxErr, timeline);
+				hboxErr.setVisible(true);
 				
 			}
 		});
@@ -299,7 +323,8 @@ public class CotisationController implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends Tab> observable,
 					Tab oldValue, Tab newValue) {
-				updateAnchorePane();
+				ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
+				hboxErr.setVisible(false);
 				if(newValue.getId().equals(LOYER_TAB_ID)){
 					chargerCotisationLoyer();
 				}else if(newValue.getId().equals(KST_TAB_ID)){
@@ -374,7 +399,8 @@ public class CotisationController implements Initializable{
 		CotisationLoyer cotisation = new CotisationLoyer(montantLoyer, date);
 		cotisation.setIdMembre(membre.getEmail());
 		ajouterCotisationLoyer(cotisation);
-		updateAnchorePane();
+		txtMontantLoyer.clear();
+		ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
 	}
 	private void ajouterCotisationLoyer(CotisationLoyer cotisation){
 		CotisationLoyerDao cotisationLoyerDao =  new CotisationLoyerImpl();
@@ -393,7 +419,8 @@ public class CotisationController implements Initializable{
 		cotisation.setIdMembre(membre.getEmail());
 		//TODO set Membre
 		ajouterCotisationKST(cotisation);
-		updateAnchorePane();
+		montantKST.clear();
+		ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
 	}
 	private void ajouterCotisationKST(CotisationKST cotisation){
 		CotisationKSTDao cotisationKSTDao =  new CotisationKSTImpl();
@@ -409,7 +436,8 @@ public class CotisationController implements Initializable{
 		CotisationEvenement cotisation = new CotisationEvenement(montantLoyer,date,even.getNomEvenement());
 		cotisation.setIdMembre(membre.getEmail());
 		ajouterCotisationEvenement(cotisation);
-		updateAnchorePane();
+		txtMontantEvenement.clear();
+		ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
 	}
 	private void ajouterCotisationEvenement(CotisationEvenement cotisation){
 		CotisationEvenementDao cotisationEvenementDao =  new CotisationEvenementImpl();
@@ -521,13 +549,4 @@ public class CotisationController implements Initializable{
 		});
 	}
 	
-	// mettre a jour la table de view
-	 	public void updateAnchorePane() {
-	 		List<Node> listChilds = anc.getChildren();
-	 		for(Node p :listChilds.subList(nbChilds, listChilds.size())){
-	 				p.setVisible(false);
-	 		}
-	 		
-	 	}
-
 }

@@ -4,19 +4,19 @@ import dao.DahiraDao;
 import daoimpl.DahiraDaoImpl;
 import javafx.loadview.LoadManagerView;
 
-public class ManagerEntite {
+public class ManagerEntiteDahira {
 	
 	/** Constructeur privé */
-	private ManagerEntite() {
+	private ManagerEntiteDahira() {
 	}
 
 	/** Instance unique non préinitialisée */
-	private static ManagerEntite INSTANCE = null;
+	private static ManagerEntiteDahira INSTANCE = null;
 
 	/** Point d'accès pour l'instance unique du singleton */
-	public static synchronized ManagerEntite getInstance() {
+	public static synchronized ManagerEntiteDahira getInstance() {
 		if (INSTANCE == null) {
-			INSTANCE = new ManagerEntite();
+			INSTANCE = new ManagerEntiteDahira();
 		}
 		return INSTANCE;
 	}
@@ -33,4 +33,10 @@ public class ManagerEntite {
 			DahiraDao dahiraDao = new DahiraDaoImpl();
 			dahiraDao.update(dahira);
 	}
+	
+	//mettre à jour un membre dans la base de donnée
+		public void createDahira(Dahira dahira) {
+				DahiraDao dahiraDao = new DahiraDaoImpl();
+				dahiraDao.create(dahira);
+		}
 }

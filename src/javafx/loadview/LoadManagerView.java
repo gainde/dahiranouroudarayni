@@ -48,7 +48,7 @@ public class LoadManagerView {
 			DahiraController dahiraController = (DahiraController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			// scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			dahiraController.setStage(primaryStage);
 			dahiraController.setEditDahira(dahira);
@@ -75,7 +75,7 @@ public class LoadManagerView {
 			MembreController membreController = (MembreController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			// scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			membreController.setStage(primaryStage);
 			membreController.setParentStage(stage);
@@ -92,7 +92,7 @@ public class LoadManagerView {
 	public void afficherVueEvenement(Stage stage) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Évènements");
-		primaryStage.initModality(Modality.WINDOW_MODAL);
+		//primaryStage.initModality(Modality.WINDOW_MODAL);
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader(
@@ -101,7 +101,7 @@ public class LoadManagerView {
 			EvenementController evenementController = (EvenementController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			//scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			evenementController.setStage(primaryStage);
 			evenementController.setParentStage(stage);
@@ -119,7 +119,7 @@ public class LoadManagerView {
 	public void afficherVueImpot(Stage stage) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Impôt");
-		primaryStage.initModality(Modality.WINDOW_MODAL);
+		//primaryStage.initModality(Modality.WINDOW_MODAL);
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader(
@@ -128,7 +128,7 @@ public class LoadManagerView {
 			ImpotController impotController = (ImpotController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			// scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			impotController.setStage(primaryStage);
 			impotController.setParentStage(stage);
@@ -184,7 +184,7 @@ public class LoadManagerView {
 			EditerMembreController editMemberController = (EditerMembreController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			// scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			editMemberController.setStage(primaryStage);
 			editMemberController.setEditMembre(membreActif);
@@ -212,7 +212,7 @@ public class LoadManagerView {
 			CotisationController cotisation = (CotisationController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			// scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			// cotisation.setParentStage(primaryStage);
 			cotisation.setStage(primaryStage);
@@ -240,7 +240,7 @@ public class LoadManagerView {
 			EmailController emailController = (EmailController) loader
 					.getController();
 			Scene scene = new Scene(anc);
-			// scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getStylesheets().add("META-INF/css/style.css");
 			primaryStage.setScene(scene);
 			emailController.setStage(primaryStage);
 			emailController.setMembreEnvoyer(membreActif);
