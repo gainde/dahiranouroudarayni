@@ -189,7 +189,7 @@ public class CotisationController implements Initializable{
 			@Override
 			public void handle(Event event) {
 				valide = ManagerValidation.getInstance()
-						.unEstValide(valideurLoyer);
+						.valider(valideurLoyer);
 				if(valide){
 					System.out.println("Ok Loyer");
 					ajouterCotisationLoyer();
@@ -208,7 +208,7 @@ public class CotisationController implements Initializable{
 			@Override
 			public void handle(Event event) {
 				valide = ManagerValidation.getInstance()
-						.unEstValide(valideurKST);
+						.valider(valideurKST);
 				if(valide){
 					System.out.println("Ok KST");
 					ajouterCotisationKST();
@@ -227,7 +227,7 @@ public class CotisationController implements Initializable{
 			@Override
 			public void handle(Event event) {
 				valide = ManagerValidation.getInstance()
-						.unEstValide(valideurEvent);
+						.valider(valideurEvent);
 				if(valide){
 					System.out.println("Ok Evenement");
 					ajouterCotisationEvenement();

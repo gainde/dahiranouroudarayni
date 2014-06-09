@@ -242,7 +242,7 @@ public class EvenementController implements Initializable{
 			@Override
 			public void handle(Event event) {
 				Boolean valide = ManagerValidation.getInstance()
-						.toutEstValide();
+						.valider();
 				if(valide){
 					ajouterEvenement();
 					btnErr.setText("Évènement ajouté avec succés!");
@@ -275,7 +275,7 @@ public class EvenementController implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 				Boolean valide = ManagerValidation.getInstance()
-						.toutEstValide();
+						.valider();
 				if(valide){
 					
 					enregistrer();

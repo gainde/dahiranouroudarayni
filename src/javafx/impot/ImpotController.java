@@ -226,7 +226,7 @@ public class ImpotController implements Initializable {
 			public void handle(Event event) {
 				Boolean valideMotDePasse = validerMotDePasse();
 				Boolean valide = ManagerValidation.getInstance()
-						.toutEstValide();
+						.valider();
 				System.out.println("click");
 				if (valide && valideMotDePasse) {
 					getInfo();

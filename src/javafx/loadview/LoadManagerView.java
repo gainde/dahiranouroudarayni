@@ -268,7 +268,7 @@ public class LoadManagerView {
 				KSTController kstController = (KSTController) loader
 						.getController();
 				Scene scene = new Scene(anc);
-				//scene.getStylesheets().add("META-INF/css/style.css");
+				scene.getStylesheets().add("META-INF/css/style.css");
 				primaryStage.setScene(scene);
 				kstController.setStage(primaryStage);
 				kstController.setParentStage(stage);

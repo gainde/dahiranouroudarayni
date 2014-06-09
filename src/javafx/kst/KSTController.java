@@ -30,6 +30,7 @@ public class KSTController implements Initializable{
     
     @FXML private Button btnEditer;
     @FXML private Button btnEnregistrer;
+    @FXML private Button btnQuitter;
     
     @FXML private DatePicker dateDebut;
     @FXML private DatePicker dateFin;
@@ -56,6 +57,7 @@ public class KSTController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	HandleButtonEditer();
     	handleButtonEnregistrer();
+    	handleButtonQuitter();
     	enableFieldsEdit(true);
     	titledPaneInfo.setExpanded(false);
     	dateDebut.setEditable(false);
@@ -94,6 +96,16 @@ public class KSTController implements Initializable{
 			}
 		});
     }
+    
+ 	public void handleButtonQuitter() {
+ 		btnQuitter.setOnAction(new EventHandler<ActionEvent>() {
+ 			@Override
+ 			public void handle(ActionEvent event) {
+ 				parent.show();
+ 				stage.close();
+ 			}
+ 		});
+ 	}
     
     private void enableFieldsEdit(boolean value){
     	txtNom.setDisable(value);

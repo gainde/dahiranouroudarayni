@@ -203,7 +203,7 @@ public class DahiraController implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				Boolean valide = ManagerValidation.getInstance()
-						.toutEstValide();
+						.valider();
 				if (valide) {
 					System.out.println("Tout est valide :" + valide);
 					enregistrerDahira();

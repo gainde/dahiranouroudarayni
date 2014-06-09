@@ -112,14 +112,14 @@ public class ManagerValidation{
 		valideList.add(val);
 	}
 
-	public Boolean toutEstValide() {
+	public Boolean valider() {
+		boolean valide = true;
 		for (Validateur p : valideList) {
-			if (!p.valider())
-				return false;
+			valide &=p.valider();
 		}
-		return true;
+		return valide;
 	}
-	public Boolean unEstValide(Validateur p) {
+	public Boolean valider(Validateur p) {
 		return p.valider();
 	}
 	

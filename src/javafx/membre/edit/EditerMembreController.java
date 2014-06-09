@@ -179,7 +179,7 @@ public class EditerMembreController implements Initializable{
 				 	    @Override 
 				 	    public void handle(ActionEvent event) {
 				 	    	Boolean valide = ManagerValidation.getInstance()
-									.toutEstValide();
+									.valider();
 				 	    	System.out.println("valide :"+valide);
 							if(valide){
 				 	    		enregistrerMembre();
