@@ -3,6 +3,7 @@
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -138,6 +139,14 @@
 			<font>
 				<Font name="System Bold" size="23.0" />
 			</font>
-		</Label><Button fx:id="btnQuitter" layoutX="676.0" layoutY="481.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Quitter" />
+		</Label><Button fx:id="btnQuitter" layoutX="676.0" layoutY="481.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Quitter" /><HBox fx:id="hboxErr" layoutX="13.0" layoutY="57.0" prefHeight="26.0" prefWidth="371.0">
+<children><Button id="btnErr" fx:id="btnErr" mnemonicParsing="false" prefWidth="302.0">
+<HBox.margin>
+<Insets top="7.0" />
+</HBox.margin></Button><ImageView fx:id="closeShape" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+<image>
+<Image url="@../../META-INF/images/Fermer.png" />
+</image></ImageView>
+</children></HBox>
 	</children>
 </AnchorPane>

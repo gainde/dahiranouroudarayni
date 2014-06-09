@@ -2,6 +2,7 @@ package javafx.evenement;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -115,11 +116,14 @@ public class EvenementController implements Initializable{
     	nbChilds = anc.getChildren().size();
     	// set l anchorpane
     	Validateur.setAnc(anc);
+    	// iniialiser à la date d aujourd hui
+    	dateNouveauEven.setValue(LocalDate.now());
     	
     	toolTipButton(btnHome,"Home");
     	hboxErr.setVisible(false);
-    	//btnErr.setVisible(false);
-    	//closeShape.setVisible(false);
+    	timeline = new Timeline();
+		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
+    
     	// validation
     	initValidation(txtNom);
     	initValidation(txtBudget);
@@ -128,18 +132,7 @@ public class EvenementController implements Initializable{
     	initValidation1(txtNomNouveauEven);
     	initValidation1(txtBudgetNouveauEven);
    
-    	closeShape.setCursor(Cursor.CLOSED_HAND);
-    	
-    	closeShape.setOnMousePressed(new EventHandler<Event>() {
-			
-			@Override
-			public void handle(Event event) {
-				System.out.println("Dans Croix");
-				hboxErr.setVisible(false);
-			}
-		});
-    	
-    	
+   
     	HandleButtonAjouter();
     	HandleButtonEditer();
     	HandleButtonSupprimer();
@@ -228,17 +221,7 @@ public class EvenementController implements Initializable{
 			}
 		});
     }
-    //animation message d erreur
-    public void animate(Node node){
-        	timeline = new Timeline();
-    		timeline.getKeyFrames().addAll(
-    		    new KeyFrame(Duration.ZERO, new KeyValue(node.scaleXProperty(), 0)),
-    		    new KeyFrame(new Duration(1000), new KeyValue(node.scaleXProperty(), 1))
-    		);
-    		//timeline.setCycleCount(10);
-    		//timeline.setAutoReverse(false);
-    		timeline.play();
-    }
+    
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -263,14 +246,13 @@ public class EvenementController implements Initializable{
 				if(valide){
 					ajouterEvenement();
 					btnErr.setText("Évènement ajouté avec succés!");
-					hboxErr.setVisible(true);
 					titledPaneNvEven.setExpanded(false);
 				}else{
 					btnErr.setText("Veuillez corriger les champs invalides!");
 					//textErrMsg.setText("Veuillez corriger les champs invalides!");
-					hboxErr.setVisible(true);
 				}
-				animate(hboxErr);
+				ManagerValidation.getInstance().animate(hboxErr, timeline);
+				hboxErr.setVisible(true);
 			}
 		});
     }
@@ -297,9 +279,7 @@ public class EvenementController implements Initializable{
 				if(valide){
 					
 					enregistrer();
-					tableEvenement.getSelectionModel().clearSelection();
 					btnErr.setText("Modification enregistrée avec succés!");
-					hboxErr.setVisible(true);
 					clearEditEvenement();
 			    	btnEditer.setDisable(true);
 			    	btnSupprimer.setDisable(true);
@@ -307,9 +287,9 @@ public class EvenementController implements Initializable{
 				}else{
 					btnErr.setText("Veuillez corriger les champs invalides!");
 					//textErrMsg.setText("Veuillez corriger les champs invalides!");
-					hboxErr.setVisible(true);
 				}
-				animate(hboxErr);
+				ManagerValidation.getInstance().animate(hboxErr, timeline);;
+				hboxErr.setVisible(true);
 				}
 		});
     }
@@ -388,7 +368,11 @@ public class EvenementController implements Initializable{
 		evenDao.create(even);
 		evenementData.add(even);
 		clearNewEvenement();
-		updateAnchorePane();
+		ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
+		tableEvenement.getSelectionModel().clearSelection();
+		clearEditEvenement();
+		btnEditer.setDisable(true);
+    	btnSupprimer.setDisable(true);
     }
     private void enableFieldsEdit(boolean value){
     	txtNom.setDisable(value);
@@ -424,7 +408,8 @@ public class EvenementController implements Initializable{
 		evenementData.set(index.get(), even);
 		//btnEditer.setDisable(false);
 		btnEnregistrer.setDisable(true);
-		updateAnchorePane();
+		ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
+		tableEvenement.getSelectionModel().clearSelection();
     }
     
   //caption pour indique le bouton home
@@ -434,14 +419,5 @@ public class EvenementController implements Initializable{
 		tooltip.setText(text);
 		node.setTooltip(tooltip);
 	}
-    
- // mettre a jour la table de view
- 	public void updateAnchorePane() {
- 		List<Node> listChilds = anc.getChildren();
- 		for(Node p :listChilds.subList(nbChilds, listChilds.size())){
- 				p.setVisible(false);
- 		}
- 		
- 	}
- 
+   
 }

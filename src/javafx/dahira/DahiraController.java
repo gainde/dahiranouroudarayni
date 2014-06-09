@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import validation.Validateur;
+import javafx.animation.Timeline;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -11,13 +13,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.membre.MembreController;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import validation.ManagerValidation;
@@ -30,10 +36,15 @@ import dao.DahiraDao;
 import daoimpl.DahiraDaoImpl;
 import entites.Adresse;
 import entites.Dahira;
-import entites.ManagerEntite;
+import entites.ManagerEntiteDahira;
 
 public class DahiraController implements Initializable {
 
+
+	@FXML private HBox hboxErr;
+	@FXML private Button btnErr;
+	@FXML private ImageView closeShape;
+	
 	@FXML
 	private Text textErrNom;
 	@FXML
@@ -94,6 +105,7 @@ public class DahiraController implements Initializable {
 
 	private Dahira editDahira;
 	private MembreController membreController;
+	private Timeline timeline;
 
 	String province = "Quebec";
 
@@ -147,9 +159,12 @@ public class DahiraController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		btnEnregistrer.disableProperty()
 				.bind(btnEditer.disableProperty().not());
+		setDisableAllFieldText(true);
 		// set l anchorpane
 		Validateur.setAnc(anc);
-
+		hboxErr.setVisible(false);
+		timeline = new Timeline();
+		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
 		// validation
 		ManagerValidation.getInstance().validerChaine(nomField, textErrNom,
 				false, 30);
@@ -160,7 +175,9 @@ public class DahiraController implements Initializable {
 		ManagerValidation.getInstance().validerChaine(siteWebField,
 				textErrSiteWeb, true, 30);
 		ManagerValidation.getInstance().validerChaine(descriptionArea,
-				textErrDescription, true, 100);
+				textErrDescription, true, 90);
+		setNodeStopWriten(descriptionArea,90);
+		
 		ManagerValidation.getInstance().validerChaine(villeField, textErrVille,
 				true, 30);
 
@@ -193,8 +210,9 @@ public class DahiraController implements Initializable {
 					stage.close();
 
 				} else {
-					textErrMessage
-							.setText("Veuillez corriger les champs invalides!");
+					btnErr.setText("Veuillez corriger les champs invalides!");
+					ManagerValidation.getInstance().animate(hboxErr, timeline);
+					hboxErr.setVisible(true);
 				}
 
 			}
@@ -204,6 +222,7 @@ public class DahiraController implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				btnEditer.setDisable(true);
+				setDisableAllFieldText(false);
 
 			}
 		});
@@ -212,6 +231,11 @@ public class DahiraController implements Initializable {
 
 	// ajouter les informations dans la base de donnée
 	public void enregistrerDahira() {
+		Boolean nullDahira = false;
+		if (editDahira == null){
+			 nullDahira = true;
+			editDahira = new Dahira();
+		}
 		editDahira.setNomDahira(nomField.getText().trim());
 		editDahira.setNumeroEnregistrement(numeroNEField.getText().trim());
 		editDahira.setDescription(descriptionArea.getText().trim());
@@ -222,7 +246,10 @@ public class DahiraController implements Initializable {
 				.getText().trim(), province, postalField.getText().trim(),
 				"Canada");
 		editDahira.setAdresse(adresse);
-		ManagerEntite.getInstance().updateDahira(editDahira);
+		if(nullDahira)
+			ManagerEntiteDahira.getInstance().createDahira(editDahira);
+		else
+			ManagerEntiteDahira.getInstance().updateDahira(editDahira);
 	}
 
 	// action sur le combox selection de province
@@ -239,4 +266,29 @@ public class DahiraController implements Initializable {
 		});
 	}
 
+	// set disable the field text
+	public void setDisableAllFieldText(Boolean disable) {
+		nomField.setDisable(disable);
+		numeroNEField.setDisable(disable);
+		adresseField.setDisable(disable);
+		siteWebField.setDisable(disable);
+		descriptionArea.setDisable(disable);
+		villeField.setDisable(disable);
+		postalField.setDisable(disable);
+		emailField.setDisable(disable);
+		telephoneField.setDisable(disable);
+		cmbProvince.setDisable(disable);
+
+	}
+	
+	//stop to write 
+	public void setNodeStopWriten(TextArea node,int caractereMax){
+		node.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+			public void handle(final KeyEvent keyEvent) {
+				if (node.getText().length() >= caractereMax) {
+					keyEvent.consume();
+				}
+			}
+		});
+	}
 }

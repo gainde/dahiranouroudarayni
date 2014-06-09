@@ -41,7 +41,7 @@ public class ValideurEmail extends Validateur {
 		textField.addEventHandler(KeyEvent.KEY_TYPED,
 				new EventHandler<KeyEvent>() {
 					public void handle(final KeyEvent keyEvent) {
-						if (textField.getText().length() > tailleMax - 4) {
+						if (textField.getText().length() >= tailleMax) {
 							keyEvent.consume();
 						}
 					}

@@ -8,6 +8,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,7 +20,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import validation.ManagerValidation;
@@ -35,6 +38,10 @@ import entites.Adresse;
 import entites.Membre;
 
 public class EditerMembreController implements Initializable{
+	
+	@FXML private HBox hboxErr;
+	@FXML private Button btnErr;
+	@FXML private ImageView closeShape;
 	
 	@FXML
 	private Text textErrPrenom;
@@ -77,7 +84,8 @@ public class EditerMembreController implements Initializable{
 	
 	 private Membre   editMembre;
 	 private MembreController membreController;
-	 private int index;
+	 private Timeline timeline;
+	 
 		String province = "Quebec";
 		Date date = new Date();
 	
@@ -85,9 +93,6 @@ public class EditerMembreController implements Initializable{
 			this.anc = anc;
 	}
 	
-	public void setIndex(int index) {
-		this.index = index;
-	}
 
 	public void setMembreActif() {
 		if( editMembre != null ){
@@ -138,7 +143,9 @@ public class EditerMembreController implements Initializable{
 		
 		//set l anchorpane
 		Validateur.setAnc(anc);
-		
+		hboxErr.setVisible(false);
+		timeline = new Timeline();
+		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
 		// validation
 				ManagerValidation.getInstance().validerChaine(prenomField,
 						textErrPrenom, false, 30);
@@ -163,7 +170,6 @@ public class EditerMembreController implements Initializable{
 				 btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
 				 	    @Override public void handle(ActionEvent event) {
 				 	    	//parentStage.show();
-				 	    	membreController.updateMembreTableView();
 				 	    	stage.close();
 				 	    }
 				 	});
@@ -174,15 +180,17 @@ public class EditerMembreController implements Initializable{
 				 	    public void handle(ActionEvent event) {
 				 	    	Boolean valide = ManagerValidation.getInstance()
 									.toutEstValide();
+				 	    	System.out.println("valide :"+valide);
 							if(valide){
 				 	    		enregistrerMembre();
 					 	    	membreController.makeDataMembre(editMembre);
-					 	    	membreController.updateMembreTableView();
 					 	    	ManagerValidation.getInstance().clearListOfValidation();
 					 	    	stage.close();
 								
 							}else{
-								textErrMessage.setText("Veuillez corriger les champs invalides!");
+								btnErr.setText("Veuillez corriger les champs invalides!");
+								ManagerValidation.getInstance().animate(hboxErr, timeline);
+								hboxErr.setVisible(true);
 							}
 				 	    	
 				 	    }
@@ -206,6 +214,7 @@ public class EditerMembreController implements Initializable{
 						postalField.getText().trim(),"Canada");
 				editMembre.setAdresse(adresse);
 				enreisgitrerMembre(editMembre);
+				membreController.getMembreDonnee().set(membreController.getIndex().get(), editMembre);
 				
 		}
 		//ajouter membre dans la base de donnée

@@ -98,6 +98,12 @@ public class MembreController implements Initializable {
 	private final String LIST_MEMBRE = "select c from Membre c";
 
 	boolean etatEdit = false;// dans etat editer membre çà donne true
+	
+	
+	
+	public static IntegerProperty getIndex() {
+		return index;
+	}
 
 	public Stage getStage() {
 		return stage;
@@ -111,7 +117,7 @@ public class MembreController implements Initializable {
 		this.parent = parent;
 	}
 
-	public static ObservableList<Membre> getMembreDonnee() {
+	public ObservableList<Membre> getMembreDonnee() {
 		return membreDonnee;
 	}
 
@@ -420,14 +426,6 @@ public class MembreController implements Initializable {
 				tableViewMembre.getSortOrder());
 		tableViewMembre.getSortOrder().clear();
 		tableViewMembre.getSortOrder().addAll(sortOrder);
-	}
-
-	// mettre a jour la table de view
-	public void updateMembreTableView() {
-		ObservableList<Membre> tempData = FXCollections.observableArrayList();
-		tempData.addAll(membreDonnee);
-		tableViewMembre.getItems().clear();
-		tableViewMembre.setItems(tempData);
 	}
 
 	public void toolTipButton(Control node, String text) {

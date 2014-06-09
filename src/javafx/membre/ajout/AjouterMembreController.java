@@ -7,23 +7,28 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.membre.MembreController;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import validation.ManagerValidation;
@@ -35,6 +40,10 @@ import entites.Membre;
 
 public class AjouterMembreController implements Initializable {
 
+	@FXML private HBox hboxErr;
+	@FXML private Button btnErr;
+	@FXML private ImageView closeShape;
+	
 	@FXML
 	private Text textErrPrenom;
 	@FXML
@@ -49,8 +58,6 @@ public class AjouterMembreController implements Initializable {
 	private Text textErrCodepostal;
 	@FXML
 	private Text textErrVille;
-	@FXML
-	private Text textErrMessage;
 	
 	@FXML
 	private TextField prenomField;
@@ -85,6 +92,7 @@ public class AjouterMembreController implements Initializable {
 	private Stage stage;
 	private Membre membre;
 	private MembreController membreController;
+	private Timeline timeline;
 	
 	public void setAnchorPane(AnchorPane anc) {
 		this.anc = anc;
@@ -113,11 +121,13 @@ public class AjouterMembreController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		
 		Validateur.setAnc(anc);
+		hboxErr.setVisible(false);
+		timeline = new Timeline();
+		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
 		// validation
 		ManagerValidation.getInstance().validerChaine(prenomField,
-				textErrPrenom, false, 30);
+			textErrPrenom, false, 30);
 		ManagerValidation.getInstance().validerChaine(nomField, textErrNom,
 				false, 30);
 		ManagerValidation.getInstance().validerChaine(adresseField,
@@ -155,17 +165,19 @@ public class AjouterMembreController implements Initializable {
 					public void handle(ActionEvent event) {
 						Boolean valide = ManagerValidation.getInstance()
 								.toutEstValide();
+						System.out.println("valide :"+valide);
 						if(valide){
 							enregistrerMembre();
 							ManagerValidation.getInstance().clearListOfValidation();
 							stage.close();
 						}else{
-							textErrMessage.setText("Veuillez corriger les champs invalides!");
+							btnErr.setText("Veuillez corriger les champs invalides!");
+							ManagerValidation.getInstance().animate(hboxErr, timeline);
+							hboxErr.setVisible(true);
 						}
 						
 					}
 				});
-				
 	}//fin d'initialistion
 
 	// ajouter les informations dans la base de donnée
