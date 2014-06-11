@@ -17,6 +17,7 @@ public class ValideurEmail extends Validateur {
 			ValidationErreur validationErr, int tailleMax) {
 		super(texte, labelErr, nullable, validationErr);
 		this.tailleMax = tailleMax;
+		initValiderEmail(texte, labelErr);
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class ValideurEmail extends Validateur {
 	}
 
 	// validation champ email
-	public void validerEmail(TextField textField, Text textErr) {
+	public void initValiderEmail(TextField textField, Text textErr) {
 		textErr.setVisible(false);
 		textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override

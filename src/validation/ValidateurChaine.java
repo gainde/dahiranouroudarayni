@@ -27,6 +27,7 @@ public class ValidateurChaine extends Validateur {
 		super(texte, labelErr, nullable, validationErr);
 		this.tailleMax = taille;
 		this.choice = false;
+		initValiderChaine(texte, labelErr);
 	}
 	
 	public ValidateurChaine(TextArea texteArea, Text labelErr, boolean nullable,
@@ -35,6 +36,7 @@ public class ValidateurChaine extends Validateur {
 		this.tailleMax = taille;
 		this.choice = true;
 		this.texteArea = texteArea;
+		initValiderChaine(texteArea, labelErr);
 	}
 	@Override
 	public boolean valider() {
@@ -45,7 +47,7 @@ public class ValidateurChaine extends Validateur {
 	}
 	
 	// validation champ
-		public void validerChaine(TextField textField, Text labelErr) {
+		private void initValiderChaine(TextField textField, Text labelErr) {
 			labelErr.setVisible(false);
 			textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 				@Override
@@ -66,7 +68,7 @@ public class ValidateurChaine extends Validateur {
 		}
 		
 		// validation champ
-				public void validerChaine(TextArea textArea, Text labelErr) {
+				private void initValiderChaine(TextArea textArea, Text labelErr) {
 					labelErr.setVisible(false);
 					textArea.focusedProperty().addListener(new ChangeListener<Boolean>() {
 						@Override

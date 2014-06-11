@@ -39,5 +39,5 @@
 </GridPane>
 </children></AnchorPane>
   </content>
-</TitledPane><Label layoutX="22.0" layoutY="94.0" prefHeight="17.0" prefWidth="68.0" text="Budget" /><Label fx:id="lbBudget" layoutX="120.0" layoutY="94.0" prefHeight="17.0" prefWidth="177.0" text="Label" /><Label layoutX="22.0" layoutY="133.0" prefHeight="17.0" prefWidth="68.0" text="Cotisations" /><Label fx:id="lbCotisations" layoutX="120.0" layoutY="133.0" prefHeight="17.0" prefWidth="177.0" text="Label" /><Button fx:id="btnQuitter" layoutX="650.0" layoutY="485.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Quitter" />
+</TitledPane><Label layoutX="22.0" layoutY="94.0" prefHeight="17.0" prefWidth="68.0" text="Budget" /><Label fx:id="lbBudget" layoutX="120.0" layoutY="94.0" prefHeight="17.0" prefWidth="177.0" /><Label layoutX="22.0" layoutY="133.0" prefHeight="17.0" prefWidth="68.0" text="Cotisations" /><Label fx:id="lbCotisations" layoutX="120.0" layoutY="133.0" prefHeight="17.0" prefWidth="177.0" /><Button fx:id="btnQuitter" layoutX="650.0" layoutY="485.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Quitter" />
 </children></AnchorPane>

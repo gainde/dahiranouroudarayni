@@ -8,17 +8,13 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.animation.Timeline;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.membre.MembreController;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -33,6 +29,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
+import validation.ValidateurChaine;
+import validation.ValidationErreur;
+import validation.ValideurCodePostale;
+import validation.ValideurEmail;
+import validation.ValideurTelephone;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
 import entites.Adresse;
@@ -94,6 +95,8 @@ public class AjouterMembreController implements Initializable {
 	private MembreController membreController;
 	private Timeline timeline;
 	
+	private ManagerValidation validateurManager = new ManagerValidation();
+	
 	public void setAnchorPane(AnchorPane anc) {
 		this.anc = anc;
 	}
@@ -121,7 +124,7 @@ public class AjouterMembreController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		Validateur.setAnc(anc);
+		/*Validateur.setAnc(anc);
 		hboxErr.setVisible(false);
 		timeline = new Timeline();
 		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
@@ -142,7 +145,7 @@ public class AjouterMembreController implements Initializable {
 				textErrCodepostal, true);
 		
 		ManagerValidation.getInstance().validerTelephone(telephoneField,
-				textErrTelephone, true);
+				textErrTelephone, true);*/
 		
 		
 		// installEventHandler(telephoneField);
@@ -163,16 +166,15 @@ public class AjouterMembreController implements Initializable {
 				btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						Boolean valide = ManagerValidation.getInstance()
-								.valider();
+						Boolean valide = validateurManager.valider();
 						System.out.println("valide :"+valide);
 						if(valide){
 							enregistrerMembre();
-							ManagerValidation.getInstance().clearListOfValidation();
+							validateurManager.clearListOfValidation();
 							stage.close();
 						}else{
 							btnErr.setText("Veuillez corriger les champs invalides!");
-							ManagerValidation.getInstance().animate(hboxErr, timeline);
+							validateurManager.animate(hboxErr, timeline);
 							hboxErr.setVisible(true);
 						}
 						
@@ -238,5 +240,34 @@ public class AjouterMembreController implements Initializable {
 
 		keyNode.setOnKeyPressed(keyEventHandler);
 		keyNode.setOnKeyReleased(keyEventHandler);
+	}
+	private void initialiserValidation(){
+		//set l anchorpane
+		Validateur.setAnc(anc);
+		hboxErr.setVisible(false);
+		timeline = new Timeline();
+		//ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
+		validateurManager.hideBoxErr(hboxErr, closeShape, timeline);
+		// validation
+		validateurManager.add(new ValidateurChaine(prenomField,
+						textErrPrenom, false, ValidationErreur.CHAINE_ERR, 30));
+		
+		validateurManager.add(new ValidateurChaine(nomField, textErrNom,
+						false, ValidationErreur.CHAINE_ERR,30));
+		
+		validateurManager.add(new ValidateurChaine(adresseField,
+						textErrAdresse, true, ValidationErreur.CHAINE_ERR,90));
+		
+		validateurManager.add(new ValidateurChaine(villeField, textErrVille,
+						true, ValidationErreur.CHAINE_ERR,30));
+
+		validateurManager.add(new ValideurEmail(emailField, textErrEmail,
+						false, ValidationErreur.EMAIL_ERR,30));
+
+		validateurManager.add(new ValideurCodePostale(postalField,
+						textErrCodepostal, true,ValidationErreur.CODEPOSTALE_ERR));
+				
+		validateurManager.add(new ValideurTelephone(telephoneField,
+						textErrTelephone, true, ValidationErreur.TELEPHONE_ERR));
 	}
 }

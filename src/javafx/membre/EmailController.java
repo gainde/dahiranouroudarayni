@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidationErreur;
 import validation.ValideurEmail;
@@ -46,6 +47,8 @@ public class EmailController implements Initializable{
 		
 		private final String DAHIRA = "select c from Dahira c";
 		
+		private ManagerValidation validateurManager = new ManagerValidation();
+		
 		public Stage getStage() {
 			return stage;
 		}
@@ -76,13 +79,13 @@ public class EmailController implements Initializable{
 			dahira = ManagerEntiteDahira.getInstance().loadDahira();
 			
 			//Valider le mail
-			ValideurEmail validerEmail = new ValideurEmail(emailConexionField,
-					connexionErr, false, ValidationErreur.EMAIL_ERR,45);
-			validerEmail.validerEmail(emailConexionField,connexionErr);
+			validateurManager.add(new ValideurEmail(emailConexionField,
+					connexionErr, false, ValidationErreur.EMAIL_ERR,45));
+			
 			//action sur bouton envoyer
 			btnEnvoyer.setOnAction(new EventHandler<ActionEvent>() {
 		 	    @Override public void handle(ActionEvent event) {
-		 	    	bool = validerEmail.valider();
+		 	    	bool = validateurManager.valider();
 		 	    	envoieMess();
 		 	    	}
 		 	});

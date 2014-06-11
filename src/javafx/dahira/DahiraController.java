@@ -106,6 +106,8 @@ public class DahiraController implements Initializable {
 	private Dahira editDahira;
 	private MembreController membreController;
 	private Timeline timeline;
+	
+	private ManagerValidation validateurManager = new ManagerValidation();
 
 	String province = "Quebec";
 
@@ -160,34 +162,8 @@ public class DahiraController implements Initializable {
 		btnEnregistrer.disableProperty()
 				.bind(btnEditer.disableProperty().not());
 		setDisableAllFieldText(true);
-		// set l anchorpane
-		Validateur.setAnc(anc);
-		hboxErr.setVisible(false);
-		timeline = new Timeline();
-		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
-		// validation
-		ManagerValidation.getInstance().validerChaine(nomField, textErrNom,
-				false, 30);
-		ManagerValidation.getInstance().validerChaine(numeroNEField,
-				textErrNumero, false, 30);
-		ManagerValidation.getInstance().validerChaine(adresseField,
-				textErrAdresse, false, 90);
-		ManagerValidation.getInstance().validerChaine(siteWebField,
-				textErrSiteWeb, true, 30);
-		ManagerValidation.getInstance().validerChaine(descriptionArea,
-				textErrDescription, true, 90);
-		setNodeStopWriten(descriptionArea,90);
 		
-		ManagerValidation.getInstance().validerChaine(villeField, textErrVille,
-				true, 30);
-
-		ManagerValidation.getInstance().validerEmail(emailField, textErrEmail,
-				false, 30);
-
-		ManagerValidation.getInstance().validerCodePostal(postalField,
-				textErrCodepostal, true);
-		ManagerValidation.getInstance().validerTelephone(telephoneField,
-				textErrTelephone, true);
+		initialiserValidation();
 
 		// action bouton annuler
 		btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
@@ -202,8 +178,7 @@ public class DahiraController implements Initializable {
 		btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Boolean valide = ManagerValidation.getInstance()
-						.valider();
+				Boolean valide = validateurManager.valider();
 				if (valide) {
 					System.out.println("Tout est valide :" + valide);
 					enregistrerDahira();
@@ -211,7 +186,7 @@ public class DahiraController implements Initializable {
 
 				} else {
 					btnErr.setText("Veuillez corriger les champs invalides!");
-					ManagerValidation.getInstance().animate(hboxErr, timeline);
+					validateurManager.animate(hboxErr, timeline);
 					hboxErr.setVisible(true);
 				}
 
@@ -290,5 +265,37 @@ public class DahiraController implements Initializable {
 				}
 			}
 		});
+	}
+	
+	private void initialiserValidation(){
+		// set l anchorpane
+		Validateur.setAnc(anc);
+		hboxErr.setVisible(false);
+		timeline = new Timeline();
+		validateurManager.hideBoxErr(hboxErr,closeShape, timeline);
+		// validation
+		validateurManager.add(new ValidateurChaine(nomField, textErrNom,
+				false, ValidationErreur.CHAINE_ERR,30));
+		validateurManager.add(new ValidateurChaine(numeroNEField,
+				textErrNumero, false, ValidationErreur.CHAINE_ERR, 30));
+		validateurManager.add(new ValidateurChaine(adresseField,
+				textErrAdresse, false, ValidationErreur.CHAINE_ERR, 90));
+		validateurManager.add(new ValidateurChaine(siteWebField,
+				textErrSiteWeb, true, ValidationErreur.CHAINE_ERR, 30));
+		validateurManager.add(new ValidateurChaine(descriptionArea,
+				textErrDescription, true, ValidationErreur.CHAINE_ERR,90));
+		setNodeStopWriten(descriptionArea,90);
+		
+		validateurManager.add(new ValidateurChaine(villeField, textErrVille,
+				true, ValidationErreur.CHAINE_ERR,30));
+
+		validateurManager.add(new ValideurEmail(emailField, textErrEmail,
+				false, ValidationErreur.EMAIL_ERR,30));
+
+		validateurManager.add(new ValideurCodePostale(postalField,
+				textErrCodepostal, true,ValidationErreur.CODEPOSTALE_ERR));
+		
+		validateurManager.add(new ValideurTelephone(telephoneField,
+				textErrTelephone, true, ValidationErreur.TELEPHONE_ERR));
 	}
 }

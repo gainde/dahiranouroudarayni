@@ -50,7 +50,7 @@ public class HomeController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		File file = new File("src/javafx/home/audioStart.mp3");
+		/*File file = new File("src/javafx/home/audioStart.mp3");
 		try {
 			final String mediaLocation = file.toURI().toURL().toExternalForm();
 			Media media = new Media(mediaLocation);
@@ -60,7 +60,7 @@ public class HomeController implements Initializable {
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		platform();
 		/*playSound.setScaleX(1.5);
 		

@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidateurChaine;
+import validation.ValidateurMontant;
 import validation.ValidationErreur;
 import validation.ValideurCodePostale;
 import validation.ValideurEmail;
@@ -85,6 +86,7 @@ public class EditerMembreController implements Initializable{
 	 private Membre   editMembre;
 	 private MembreController membreController;
 	 private Timeline timeline;
+	 private ManagerValidation validateurManager = new ManagerValidation();
 	 
 		String province = "Quebec";
 		Date date = new Date();
@@ -141,31 +143,7 @@ public class EditerMembreController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		//set l anchorpane
-		Validateur.setAnc(anc);
-		hboxErr.setVisible(false);
-		timeline = new Timeline();
-		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
-		// validation
-				ManagerValidation.getInstance().validerChaine(prenomField,
-						textErrPrenom, false, 30);
-				ManagerValidation.getInstance().validerChaine(nomField, textErrNom,
-						false, 30);
-				ManagerValidation.getInstance().validerChaine(adresseField,
-						textErrAdresse, true, 90);
-				ManagerValidation.getInstance().validerChaine(villeField, textErrVille,
-						true, 30);
-
-				ManagerValidation.getInstance().validerEmail(emailField, textErrEmail,
-						false, 30);
-
-				ManagerValidation.getInstance().validerCodePostal(postalField,
-						textErrCodepostal, true);
-				
-				ManagerValidation.getInstance().validerTelephone(telephoneField,
-						textErrTelephone, true);
-		
-		
+		initialiserValidation();
 		// action bouton annuler
 				 btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
 				 	    @Override public void handle(ActionEvent event) {
@@ -178,18 +156,17 @@ public class EditerMembreController implements Initializable{
 				 btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
 				 	    @Override 
 				 	    public void handle(ActionEvent event) {
-				 	    	Boolean valide = ManagerValidation.getInstance()
-									.valider();
+				 	    	Boolean valide = validateurManager.valider();
 				 	    	System.out.println("valide :"+valide);
 							if(valide){
 				 	    		enregistrerMembre();
 					 	    	membreController.makeDataMembre(editMembre);
-					 	    	ManagerValidation.getInstance().clearListOfValidation();
+					 	    	validateurManager.clearListOfValidation();
 					 	    	stage.close();
 								
 							}else{
 								btnErr.setText("Veuillez corriger les champs invalides!");
-								ManagerValidation.getInstance().animate(hboxErr, timeline);
+								validateurManager.animate(hboxErr, timeline);
 								hboxErr.setVisible(true);
 							}
 				 	    	
@@ -238,4 +215,34 @@ public class EditerMembreController implements Initializable{
 				}
 			});
 	    }
+		
+		private void initialiserValidation(){
+			//set l anchorpane
+			Validateur.setAnc(anc);
+			hboxErr.setVisible(false);
+			timeline = new Timeline();
+			//ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
+			validateurManager.hideBoxErr(hboxErr, closeShape, timeline);
+			// validation
+			validateurManager.add(new ValidateurChaine(prenomField,
+							textErrPrenom, false, ValidationErreur.CHAINE_ERR, 30));
+			
+			validateurManager.add(new ValidateurChaine(nomField, textErrNom,
+							false, ValidationErreur.CHAINE_ERR,30));
+			
+			validateurManager.add(new ValidateurChaine(adresseField,
+							textErrAdresse, true, ValidationErreur.CHAINE_ERR,90));
+			
+			validateurManager.add(new ValidateurChaine(villeField, textErrVille,
+							true, ValidationErreur.CHAINE_ERR,30));
+
+			validateurManager.add(new ValideurEmail(emailField, textErrEmail,
+							false, ValidationErreur.EMAIL_ERR,30));
+
+			validateurManager.add(new ValideurCodePostale(postalField,
+							textErrCodepostal, true,ValidationErreur.CODEPOSTALE_ERR));
+					
+			validateurManager.add(new ValideurTelephone(telephoneField,
+							textErrTelephone, true, ValidationErreur.TELEPHONE_ERR));
+		}
 }

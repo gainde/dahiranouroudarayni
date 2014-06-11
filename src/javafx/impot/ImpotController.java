@@ -14,14 +14,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import validation.ManagerValidation;
-import validation.Validateur;
-import validation.ValidationErreur;
-import validation.ValideurEmail;
 import javafx.GenererPdf;
 import javafx.SendMessage;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,8 +27,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.membre.MembreController;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -50,12 +42,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import validation.ManagerValidation;
+import validation.Validateur;
+import validation.ValidationErreur;
+import validation.ValideurEmail;
 
 import com.itextpdf.text.DocumentException;
 
@@ -67,7 +60,6 @@ import daoimpl.CotisationEvenementImpl;
 import daoimpl.CotisationKSTImpl;
 import daoimpl.CotisationLoyerImpl;
 import daoimpl.MembreDaoImpl;
-import entites.Adresse;
 import entites.Dahira;
 import entites.Impot;
 import entites.ManagerEntiteDahira;
@@ -141,6 +133,8 @@ public class ImpotController implements Initializable {
 	private final String COTISATION_EVENEMENT = "select sum(e.montant) from cotisationevenement e where e.idMembre=?1 and YEAR(e.datecotisation) = ?2";
 
 	ArrayList<Impot> listImpot;
+	
+	private ManagerValidation validateurManager = new ManagerValidation();
 
 	public void setParentStage(Stage parentStage) {
 		this.parentStage = parentStage;
@@ -151,7 +145,7 @@ public class ImpotController implements Initializable {
 		nbChilds = anc.getChildren().size();
 		hboxErr.setVisible(false);
 		timeline = new Timeline();
-		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
+		validateurManager.hideBoxErr(hboxErr,closeShape, timeline);
 		// iniialiser à la date d aujourd hui
 		datePickerDeliv.setValue(LocalDate.now());
 		// set anchorPane
@@ -163,8 +157,8 @@ public class ImpotController implements Initializable {
 		setNodeStopWriten(txtMotDePasseC, txtMotDePasseC.getText(), 30);
 		btnExecuter.disableProperty().bind(lbDossier.textProperty().isEmpty());
 		// validation email
-		ManagerValidation.getInstance().validerEmail(txtEmail, textErrEmail,
-				false, 30);
+		validateurManager.add(new ValideurEmail(txtEmail, textErrEmail,
+				false, ValidationErreur.EMAIL_ERR,30));
 
 		handleButtonChoisir();
 
@@ -225,13 +219,12 @@ public class ImpotController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				Boolean valideMotDePasse = validerMotDePasse();
-				Boolean valide = ManagerValidation.getInstance()
-						.valider();
+				Boolean valide = validateurManager.valider();
 				System.out.println("click");
 				if (valide && valideMotDePasse) {
 					getInfo();
-					ManagerValidation.getInstance().clearListOfValidation();
-					ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
+					validateurManager.clearListOfValidation();
+					validateurManager.updateAnchorePane(nbChilds, anc);
 					btnErr.setText("Veuillez attendre envoie en cours!");
 				} else if(valideMotDePasse) {
 					btnErr.setText("Veuillez corriger les champs invalides!");
@@ -240,7 +233,7 @@ public class ImpotController implements Initializable {
 				}else{
 					btnErr.setText("Veuillez corriger les champs invalides!");
 				}
-				ManagerValidation.getInstance().animate(hboxErr, timeline);
+				validateurManager.animate(hboxErr, timeline);
 				hboxErr.setVisible(true);
 			}
 		});
