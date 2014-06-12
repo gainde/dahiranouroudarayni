@@ -50,7 +50,7 @@ public class HomeController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		File file = new File("src/javafx/home/audioStart.mp3");
+		/*File file = new File("src/javafx/home/audioStart.mp3");
 		try {
 			final String mediaLocation = file.toURI().toURL().toExternalForm();
 			Media media = new Media(mediaLocation);
@@ -61,7 +61,7 @@ public class HomeController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		platform();
+	*/
 		/*playSound.setScaleX(1.5);
 		
 		mediaPlayer.setOnEndOfMedia(new Runnable() {
@@ -88,16 +88,14 @@ public class HomeController implements Initializable {
 			}
 		});*/
 		
-		//AudioClip sound = new AudioClip(mediaLocation);
-		//sound.play();
-		/*HandleButtonDahira();
+		HandleButtonDahira();
 		HandleButtonEvenement();
 		HandleButtonImpot();
 		HandleButtonMembre();
 		HandleButtonParametre();
 		HandleButtonKeurSerigneTouba();
 		HandleButtonQuitter();
-		dahira = ManagerEntiteDahira.getInstance().loadDahira();*/
+		dahira = ManagerEntiteDahira.getInstance().loadDahira();
 	}
 
 	public void setStage(Stage stage) {
@@ -175,30 +173,8 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Quitter");
-				stage.hide();
-				
+				stage.close();	
 			}
-	
-			
 		});
-	}
-	public void platform(){
-		Platform.runLater(new Runnable(){
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				HandleButtonDahira();
-				HandleButtonEvenement();
-				HandleButtonImpot();
-				HandleButtonMembre();
-				HandleButtonParametre();
-				HandleButtonKeurSerigneTouba();
-				HandleButtonQuitter();
-				dahira = ManagerEntiteDahira.getInstance().loadDahira();
-			}
-			
-		});
-	}
-	
+	}	
 }
