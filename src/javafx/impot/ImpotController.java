@@ -48,7 +48,7 @@ import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidationErreur;
-import validation.ValideurEmail;
+import validation.ValidationEmail;
 
 import com.itextpdf.text.DocumentException;
 
@@ -157,7 +157,7 @@ public class ImpotController implements Initializable {
 		setNodeStopWriten(txtMotDePasseC, txtMotDePasseC.getText(), 30);
 		btnExecuter.disableProperty().bind(lbDossier.textProperty().isEmpty());
 		// validation email
-		validateurManager.add(new ValideurEmail(txtEmail, textErrEmail,
+		validateurManager.add(new ValidationEmail(txtEmail, textErrEmail,
 				false, ValidationErreur.EMAIL_ERR,30));
 
 		handleButtonChoisir();
@@ -355,7 +355,7 @@ public class ImpotController implements Initializable {
 
 	public void progressBar() {
 		progressBar.setProgress(0);
-		Task copyWorker = createWorker();
+		Task<?> copyWorker = createWorker();
 		progressBar.progressProperty().unbind();
 		progressBar.progressProperty().bind(copyWorker.progressProperty());
 		lbMembres.textProperty().bind(copyWorker.messageProperty());
@@ -369,8 +369,8 @@ public class ImpotController implements Initializable {
 		new Thread(copyWorker).start();
 	}
 
-	public Task createWorker() {
-		return new Task() {
+	public Task<?> createWorker() {
+		return new Task<Object>() {
 			protected Object call() throws Exception {
 				double i = 1;
 				int numero = 1;

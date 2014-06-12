@@ -9,6 +9,7 @@ import entites.ProjetKST;
 
 
 public class ProjetDaoImpl extends GeneriqueDao<ProjetKST, Integer> implements ProjetDao{
+	@SuppressWarnings("rawtypes")
 	@Override
     public Double getMontant(String query){
     	Double t;

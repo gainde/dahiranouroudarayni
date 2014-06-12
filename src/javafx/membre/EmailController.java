@@ -18,11 +18,10 @@ import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidationErreur;
-import validation.ValideurEmail;
+import validation.ValidationEmail;
 
 import com.itextpdf.text.DocumentException;
 
-import daoimpl.DahiraDaoImpl;
 import entites.Dahira;
 import entites.ManagerEntiteDahira;
 import entites.Membre;
@@ -44,8 +43,6 @@ public class EmailController implements Initializable{
 		private Membre membreActif;
 		private Dahira dahira;
 		private Boolean bool = false;
-		
-		private final String DAHIRA = "select c from Dahira c";
 		
 		private ManagerValidation validateurManager = new ManagerValidation();
 		
@@ -79,7 +76,7 @@ public class EmailController implements Initializable{
 			dahira = ManagerEntiteDahira.getInstance().loadDahira();
 			
 			//Valider le mail
-			validateurManager.add(new ValideurEmail(emailConexionField,
+			validateurManager.add(new ValidationEmail(emailConexionField,
 					connexionErr, false, ValidationErreur.EMAIL_ERR,45));
 			
 			//action sur bouton envoyer

@@ -44,7 +44,6 @@ public class KSTController implements Initializable{
     private Stage parent;
     
     private final String MONTANT_COTISATION_KST_QUERY = "select sum(k.montant) from cotisationkst k";
-	private final String GET_PROJET_QUERY = "select p.nom from ProjetKST p where p.nom = ?";
 	private final String PROJET_QUERY = "select p from ProjetKST p";
 	
 	ProjetKST projetKSTExistant = null;

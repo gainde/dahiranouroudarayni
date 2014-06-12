@@ -78,7 +78,8 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
         tx.commit();
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<T> getAll(String query) {
     	List<T> l;
     	try{
@@ -93,7 +94,8 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     	return l;
 	}
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public List<T> getAll(String query, String param) {
     	List<T> l;
     	try{
@@ -108,7 +110,8 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     	return l;
 	}
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public T get(String query) {
     	T t;
     	try{
@@ -123,7 +126,8 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     	return t;
 	}
     
-    public T get(String query, String param){
+    @SuppressWarnings("unchecked")
+	public T get(String query, String param){
     	T t;
     	try{
 	    	tx.begin();
@@ -139,7 +143,8 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     	return t;
     }
     
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public Double getMontant(String query, String id, String annee){
     	Double t;
     	try{

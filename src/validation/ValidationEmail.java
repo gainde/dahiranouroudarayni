@@ -9,11 +9,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
-public class ValideurEmail extends Validateur {
+public class ValidationEmail extends Validateur {
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private int tailleMax;
 
-	public ValideurEmail(TextField texte, Text labelErr, boolean nullable,
+	public ValidationEmail(TextField texte, Text labelErr, boolean nullable,
 			ValidationErreur validationErr, int tailleMax) {
 		super(texte, labelErr, nullable, validationErr);
 		this.tailleMax = tailleMax;

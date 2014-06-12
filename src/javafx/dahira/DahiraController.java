@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import validation.Validateur;
 import javafx.animation.Timeline;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -13,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.membre.MembreController;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -22,18 +20,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.ValidateurChaine;
 import validation.ValidationErreur;
-import validation.ValideurCodePostale;
-import validation.ValideurEmail;
-import validation.ValideurTelephone;
-import dao.DahiraDao;
-import daoimpl.DahiraDaoImpl;
+import validation.ValidationCodePostale;
+import validation.ValidationEmail;
+import validation.ValidationTelephone;
 import entites.Adresse;
 import entites.Dahira;
 import entites.ManagerEntiteDahira;
@@ -289,13 +284,13 @@ public class DahiraController implements Initializable {
 		validateurManager.add(new ValidateurChaine(villeField, textErrVille,
 				true, ValidationErreur.CHAINE_ERR,30));
 
-		validateurManager.add(new ValideurEmail(emailField, textErrEmail,
+		validateurManager.add(new ValidationEmail(emailField, textErrEmail,
 				false, ValidationErreur.EMAIL_ERR,30));
 
-		validateurManager.add(new ValideurCodePostale(postalField,
+		validateurManager.add(new ValidationCodePostale(postalField,
 				textErrCodepostal, true,ValidationErreur.CODEPOSTALE_ERR));
 		
-		validateurManager.add(new ValideurTelephone(telephoneField,
+		validateurManager.add(new ValidationTelephone(telephoneField,
 				textErrTelephone, true, ValidationErreur.TELEPHONE_ERR));
 	}
 }

@@ -1,28 +1,16 @@
 package javafx.home;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.loadview.LoadManagerView;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Duration;
-import daoimpl.DahiraDaoImpl;
 import entites.Dahira;
 import entites.ManagerEntiteDahira;
 
@@ -45,7 +33,7 @@ public class HomeController implements Initializable {
 	private Stage stage;
 	private Dahira dahira;
 
-	private MediaPlayer mediaPlayer;
+	//private MediaPlayer mediaPlayer;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

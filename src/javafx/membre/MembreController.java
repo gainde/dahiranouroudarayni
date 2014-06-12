@@ -140,7 +140,7 @@ public class MembreController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		HandleButtonHome();
 
 		// set bouton non actif
 		tableViewMembre.getSelectionModel().setSelectionMode(

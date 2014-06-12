@@ -2,7 +2,6 @@ package entites;
 
 import dao.DahiraDao;
 import daoimpl.DahiraDaoImpl;
-import javafx.loadview.LoadManagerView;
 
 public class ManagerEntiteDahira {
 	
