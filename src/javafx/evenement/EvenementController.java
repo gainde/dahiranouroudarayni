@@ -5,12 +5,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -25,7 +22,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -39,15 +35,16 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.Duration;
 import util.Utile;
 import validation.ManagerValidation;
 import validation.Validateur;
+import validation.ValidateurChaine;
+import validation.ValidateurMontant;
+import validation.ValidationErreur;
 import dao.EvenementDao;
 import daoimpl.EvenementDaoImpl;
 import entites.Evenement;
@@ -103,6 +100,8 @@ public class EvenementController implements Initializable{
     
     private static IntegerProperty index = new SimpleIntegerProperty();
     
+    private ManagerValidation validateurManager = new ManagerValidation();
+    
     public void setParentStage(Stage parent){
     	this.parent = parent;
     }
@@ -122,7 +121,7 @@ public class EvenementController implements Initializable{
     	toolTipButton(btnHome,"Home");
     	hboxErr.setVisible(false);
     	timeline = new Timeline();
-		ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
+    	validateurManager.hideBoxErr(hboxErr,closeShape, timeline);
     
     	// validation
     	initValidation(txtNom);
@@ -191,13 +190,13 @@ public class EvenementController implements Initializable{
 			public void changed(ObservableValue<? extends Boolean> observable,
 					Boolean oldValue, Boolean newValue) {
 				if (newValue) {
-					ManagerValidation.getInstance().clearListOfValidation();
-					ManagerValidation.getInstance().validerChaine(txtNom,
-	    					textErrNom, false, 30);
-					ManagerValidation.getInstance().validerMontant(txtBudget,
-					textErrBudget, false);
-					ManagerValidation.getInstance().validerMontant(txtDepense,
-					textErrDepense, true);
+					validateurManager.clearListOfValidation();
+					validateurManager.add(new ValidateurChaine(txtNom,
+	    					textErrNom, false, ValidationErreur.CHAINE_ERR, 30));
+					validateurManager.add(new ValidateurMontant(txtBudget,
+					textErrBudget, false, ValidationErreur.MONTANT_ERR));
+					validateurManager.add(new ValidateurMontant(txtDepense,
+					textErrDepense, true, ValidationErreur.MONTANT_ERR));
 					
 				}
 				
@@ -211,11 +210,11 @@ public class EvenementController implements Initializable{
 			public void changed(ObservableValue<? extends Boolean> observable,
 					Boolean oldValue, Boolean newValue) {
 				if (newValue) {
-					ManagerValidation.getInstance().clearListOfValidation();
-					ManagerValidation.getInstance().validerChaine(txtNomNouveauEven,
-	    					textErrNom1, false, 30);
-					ManagerValidation.getInstance().validerMontant(txtBudgetNouveauEven,
-					textErrBudget1, false);
+					validateurManager.clearListOfValidation();
+					validateurManager.add(new ValidateurChaine(txtNomNouveauEven,
+	    					textErrNom1, false, ValidationErreur.CHAINE_ERR,30));
+					validateurManager.add(new ValidateurMontant(txtBudgetNouveauEven,
+					textErrBudget1, false, ValidationErreur.MONTANT_ERR));
 				}
 				
 			}
@@ -241,8 +240,7 @@ public class EvenementController implements Initializable{
 			
 			@Override
 			public void handle(Event event) {
-				Boolean valide = ManagerValidation.getInstance()
-						.toutEstValide();
+				Boolean valide = validateurManager.valider();
 				if(valide){
 					ajouterEvenement();
 					btnErr.setText("Évènement ajouté avec succés!");
@@ -251,7 +249,7 @@ public class EvenementController implements Initializable{
 					btnErr.setText("Veuillez corriger les champs invalides!");
 					//textErrMsg.setText("Veuillez corriger les champs invalides!");
 				}
-				ManagerValidation.getInstance().animate(hboxErr, timeline);
+				validateurManager.animate(hboxErr, timeline);
 				hboxErr.setVisible(true);
 			}
 		});
@@ -274,8 +272,7 @@ public class EvenementController implements Initializable{
 			
 			@Override
 			public void handle(ActionEvent event) {
-				Boolean valide = ManagerValidation.getInstance()
-						.toutEstValide();
+				Boolean valide = validateurManager.valider();
 				if(valide){
 					
 					enregistrer();
@@ -288,7 +285,7 @@ public class EvenementController implements Initializable{
 					btnErr.setText("Veuillez corriger les champs invalides!");
 					//textErrMsg.setText("Veuillez corriger les champs invalides!");
 				}
-				ManagerValidation.getInstance().animate(hboxErr, timeline);;
+				validateurManager.animate(hboxErr, timeline);;
 				hboxErr.setVisible(true);
 				}
 		});
@@ -368,7 +365,7 @@ public class EvenementController implements Initializable{
 		evenDao.create(even);
 		evenementData.add(even);
 		clearNewEvenement();
-		ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
+		validateurManager.updateAnchorePane(nbChilds, anc);
 		tableEvenement.getSelectionModel().clearSelection();
 		clearEditEvenement();
 		btnEditer.setDisable(true);
@@ -408,7 +405,7 @@ public class EvenementController implements Initializable{
 		evenementData.set(index.get(), even);
 		//btnEditer.setDisable(false);
 		btnEnregistrer.setDisable(true);
-		ManagerValidation.getInstance().updateAnchorePane(nbChilds, anc);
+		validateurManager.updateAnchorePane(nbChilds, anc);
 		tableEvenement.getSelectionModel().clearSelection();
     }
     

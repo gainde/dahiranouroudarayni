@@ -1,3 +1,5 @@
+
+
 package javafx.loadview;
 
 import java.io.IOException;
@@ -7,11 +9,11 @@ import javafx.dahira.DahiraController;
 import javafx.evenement.EvenementController;
 import javafx.fxml.FXMLLoader;
 import javafx.impot.ImpotController;
+import javafx.kst.KSTController;
 import javafx.membre.EmailController;
 import javafx.membre.MembreController;
 import javafx.membre.ajout.AjouterMembreController;
 import javafx.membre.edit.EditerMembreController;
-import javafx.parametre.ParametreController;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -255,22 +257,23 @@ public class LoadManagerView {
 
 	}
 	
-	// afficher la fenetre parametrages 
-		public void afficherVueParametres() {
+	// afficher la fenetre Keur Serigne Touba
+		public void afficherVueKST(Stage stage) {
 			Stage primaryStage = new Stage();
-			primaryStage.setTitle("Paramètres");
-			primaryStage.initModality(Modality.APPLICATION_MODAL);
+			primaryStage.setTitle("Keur Serigne Touba");
+			primaryStage.initModality(Modality.WINDOW_MODAL);
 			try {
 				// Load the root layout from the fxml file
 				FXMLLoader loader = new FXMLLoader(
-						ParametreController.class.getResource("VueParametres.fxml"));
+						KSTController.class.getResource("KST.fxml"));
 				AnchorPane anc = (AnchorPane) loader.load();
-				ParametreController parametreController = (ParametreController) loader
+				KSTController kstController = (KSTController) loader
 						.getController();
 				Scene scene = new Scene(anc);
 				scene.getStylesheets().add("META-INF/css/style.css");
 				primaryStage.setScene(scene);
-				parametreController.setStage(primaryStage);
+				kstController.setStage(primaryStage);
+				kstController.setParentStage(stage);
 				primaryStage.setResizable(false);
 				primaryStage.show();
 

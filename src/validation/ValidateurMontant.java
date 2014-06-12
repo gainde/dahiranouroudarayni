@@ -12,6 +12,7 @@ public class ValidateurMontant extends Validateur {
 	public ValidateurMontant(TextField texte, Text labelErr, boolean nullable,
 			ValidationErreur validationErr) {
 		super(texte, labelErr, nullable, validationErr);
+		initValiderMontant(texte, labelErr);
 	}
 
 	@Override
@@ -22,7 +23,7 @@ public class ValidateurMontant extends Validateur {
 	}
 	
 	// validation champ telephone
-		public void validerMontant(TextField textField, Text textErr) {
+		private void initValiderMontant(TextField textField, Text textErr) {
 			textErr.setVisible(false);
 			textField.focusedProperty().addListener(
 					new ChangeListener<Boolean>() {

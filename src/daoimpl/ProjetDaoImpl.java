@@ -4,11 +4,11 @@ import java.util.Vector;
 
 import javax.persistence.NoResultException;
 
-import dao.CotisationKSTDao;
-import entites.CotisationKST;
+import dao.ProjetDao;
+import entites.ProjetKST;
 
-public class CotisationKSTImpl extends GeneriqueDao<CotisationKST, Integer>
-		implements CotisationKSTDao {
+
+public class ProjetDaoImpl extends GeneriqueDao<ProjetKST, Integer> implements ProjetDao{
 	@Override
     public Double getMontant(String query){
     	Double t;
@@ -18,13 +18,13 @@ public class CotisationKSTImpl extends GeneriqueDao<CotisationKST, Integer>
 	    	t = (Double)singleResult.get(0);
 	    	tx.commit();
     	}catch(NoResultException e){
-    		e.printStackTrace();
+    		tx.rollback();
     		return null;		
     	}catch(Exception e){
+    		tx.rollback();
     		e.printStackTrace();
     		return null;
     	}
     	return t;
     }
-
 }

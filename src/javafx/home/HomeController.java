@@ -62,6 +62,8 @@ public class HomeController implements Initializable {
 			e.printStackTrace();
 		}
 	*/
+
+
 		/*playSound.setScaleX(1.5);
 		
 		mediaPlayer.setOnEndOfMedia(new Runnable() {
@@ -153,6 +155,7 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Aide");
+				
 			}
 		});
 	}
@@ -163,6 +166,8 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Keur Serigne Touba");
+				LoadManagerView.getInstance().afficherVueKST(stage);
+				stage.hide();
 			}
 		});
 	}

@@ -8,10 +8,12 @@ import java.util.Date;
 
 public class Utile {
 	public static Date getDate(LocalDate localDate){
+		if(localDate == null) return null;
 		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 		return Date.from(instant);
 	}
 	public static LocalDate getLocalDate(Date date){
+		if(date == null) return null;
 		LocalDate localDate = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalDate();
 		return localDate;
 	}

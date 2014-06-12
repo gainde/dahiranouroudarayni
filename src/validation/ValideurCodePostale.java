@@ -12,7 +12,7 @@ public class ValideurCodePostale extends Validateur{
 	public ValideurCodePostale(TextField texte, Text labelErr,
 			boolean nullable, ValidationErreur validationErr) {
 		super(texte, labelErr, nullable, validationErr);
-		
+		initValiderCodePostal(texte, labelErr);
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class ValideurCodePostale extends Validateur{
 	}
 	
 	// validation champ
-		public void validerCodePostal(TextField textField, Text textErr) {
+		private void initValiderCodePostal(TextField textField, Text textErr) {
 
 			textErr.setVisible(false);
 			textField.focusedProperty().addListener(

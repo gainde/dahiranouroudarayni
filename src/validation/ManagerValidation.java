@@ -20,25 +20,11 @@ import javafx.util.Duration;
 import entites.ManagerEntiteDahira;
 
 public class ManagerValidation{
+	private ArrayList<Validateur> valideList = new ArrayList<Validateur>();
 	
-	/** Constructeur privé */
-	private ManagerValidation() {
+	public ManagerValidation() {
 		
 	}
-
-	/** Instance unique non préinitialisée */
-	private static ManagerValidation INSTANCE = null;
-
-	/** Point d'accès pour l'instance unique du singleton */
-	public static synchronized ManagerValidation getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new ManagerValidation();
-		}
-		return INSTANCE;
-	}
-	
-	
-	private ArrayList<Validateur> valideList = new ArrayList<Validateur>();
 	
 	
 	public ArrayList<Validateur> getValideList() {
@@ -49,77 +35,19 @@ public class ManagerValidation{
 		this.valideList = valideList;
 	}
 
-	// Valider le chaine de caracteres
-	public void validerChaine(TextField texte, Text textErr, Boolean nullable,
-			int taille) {
-		ValidateurChaine valideur = new ValidateurChaine(texte, textErr,
-				nullable, ValidationErreur.CHAINE_ERR, taille);
-		valideur.validerChaine(texte, textErr);
-		add(valideur);
-	}
-
-	// Valider le chaine de caracteres
-	public void validerChaine(TextArea texte, Text textErr, Boolean nullable,
-			int taille) {
-		ValidateurChaine valideur = new ValidateurChaine(texte, textErr,
-				nullable, ValidationErreur.CHAINE_ERR, taille);
-		valideur.validerChaine(texte, textErr);
-		add(valideur);
-	}
-
-	// Valider email
-	public void validerEmail(TextField texte, Text textErr, Boolean nullable,
-			int taille) {
-		ValideurEmail valideur = new ValideurEmail(texte, textErr, nullable,
-				ValidationErreur.EMAIL_ERR, taille);
-		valideur.validerEmail(texte, textErr);
-		add(valideur);
-	}
-
-	// Valider code postale
-	public void validerCodePostal(TextField texte, Text textErr,
-			Boolean nullable) {
-		ValideurCodePostale valideur = new ValideurCodePostale(texte, textErr,
-				nullable, ValidationErreur.CODEPOSTALE_ERR);
-		valideur.validerCodePostal(texte, textErr);
-		add(valideur);
-	}
-
-	// Valider code postale
-	public void validerTelephone(TextField texte, Text textErr, Boolean nullable) {
-		ValideurTelephone valideur = new ValideurTelephone(texte, textErr,
-				nullable, ValidationErreur.TELEPHONE_ERR);
-		valideur.validerTelephone(texte, textErr);
-		add(valideur);
-	}
-
-	// Valider Montant
-		public void validerMontant(TextField texte, Text textErr, Boolean nullable) {
-			ValidateurMontant valideur = new ValidateurMontant(texte, textErr,
-					nullable, ValidationErreur.MONTANT_ERR);
-			valideur.validerMontant(texte, textErr);
-			add(valideur);
-		}
-	
-		// Valider Montant
-		public Validateur validerUnMontant(TextField texte, Text textErr, Boolean nullable) {
-				ValidateurMontant valideur = new ValidateurMontant(texte, textErr,
-							nullable, ValidationErreur.MONTANT_ERR);
-					valideur.validerMontant(texte, textErr);
-					return valideur;
-		}
-	public void add(Validateur val) {
+	public Validateur add(Validateur val) {
 		valideList.add(val);
+		return val;
 	}
 
-	public Boolean toutEstValide() {
+	public Boolean valider() {
+		boolean valide = true;
 		for (Validateur p : valideList) {
-			if (!p.valider())
-				return false;
+			valide &=p.valider();
 		}
-		return true;
+		return valide;
 	}
-	public Boolean unEstValide(Validateur p) {
+	public Boolean valider(Validateur p) {
 		return p.valider();
 	}
 	

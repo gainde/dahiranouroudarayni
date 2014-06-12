@@ -34,9 +34,8 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
 	    	tx.begin();
 	        this.entityManager.persist(t);
 	        tx.commit();
-    	}catch(NoResultException e){
-    		return null;		
     	}catch(Exception e){
+    		e.printStackTrace();
     		return null;
     	}
         return t;
@@ -113,10 +112,9 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     public T get(String query) {
     	T t;
     	try{
-    	tx.begin();
-    	t = (T) entityManager.createQuery(query).getSingleResult();
-    	 t = (T) entityManager.createQuery(query).getSingleResult();
-    	tx.commit();
+    		tx.begin();
+    		t = (T) entityManager.createQuery(query).getSingleResult();
+    		tx.commit();
     	}catch(NoResultException e){
     		return null;		
     	}catch(Exception e){
@@ -124,6 +122,22 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
     	}
     	return t;
 	}
+    
+    public T get(String query, String param){
+    	T t;
+    	try{
+	    	tx.begin();
+	    	t = (T) entityManager.createQuery(query).setParameter(1, param).getSingleResult();
+	    	tx.commit();
+    	}catch(NoResultException e){
+    		tx.rollback();
+    		return null;		
+    	}catch(Exception e){
+    		tx.rollback();
+    		return null;
+    	}
+    	return t;
+    }
     
     @Override
     public Double getMontant(String query, String id, String annee){
@@ -134,9 +148,10 @@ public abstract class GeneriqueDao<T, PK extends Serializable> implements Dao<T,
 	    	t = (Double)singleResult.get(0);
 	    	tx.commit();
     	}catch(NoResultException e){
-    		e.printStackTrace();
+    		tx.rollback();
     		return null;		
     	}catch(Exception e){
+    		tx.rollback();
     		e.printStackTrace();
     		return null;
     	}
