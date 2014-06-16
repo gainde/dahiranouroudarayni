@@ -1,7 +1,7 @@
 package validation;
 
 
-import java.io.InputStream;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.text.Text;
+import logique.Main;
 
 
 public abstract  class Validateur {
@@ -126,8 +127,7 @@ public abstract  class Validateur {
 		if(iv1 != null)
 			return;
 		
-		InputStream imageURL = getClass().getResourceAsStream("../META-INF/images/Valider.png");
-		Image image = new Image(imageURL);
+		Image image = new Image("META-INF/images/Valider.png");
 	    //simple displays ImageView the image as is
         iv1 = new ImageView();
         iv1.setFitWidth(10);iv1.setFitHeight(10);

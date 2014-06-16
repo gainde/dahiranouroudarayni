@@ -5,8 +5,8 @@ import javafx.home.Home;
 
 public class Main {
 	
-	public static  void main(String args[]){
-		Application.launch(Home.class);
+	public static  void main (String args[]){
+			Application.launch(Home.class);
 	}
 	
 }

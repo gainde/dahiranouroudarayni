@@ -101,7 +101,7 @@ public class MembreController implements Initializable {
 	
 	
 	
-	public static IntegerProperty getIndex() {
+	public  IntegerProperty getIndex() {
 		return index;
 	}
 
