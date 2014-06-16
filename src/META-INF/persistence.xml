@@ -16,7 +16,7 @@
 		<properties>
 			<!-- connexion JDBC -->
 			<property name="toplink.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/nouroudarayni" />
+			<property name="toplink.jdbc.url" value="jdbc:mysql://localhost:8889/nouroudarayni" />
 			<property name="toplink.jdbc.user" value="root" />
 			<property name="toplink.jdbc.password" value="root" />
 		</properties>

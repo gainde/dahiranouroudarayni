@@ -41,10 +41,13 @@ import entites.Membre;
 
 public class AjouterMembreController implements Initializable {
 
-	@FXML private HBox hboxErr;
-	@FXML private Button btnErr;
-	@FXML private ImageView closeShape;
-	
+	@FXML
+	private HBox hboxErr;
+	@FXML
+	private Button btnErr;
+	@FXML
+	private ImageView closeShape;
+
 	@FXML
 	private Text textErrPrenom;
 	@FXML
@@ -59,7 +62,7 @@ public class AjouterMembreController implements Initializable {
 	private Text textErrCodepostal;
 	@FXML
 	private Text textErrVille;
-	
+
 	@FXML
 	private TextField prenomField;
 	@FXML
@@ -89,18 +92,17 @@ public class AjouterMembreController implements Initializable {
 
 	@FXML
 	private AnchorPane anc;
-	
+
 	private Stage stage;
 	private Membre membre;
 	private MembreController membreController;
 	private Timeline timeline;
-	
+
 	private ManagerValidation validateurManager = new ManagerValidation();
-	
+
 	public void setAnchorPane(AnchorPane anc) {
 		this.anc = anc;
 	}
-
 
 	String province = "Quebec";
 	Date date = new Date();
@@ -123,43 +125,40 @@ public class AjouterMembreController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
 		initialiserValidation();
-		
-		
 		// installEventHandler(telephoneField);
 		// action sur le combo box
 		handleComboBoxProvince();
-		
+
 		// action bouton annuler
-				btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						// parentStage.show();
-						stage.close();
-					}
-				});
-				if(membreController != null)
-					membreController.chargerMembres();
-				// action bouton enregistrer
-				btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						Boolean valide = validateurManager.valider();
-						System.out.println("valide :"+valide);
-						if(valide){
-							enregistrerMembre();
-							validateurManager.clearListOfValidation();
-							stage.close();
-						}else{
-							btnErr.setText("Veuillez corriger les champs invalides!");
-							validateurManager.animate(hboxErr, timeline);
-							hboxErr.setVisible(true);
-						}
-						
-					}
-				});
-	}//fin d'initialistion
+		btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// parentStage.show();
+				stage.close();
+			}
+		});
+		if (membreController != null)
+			membreController.chargerMembres();
+		// action bouton enregistrer
+		btnEnregistrer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Boolean valide = validateurManager.valider();
+				System.out.println("valide :" + valide);
+				if (valide) {
+					enregistrerMembre();
+					validateurManager.clearListOfValidation();
+					stage.close();
+				} else {
+					btnErr.setText("Veuillez corriger les champs invalides!");
+					validateurManager.animate(hboxErr, timeline);
+					hboxErr.setVisible(true);
+				}
+
+			}
+		});
+	}// fin d'initialistion
 
 	// ajouter les informations dans la base de donnée
 	public void enregistrerMembre() {
@@ -167,23 +166,24 @@ public class AjouterMembreController implements Initializable {
 			LocalDate localDate = dateNaissance.getValue();
 			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId
 					.systemDefault()));
-			date = Date.from(instant);}
-			membre = new Membre(nomField.getText().trim(), prenomField.getText().trim(),
-					date, telephoneField.getText().trim(), emailField.getText().trim());
-			Adresse adresse = new Adresse(adresseField.getText().trim(),
-					villeField.getText().trim(), province, postalField.getText().trim(),
-					"Canada");
-			membre.setAdresse(adresse);
-			System.out.println(membre.toString());
-			enreisgitrerMembre(membre);
-			membreController.getMembreDonnee().add(membre);
-		
+			date = Date.from(instant);
+		}
+		membre = new Membre(nomField.getText().trim(), prenomField.getText()
+				.trim(), date, telephoneField.getText().trim(), emailField
+				.getText().trim());
+		Adresse adresse = new Adresse(adresseField.getText().trim(), villeField
+				.getText().trim(), province, postalField.getText().trim(),
+				"Canada");
+		membre.setAdresse(adresse);
+		System.out.println(membre.toString());
+		enreisgitrerMembre(membre);
+		membreController.getMembreDonnee().add(membre);
+
 	}
 
-
-	//ajouter membre dans la base de donnée
-	public void enreisgitrerMembre(Membre member){
-		MembreDao membreDao =  new MembreDaoImpl();
+	// ajouter membre dans la base de donnée
+	public void enreisgitrerMembre(Membre member) {
+		MembreDao membreDao = new MembreDaoImpl();
 		membreDao.create(member);
 	}
 
@@ -202,7 +202,6 @@ public class AjouterMembreController implements Initializable {
 		});
 	}
 
-	
 	public void installEventHandler(final Node keyNode) {
 		// handler for enter key press / release events, other keys are
 		// handled by the parent (keyboard) node handler
@@ -220,25 +219,27 @@ public class AjouterMembreController implements Initializable {
 		keyNode.setOnKeyPressed(keyEventHandler);
 		keyNode.setOnKeyReleased(keyEventHandler);
 	}
-	private void initialiserValidation(){
-		//set l anchorpane
+
+	private void initialiserValidation() {
+		// set l anchorpane
 		Validateur.setAnc(anc);
 		hboxErr.setVisible(false);
 		timeline = new Timeline();
-		//ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape, timeline);
+		// ManagerValidation.getInstance().hideBoxErr(hboxErr,closeShape,
+		// timeline);
 		validateurManager.hideBoxErr(hboxErr, closeShape, timeline);
 		// validation
-		validateurManager.add(new ValidateurChaine(prenomField,
-						textErrPrenom, false, ValidationErreur.CHAINE_ERR, 30));
-		
-		validateurManager.add(new ValidateurChaine(nomField, textErrNom,
-						false, ValidationErreur.CHAINE_ERR,30));
-		
+		validateurManager.add(new ValidateurChaine(prenomField, textErrPrenom,
+				false, ValidationErreur.CHAINE_ERR, 30));
+
+		validateurManager.add(new ValidateurChaine(nomField, textErrNom, false,
+				ValidationErreur.CHAINE_ERR, 30));
+
 		validateurManager.add(new ValidateurChaine(adresseField,
-						textErrAdresse, true, ValidationErreur.CHAINE_ERR,90));
-		
+				textErrAdresse, true, ValidationErreur.CHAINE_ERR, 90));
+
 		validateurManager.add(new ValidateurChaine(villeField, textErrVille,
-						true, ValidationErreur.CHAINE_ERR,30));
+				true, ValidationErreur.CHAINE_ERR, 30));
 
 		validateurManager.add(new ValidationEmail(emailField, textErrEmail,
 						false, ValidationErreur.EMAIL_ERR,30));
@@ -248,5 +249,6 @@ public class AjouterMembreController implements Initializable {
 				
 		validateurManager.add(new ValidationTelephone(telephoneField,
 						textErrTelephone, true, ValidationErreur.TELEPHONE_ERR));
+
 	}
 }

@@ -167,6 +167,7 @@ public class EditerMembreController implements Initializable{
 								btnErr.setText("Veuillez corriger les champs invalides!");
 								validateurManager.animate(hboxErr, timeline);
 								hboxErr.setVisible(true);
+								validateurManager.clearListOfValidation();
 							}
 				 	    	
 				 	    }

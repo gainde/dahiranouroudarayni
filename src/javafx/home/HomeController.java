@@ -48,8 +48,10 @@ public class HomeController implements Initializable {
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-		platform();
+		}
+	*/
+
+
 		/*playSound.setScaleX(1.5);
 		
 		mediaPlayer.setOnEndOfMedia(new Runnable() {
@@ -76,16 +78,14 @@ public class HomeController implements Initializable {
 			}
 		});*/
 		
-		//AudioClip sound = new AudioClip(mediaLocation);
-		//sound.play();
-		/*HandleButtonDahira();
+		HandleButtonDahira();
 		HandleButtonEvenement();
 		HandleButtonImpot();
 		HandleButtonMembre();
 		HandleButtonParametre();
 		HandleButtonKeurSerigneTouba();
 		HandleButtonQuitter();
-		dahira = ManagerEntiteDahira.getInstance().loadDahira();*/
+		dahira = ManagerEntiteDahira.getInstance().loadDahira();
 	}
 
 	public void setStage(Stage stage) {
@@ -166,30 +166,8 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Quitter");
-				stage.hide();
-				
+				stage.close();	
 			}
-	
-			
 		});
-	}
-	public void platform(){
-		Platform.runLater(new Runnable(){
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				HandleButtonDahira();
-				HandleButtonEvenement();
-				HandleButtonImpot();
-				HandleButtonMembre();
-				HandleButtonParametre();
-				HandleButtonKeurSerigneTouba();
-				HandleButtonQuitter();
-				dahira = ManagerEntiteDahira.getInstance().loadDahira();
-			}
-			
-		});
-	}
-	
+	}	
 }
