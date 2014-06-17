@@ -12,6 +12,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "evenement")
 public class Evenement implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(length = 100, nullable = false)
 	private String nom;// nom de l'evenement

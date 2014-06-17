@@ -11,13 +11,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
-import entites.ManagerEntiteDahira;
 
 public class ManagerValidation{
 	private ArrayList<Validateur> valideList = new ArrayList<Validateur>();

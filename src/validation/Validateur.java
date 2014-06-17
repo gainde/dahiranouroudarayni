@@ -1,20 +1,18 @@
 package validation;
 
 
-import java.util.List;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import logique.Main;
 
 
 public abstract  class Validateur {

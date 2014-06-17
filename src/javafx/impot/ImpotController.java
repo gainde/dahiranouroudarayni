@@ -37,7 +37,7 @@ import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidationErreur;
-import validation.ValideurEmail;
+import validation.ValidationEmail;
 
 
 import dao.CotisationEvenementDao;
@@ -144,7 +144,7 @@ public class ImpotController implements Initializable {
 		impotManager.setNodeStopWriten(txtMotDePasseC, txtMotDePasseC.getText(), 30);
 		btnExecuter.disableProperty().bind(lbDossier.textProperty().isEmpty());
 		// validation email
-		validateurManager.add(new ValideurEmail(txtEmail, textErrEmail,
+		validateurManager.add(new ValidationEmail(txtEmail, textErrEmail,
 				false, ValidationErreur.EMAIL_ERR,30));
 
 		handleButtonChoisir();
@@ -226,18 +226,6 @@ public class ImpotController implements Initializable {
 		});
 	}
 
-	/*private void fillComboBox() {
-		ObservableList<Integer> options = FXCollections.observableArrayList();
-		Calendar calendar = new GregorianCalendar();
-		int annee = calendar.get(Calendar.YEAR);
-		for (int i = 1; i < 5; i++) {
-			options.add(annee - i);
-		}
-		cmbAnnee.setItems(options);
-		cmbAnnee.setValue(annee - 1);
-
-	}
-*/
 	private void choisirDossier() {
 		DirectoryChooser chooser = new DirectoryChooser();
 		chooser.setTitle("JavaFX Projects");
@@ -293,7 +281,7 @@ public class ImpotController implements Initializable {
 
 	public void progressBar() {
 		progressBar.setProgress(0);
-		Task copyWorker = createWorker();
+		Task<?> copyWorker = createWorker();
 		progressBar.progressProperty().unbind();
 		progressBar.progressProperty().bind(copyWorker.progressProperty());
 		lbMembres.textProperty().bind(copyWorker.messageProperty());
@@ -307,8 +295,8 @@ public class ImpotController implements Initializable {
 		new Thread(copyWorker).start();
 	}
 
-	public Task createWorker() {
-		return new Task() {
+	public Task<?> createWorker() {
+		return new Task<Object>() {
 			protected Object call() throws Exception {
 				double i = 1;
 				int numero = 1;

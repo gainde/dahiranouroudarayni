@@ -30,10 +30,10 @@ import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidateurChaine;
+import validation.ValidationCodePostale;
+import validation.ValidationEmail;
 import validation.ValidationErreur;
-import validation.ValideurCodePostale;
-import validation.ValideurEmail;
-import validation.ValideurTelephone;
+import validation.ValidationTelephone;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
 import entites.Adresse;
@@ -126,7 +126,6 @@ public class AjouterMembreController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initialiserValidation();
-
 		// installEventHandler(telephoneField);
 		// action sur le combo box
 		handleComboBoxProvince();
@@ -159,7 +158,7 @@ public class AjouterMembreController implements Initializable {
 
 			}
 		});
-	}// fin d'initialistion
+		}// fin d'initialistion
 
 	// ajouter les informations dans la base de donnée
 	public void enregistrerMembre() {
@@ -242,13 +241,14 @@ public class AjouterMembreController implements Initializable {
 		validateurManager.add(new ValidateurChaine(villeField, textErrVille,
 				true, ValidationErreur.CHAINE_ERR, 30));
 
-		validateurManager.add(new ValideurEmail(emailField, textErrEmail,
-				false, ValidationErreur.EMAIL_ERR, 30));
+		validateurManager.add(new ValidationEmail(emailField, textErrEmail,
+						false, ValidationErreur.EMAIL_ERR,30));
 
-		validateurManager.add(new ValideurCodePostale(postalField,
-				textErrCodepostal, true, ValidationErreur.CODEPOSTALE_ERR));
+		validateurManager.add(new ValidationCodePostale(postalField,
+						textErrCodepostal, true,ValidationErreur.CODEPOSTALE_ERR));
+				
+		validateurManager.add(new ValidationTelephone(telephoneField,
+						textErrTelephone, true, ValidationErreur.TELEPHONE_ERR));
 
-		validateurManager.add(new ValideurTelephone(telephoneField,
-				textErrTelephone, true, ValidationErreur.TELEPHONE_ERR));
 	}
 }

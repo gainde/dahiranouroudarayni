@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javafx.cotisation.CotisationController;
 import javafx.dahira.DahiraController;
+//import javafx.dialog.DialogController;
 import javafx.evenement.EvenementController;
 import javafx.fxml.FXMLLoader;
 import javafx.impot.ImpotController;
@@ -283,4 +284,35 @@ public class LoadManagerView {
 			}
 
 		}
+		
+		/*// afficher la fenetre Keur Serigne Touba
+				public DialogController afficherVueDialog(Stage stage) {
+					Stage primaryStage = new Stage();
+					DialogController diagController = null;
+					primaryStage.setTitle("Confirmation");
+					primaryStage.initModality(Modality.APPLICATION_MODAL);
+					try {
+						// Load the root layout from the fxml file
+						FXMLLoader loader = new FXMLLoader(
+								DialogController.class.getResource("DialogView.fxml"));
+						AnchorPane anc = (AnchorPane) loader.load();
+						
+						diagController = (DialogController) loader
+								.getController();
+						Scene scene = new Scene(anc);
+						scene.getStylesheets().add("META-INF/css/style.css");
+						scene.getRoot().getStyleClass().add("dialog");
+						primaryStage.setScene(scene);
+						diagController.setStage(primaryStage);
+						primaryStage.initOwner( stage );
+						primaryStage.setResizable(false);
+						//primaryStage.show();
+
+					} catch (IOException e) {
+						// Exception gets thrown if the fxml file could not be loaded
+						e.printStackTrace();
+					}
+					return diagController;
+
+				}*/
 }

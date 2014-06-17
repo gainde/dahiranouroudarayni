@@ -29,7 +29,8 @@ import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidationErreur;
-import validation.ValideurEmail;
+import validation.ValidationEmail;
+
 
 import entites.Membre;
 import entites.Utilisateur;
@@ -43,8 +44,10 @@ public class EmailController implements Initializable {
 	@FXML
 	private ImageView closeShape;
 
+
 	@FXML
 	private Text connexionErr;
+
 
 	@FXML
 	private TextField emailConexionField;
@@ -120,9 +123,9 @@ public class EmailController implements Initializable {
 		impotManager.setNodeStopWriten(passWordField, passWordField.getText(), 30);
 		impotManager.setNodeStopWriten(passWordField2, passWordField2.getText(), 30);
 		// Valider le mail
-		validateurManager.add(new ValideurEmail(emailConexionField,
+		validateurManager.add(new ValidationEmail(emailConexionField,
 				connexionErr, false, ValidationErreur.EMAIL_ERR, 45));
-
+		
 		impotManager.fillComboBox(cmbAnnee);
 		// action sur bouton envoyer
 		btnEnvoyer.setOnAction(new EventHandler<ActionEvent>() {

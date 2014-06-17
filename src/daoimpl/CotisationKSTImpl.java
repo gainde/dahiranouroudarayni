@@ -9,6 +9,7 @@ import entites.CotisationKST;
 
 public class CotisationKSTImpl extends GeneriqueDao<CotisationKST, Integer>
 		implements CotisationKSTDao {
+	@SuppressWarnings("rawtypes")
 	@Override
     public Double getMontant(String query){
     	Double t;

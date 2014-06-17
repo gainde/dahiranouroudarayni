@@ -1,28 +1,17 @@
 package javafx.home;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+//import javafx.dialog.FXOptionDialog;
+//import javafx.dialog.DialogController.Response;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.loadview.LoadManagerView;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Duration;
-import daoimpl.DahiraDaoImpl;
 import entites.Dahira;
 import entites.ManagerEntiteDahira;
 
@@ -45,7 +34,7 @@ public class HomeController implements Initializable {
 	private Stage stage;
 	private Dahira dahira;
 
-	private MediaPlayer mediaPlayer;
+	//private MediaPlayer mediaPlayer;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -105,16 +94,19 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonDahira() {
+		btnDahira.getStyleClass().add("buttonMenu");
 		btnDahira.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
+				
 				LoadManagerView.getInstance().afficherVueDahira(dahira);
 			}
 		});
 	}
 
 	private void HandleButtonEvenement() {
+		btnEvenement.getStyleClass().add("buttonMenu");
 		btnEvenement.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -127,6 +119,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonImpot() {
+		btnImpot.getStyleClass().add("buttonMenu");
 		btnImpot.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -138,6 +131,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonMembre() {
+		btnMembre.getStyleClass().add("buttonMenu");
 		btnMembre.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -150,6 +144,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonParametre() {
+		btnAide.getStyleClass().add("buttonMenu");
 		btnAide.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -161,6 +156,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonKeurSerigneTouba() {
+		btnKeurSerigneTouba.getStyleClass().add("buttonMenu");
 		btnKeurSerigneTouba.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -177,9 +173,15 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Quitter");
+				System.out.println("click Quitter : ");
+				if(confirm())
 				stage.close();	
 			}
 		});
 	}	
+	private boolean confirm(){
+		//Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment ajouter", "test");
+		return true;//response.equals(Response.OUI);
+	}
+		
 }

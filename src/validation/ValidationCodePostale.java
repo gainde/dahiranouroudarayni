@@ -5,25 +5,25 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-public class ValideurTelephone extends Validateur {
-	private static final String TELEPHONE_PATTERN = "\\d{3}[( )-/]?\\d{3}[( )-/]?\\d{4}";
+public class ValidationCodePostale extends Validateur{
+	private static final String CODE_POSTALE_PATTERN = "^[ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ]( )?\\d[ABCEGHJKLMNPRSTVWXYZ]\\d$";
 	
 	
-	public ValideurTelephone(TextField texte, Text labelErr, boolean nullable,
-			ValidationErreur validationErr) {
+	public ValidationCodePostale(TextField texte, Text labelErr,
+			boolean nullable, ValidationErreur validationErr) {
 		super(texte, labelErr, nullable, validationErr);
-		initValiderTelephone(texte, labelErr);
+		initValiderCodePostal(texte, labelErr);
 	}
 
 	@Override
 	public boolean valider() {
-		boolean valide = false;
-		valide = super.valider(TELEPHONE_PATTERN); 
-		return valide;
+		
+		return super.valider(CODE_POSTALE_PATTERN);
 	}
 	
-	// validation champ telephone
-		private void initValiderTelephone(TextField textField, Text textErr) {
+	// validation champ
+		private void initValiderCodePostal(TextField textField, Text textErr) {
+
 			textErr.setVisible(false);
 			textField.focusedProperty().addListener(
 					new ChangeListener<Boolean>() {
@@ -37,5 +37,4 @@ public class ValideurTelephone extends Validateur {
 						}
 					});
 		}
-
 }

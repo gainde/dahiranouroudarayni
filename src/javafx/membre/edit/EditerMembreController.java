@@ -28,11 +28,10 @@ import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidateurChaine;
-import validation.ValidateurMontant;
 import validation.ValidationErreur;
-import validation.ValideurCodePostale;
-import validation.ValideurEmail;
-import validation.ValideurTelephone;
+import validation.ValidationCodePostale;
+import validation.ValidationEmail;
+import validation.ValidationTelephone;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
 import entites.Adresse;
@@ -192,6 +191,8 @@ public class EditerMembreController implements Initializable{
 						postalField.getText().trim(),"Canada");
 				editMembre.setAdresse(adresse);
 				enreisgitrerMembre(editMembre);
+				//TODO
+				//getIndex est static pourquoi et la tu ne l'utilise pas comme tel
 				membreController.getMembreDonnee().set(membreController.getIndex().get(), editMembre);
 				
 		}
@@ -237,13 +238,13 @@ public class EditerMembreController implements Initializable{
 			validateurManager.add(new ValidateurChaine(villeField, textErrVille,
 							true, ValidationErreur.CHAINE_ERR,30));
 
-			validateurManager.add(new ValideurEmail(emailField, textErrEmail,
+			validateurManager.add(new ValidationEmail(emailField, textErrEmail,
 							false, ValidationErreur.EMAIL_ERR,30));
 
-			validateurManager.add(new ValideurCodePostale(postalField,
+			validateurManager.add(new ValidationCodePostale(postalField,
 							textErrCodepostal, true,ValidationErreur.CODEPOSTALE_ERR));
 					
-			validateurManager.add(new ValideurTelephone(telephoneField,
+			validateurManager.add(new ValidationTelephone(telephoneField,
 							textErrTelephone, true, ValidationErreur.TELEPHONE_ERR));
 		}
 }

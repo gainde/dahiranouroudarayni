@@ -2,53 +2,81 @@
     -fx-font-size: 12px;
     -fx-font-family: "Times New Roman";
     /*-fx-background-color:  rgb(125, 125, 125);*/
-    -fx-background-color: 
+    /*-fx-background-color:  
         #c3c4c4,
         linear-gradient(#d6d6d6 50%, white 100%),
         radial-gradient(center 50% -40%, radius 200% , #e6e6e6 45%, rgba(230,230,230,0) 50%); 
-    -fx-background-radius: 10;
+    */-fx-background-radius: 10;
     -fx-background-insets: 10,10,10,10;
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    
+-fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%); /* W3C */
+
 }
 
 .label {
     -fx-font-size: 12px;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
-
+.dialog{
+	-fx-background-color:white;
+	-fx-background-radius: 0;
+    -fx-background-insets: 0;
+}
+.rectangle{
+	-fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%); 
+}
 
 #title{
-   -fx-font-size: 24px;
+	-fx-text-fill: white;
+   -fx-font-size: 20px;
+   -fx-font-weight: bold;
    -fx-font-family: "Arial Black";
-   -fx-fill: #818181;
-   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+   -fx-graphic-text-gap: 10;
+   /*-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
 }
-
-.button,.combo-box,.date-picker {
-	-fx-cursor:hand;
-    -fx-text-fill: black;
-    -fx-font-family: "Arial Narrow";
+.button {
+    -fx-background-color:
+        #005700,
+        linear-gradient(#005700 0%, #004610 20%, #002400 100%),
+        linear-gradient(#005700, #002400);
+      -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-background-color: white;
-   	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1  );
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+}
+.button Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
+.button:hover{
+	-fx-background-color: white;
+    -fx-text-fill: black;
+}
+.combo-box,.date-picker {
+    -fx-background-color:white;
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+
 }
 
-.button:hover,.combo-box:hover,.date-picker:hover {
-     -fx-background-color:
-        linear-gradient(#f0ff35, #a9fa00),
-        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
-    -fx-background-radius: 6, 5;
-    -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+.combo-box:hover,.date-picker:hover {
+	-fx-background-color: white;
     -fx-text-fill: black;
 }
 
 .button:focused,.combo-box:focused,.date-picker:focused {
-	-fx-cursor:hand;
+	/*-fx-cursor:hand;
     -fx-background-color:
         linear-gradient(#008835, #a98800),
         radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
@@ -56,10 +84,11 @@
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-text-fill:black;
-    
+    */
 }
 
 #lbDossier {
+	-fx-text-fill:black;
 	-fx-border-color:  rgba(230,230,230,0);
 	-fx-border-width: 1;
 	-fx-background-color:white;
@@ -106,6 +135,22 @@
 	-fx-font-size: 12px;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
-    -fx-text-fill: black;
+    /*-fx-text-fill: black;*/ /*not supported for the given selector */
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
+.buttonMenu{
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-border-color: green;
+    -fx-border-width: 3;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.buttonMenu:hover{
+	-fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%);
+    -fx-text-fill: white;
+    -fx-border-color: white;
+}
+
