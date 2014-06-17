@@ -97,7 +97,7 @@ public class HomeController implements Initializable {
 		HandleButtonParametre();
 		HandleButtonKeurSerigneTouba();
 		HandleButtonQuitter();
-		dahira = ManagerEntiteDahira.getInstance().loadDahira();
+		dahira = ManagerEntiteDahira.getInstance().getDahira();
 	}
 
 	public void setStage(Stage stage) {

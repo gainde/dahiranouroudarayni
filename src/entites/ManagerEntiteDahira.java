@@ -22,10 +22,19 @@ public class ManagerEntiteDahira {
 	}
 	
 	private final String DAHIRA = "select c from Dahira c";
+	private Dahira dahira;
+	
+	
+	public Dahira getDahira() {
+		if(dahira == null)
+			loadDahira();
+		return dahira;
+	}
+
 	// importer membre dans la base de donnée
-	public Dahira loadDahira(){
+	public void loadDahira(){
 		DahiraDaoImpl dahiraDao = new DahiraDaoImpl();
-		return dahiraDao.get(DAHIRA);
+		dahira = dahiraDao.get(DAHIRA);
 	}
 	
 	//mettre à jour un membre dans la base de donnée

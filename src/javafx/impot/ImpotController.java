@@ -1,33 +1,23 @@
 package javafx.impot;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javafx.GenererPdf;
-import javafx.SendMessage;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
@@ -39,7 +29,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -50,7 +39,6 @@ import validation.Validateur;
 import validation.ValidationErreur;
 import validation.ValideurEmail;
 
-import com.itextpdf.text.DocumentException;
 
 import dao.CotisationEvenementDao;
 import dao.CotisationKSTDao;
@@ -60,9 +48,7 @@ import daoimpl.CotisationEvenementImpl;
 import daoimpl.CotisationKSTImpl;
 import daoimpl.CotisationLoyerImpl;
 import daoimpl.MembreDaoImpl;
-import entites.Dahira;
 import entites.Impot;
-import entites.ManagerEntiteDahira;
 import entites.Membre;
 import entites.Utilisateur;
 
@@ -125,17 +111,18 @@ public class ImpotController implements Initializable {
 
 	private Stage stage;
 	private Stage parentStage;
-
-	private Utilisateur user;
+	
+	private List<Membre> listMembre;
+	
 	private final String QUERY_ALL_MEMBRE = "select m from Membre m";
 	private final String COTISATION_LOYER = "select sum(l.montant) from cotisationmembre l where l.idMembre=?1 and YEAR(l.datecotisation) = ?2";
 	private final String COTISATION_KST = "select sum(k.montant) from cotisationkst k where k.idMembre=?1 and YEAR(K.datecotisation) = ?2";
 	private final String COTISATION_EVENEMENT = "select sum(e.montant) from cotisationevenement e where e.idMembre=?1 and YEAR(e.datecotisation) = ?2";
 
-	ArrayList<Impot> listImpot;
 	
 	private ManagerValidation validateurManager = new ManagerValidation();
-
+	private ManagerImpot impotManager = new ManagerImpot();
+	
 	public void setParentStage(Stage parentStage) {
 		this.parentStage = parentStage;
 	}
@@ -151,18 +138,18 @@ public class ImpotController implements Initializable {
 		// set anchorPane
 		Validateur.setAnc(anc);
 		toolTipButton(btnHome, "Home");
-		setNodeStopWriten(txtAMsg, txtAMsg.getText(), 100);
-		setNodeStopWriten(txtObjet, txtObjet.getText(), 30);
-		setNodeStopWriten(txtMotDePasse, txtMotDePasse.getText(), 30);
-		setNodeStopWriten(txtMotDePasseC, txtMotDePasseC.getText(), 30);
+		impotManager.setNodeStopWriten(txtAMsg, txtAMsg.getText(), 100);
+		impotManager.setNodeStopWriten(txtObjet, txtObjet.getText(), 30);
+		impotManager.setNodeStopWriten(txtMotDePasse, txtMotDePasse.getText(), 30);
+		impotManager.setNodeStopWriten(txtMotDePasseC, txtMotDePasseC.getText(), 30);
 		btnExecuter.disableProperty().bind(lbDossier.textProperty().isEmpty());
 		// validation email
 		validateurManager.add(new ValideurEmail(txtEmail, textErrEmail,
 				false, ValidationErreur.EMAIL_ERR,30));
 
 		handleButtonChoisir();
-
-		fillComboBox();
+		impotManager.fillComboBox(cmbAnnee);
+		//fillComboBox();
 		handleButtonHome();
 		// TODO delete Test
 		Double v = new Double(0.0);
@@ -218,7 +205,7 @@ public class ImpotController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				Boolean valideMotDePasse = validerMotDePasse();
+				Boolean valideMotDePasse = impotManager.validerMotDePasse(txtMotDePasse.getText(),txtMotDePasseC.getText());
 				Boolean valide = validateurManager.valider();
 				System.out.println("click");
 				if (valide && valideMotDePasse) {
@@ -239,7 +226,7 @@ public class ImpotController implements Initializable {
 		});
 	}
 
-	private void fillComboBox() {
+	/*private void fillComboBox() {
 		ObservableList<Integer> options = FXCollections.observableArrayList();
 		Calendar calendar = new GregorianCalendar();
 		int annee = calendar.get(Calendar.YEAR);
@@ -250,7 +237,7 @@ public class ImpotController implements Initializable {
 		cmbAnnee.setValue(annee - 1);
 
 	}
-
+*/
 	private void choisirDossier() {
 		DirectoryChooser chooser = new DirectoryChooser();
 		chooser.setTitle("JavaFX Projects");
@@ -259,44 +246,19 @@ public class ImpotController implements Initializable {
 		if (selectedDirectory != null) {
 			lbDossier.setText(selectedDirectory.getPath());
 		}
+		impotManager.setLbDossier(lbDossier);
 	}
-
-	private void loadData(int annee, Date date) {
-		listImpot = new ArrayList<Impot>();
+	
+	public void setInfo(){
+		impotManager.setTxtAMsg(txtAMsg);
+		impotManager.setTxtObjet(txtObjet);
+	}
+	
+	private void loadAllMember(){
 		MembreDao membreDao = new MembreDaoImpl();
-		List<Membre> listMembre = membreDao.getAll(QUERY_ALL_MEMBRE);
-		Double tmp;
-		for (Membre membre : listMembre) {
-			CotisationLoyerDao loyerDao = new CotisationLoyerImpl();
-
-			tmp = loyerDao.getMontant(COTISATION_LOYER, membre.getEmail(),
-					String.valueOf(annee));
-			Double montantLoyer = 0.0;
-			if (tmp != null)
-				montantLoyer = tmp.doubleValue();
-
-			CotisationEvenementDao evenementDao = new CotisationEvenementImpl();
-			tmp = evenementDao.getMontant(COTISATION_KST, membre.getEmail(),
-					String.valueOf(annee));
-			Double montantEvenement = 0.0;
-			if (tmp != null)
-				montantEvenement = tmp.doubleValue();
-
-			CotisationKSTDao kstDao = new CotisationKSTImpl();
-			tmp = kstDao.getMontant(COTISATION_EVENEMENT, membre.getEmail(),
-					String.valueOf(annee));
-			Double montantKST = 0.0;
-			if (tmp != null)
-				montantKST = tmp.doubleValue();
-
-			listImpot
-					.add(new Impot(membre,
-							(montantLoyer + montantEvenement + montantKST),
-							annee, date));
-		}
-		executer(listImpot);
+		listMembre = membreDao.getAll(QUERY_ALL_MEMBRE);
 	}
-
+	
 	private void getInfo() {
 		// TODO valider
 		String email = txtEmail.getText();
@@ -308,8 +270,13 @@ public class ImpotController implements Initializable {
 				.systemDefault()));
 		Date date = Date.from(instant);
 		System.out.println(email + " " + mdp + " " + annee + " " + date);
-		user = new Utilisateur(email, mdp);
-		loadData(annee, date);
+		Utilisateur user = new Utilisateur(email, mdp);
+		setInfo();
+		impotManager.setUser(user);
+		loadAllMember();
+		impotManager.setListMembre(listMembre);
+		impotManager.loadData(annee, date);
+		executer(impotManager.getListImpot());
 	}
 
 	private void executer(ArrayList<Impot> listImpot) {
@@ -322,35 +289,6 @@ public class ImpotController implements Initializable {
 		 System.out.println("listImpot.size() = "+listImpot.size());
 		 System.out.println("i = "+i); i++; numero++;}*/
 		 
-	}
-
-	private void envoyerEmail(Impot impotMembre,int numero) {
-		Dahira dahira = ManagerEntiteDahira.getInstance().loadDahira();
-
-		String nameFile = lbDossier.getText() + "/"
-				+ impotMembre.getMembre().getPrenom() + "_"
-				+ impotMembre.getMembre().getNom() + ".pdf";
-		System.out.println("chemin : "+nameFile);
-		// GenererPdf(String dateIpmot, String dateDelivrance,String montant)
-		String annee = String.valueOf(impotMembre.getAnnee());
-		String montant = String.valueOf(impotMembre.getMontantCotisation());
-		String date = new SimpleDateFormat("dd/MM/yyyy").format(impotMembre
-				.getDateDeliv());
-		GenererPdf impot = new GenererPdf(annee, date, montant);
-		try {
-			impot.createPdf(nameFile, impotMembre.getMembre(), dahira, "", numero);
-		} catch (DocumentException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		SendMessage mess = new SendMessage();
-		mess.setObjet(txtObjet.getText());
-		mess.setMessage(txtAMsg.getText());
-		mess.setEmailDestination(impotMembre.getMembre().getEmail());
-		mess.setPathFile(nameFile);
-		mess.sendMessage(user.getLogin(), user.getPass());
-
 	}
 
 	public void progressBar() {
@@ -374,13 +312,13 @@ public class ImpotController implements Initializable {
 			protected Object call() throws Exception {
 				double i = 1;
 				int numero = 1;
-				for (Impot impot : listImpot) {
-					envoyerEmail(impot,numero);
+				for (Impot impot : impotManager.getListImpot()) {
+					impotManager.envoyerEmail(impot,numero);
 					String ch = impot.getMembre().getPrenom() + " "
 							+ impot.getMembre().getNom() + " - Email : "
 							+ impot.getMembre().getEmail();
 					updateMessage(ch);
-					updateProgress(i, listImpot.size());
+					updateProgress(i, impotManager.getListImpot().size());
 					i++;
 					numero++;
 				}
@@ -399,25 +337,4 @@ public class ImpotController implements Initializable {
 		node.setTooltip(tooltip);
 	}
 
-	// stop to write
-	public void setNodeStopWriten(Node node, String text, int caractereMax) {
-		node.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-			public void handle(final KeyEvent keyEvent) {
-				if (text.length() >= caractereMax) {
-					keyEvent.consume();
-				}
-			}
-		});
-	}
-	
-	//vérifier la validité du mot de passe
-	public Boolean validerMotDePasse(){
-		if(!txtMotDePasse.getText().isEmpty() && !txtMotDePasseC.getText().isEmpty())
-			if(txtMotDePasse.getText().compareTo(txtMotDePasseC.getText()) == 0)
-				return true;
-			else
-				return false;
-		else
-			return false;
-	}
 }

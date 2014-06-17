@@ -129,7 +129,7 @@ public abstract  class Validateur {
 		if(iv1 != null)
 			return;
 		
-		Image image = new Image("@../../META-INF/images/Valider.png");
+		Image image = new Image("META-INF/images/Valider.png");
 	    //simple displays ImageView the image as is
         iv1 = new ImageView();
         iv1.setFitWidth(10);iv1.setFitHeight(10);
