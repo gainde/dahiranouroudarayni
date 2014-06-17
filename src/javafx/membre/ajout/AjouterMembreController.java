@@ -30,9 +30,9 @@ import javafx.stage.Stage;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidateurChaine;
-import validation.ValidationErreur;
 import validation.ValidationCodePostale;
 import validation.ValidationEmail;
+import validation.ValidationErreur;
 import validation.ValidationTelephone;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
@@ -158,7 +158,7 @@ public class AjouterMembreController implements Initializable {
 
 			}
 		});
-	}// fin d'initialistion
+		}// fin d'initialistion
 
 	// ajouter les informations dans la base de donnée
 	public void enregistrerMembre() {

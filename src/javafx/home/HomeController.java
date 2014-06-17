@@ -3,7 +3,8 @@ package javafx.home;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
+import javafx.dialog.FXOptionDialog;
+import javafx.dialog.DialogController.Response;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -93,16 +94,19 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonDahira() {
+		btnDahira.getStyleClass().add("buttonMenu");
 		btnDahira.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
+				
 				LoadManagerView.getInstance().afficherVueDahira(dahira);
 			}
 		});
 	}
 
 	private void HandleButtonEvenement() {
+		btnEvenement.getStyleClass().add("buttonMenu");
 		btnEvenement.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -115,6 +119,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonImpot() {
+		btnImpot.getStyleClass().add("buttonMenu");
 		btnImpot.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -126,6 +131,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonMembre() {
+		btnMembre.getStyleClass().add("buttonMenu");
 		btnMembre.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -138,6 +144,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonParametre() {
+		btnAide.getStyleClass().add("buttonMenu");
 		btnAide.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -149,6 +156,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void HandleButtonKeurSerigneTouba() {
+		btnKeurSerigneTouba.getStyleClass().add("buttonMenu");
 		btnKeurSerigneTouba.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
@@ -165,9 +173,15 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Quitter");
+				System.out.println("click Quitter : ");
+				if(confirm())
 				stage.close();	
 			}
 		});
 	}	
+	private boolean confirm(){
+		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment ajouter", "test");
+		return response.equals(Response.OUI);
+	}
+		
 }
