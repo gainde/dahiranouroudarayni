@@ -17,6 +17,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.dialog.FXOptionDialog;
+import javafx.dialog.DialogController.Response;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -295,7 +297,8 @@ public class EvenementController implements Initializable{
 
 			@Override
 			public void handle(Event event) {
-				supprimerEvenement(eventSelected);
+				if(confirm())
+					supprimerEvenement(eventSelected);
 			}
 		});
     }
@@ -415,6 +418,11 @@ public class EvenementController implements Initializable{
 		tooltip.setHeight(14);tooltip.setWidth(10);
 		tooltip.setText(text);
 		node.setTooltip(tooltip);
+	}
+    
+    private boolean confirm(){
+		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment supprimer l'évènement", "Confirmation");
+		return response.equals(Response.OUI);
 	}
    
 }
