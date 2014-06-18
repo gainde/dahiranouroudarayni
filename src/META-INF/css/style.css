@@ -8,21 +8,22 @@
         radial-gradient(center 50% -40%, radius 200% , #e6e6e6 45%, rgba(230,230,230,0) 50%); 
     */-fx-background-radius: 10;
     -fx-background-insets: 10,10,10,10;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+    /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );*/
     
 -fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%); /* W3C */
 
 
 }
 
-.label {
+.label, .text {
     -fx-font-size: 12px;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-text-fill: white;
     /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
+
 .dialog{
 	-fx-background-color:white;
 	-fx-background-radius: 0;
@@ -32,13 +33,18 @@
 	-fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%); /* W3C */
 }
 
-#title{
-	-fx-text-fill: white;
+#title, #grdTitle{
+   -fx-fill: white;
    -fx-font-size: 20px;
    -fx-font-weight: bold;
    -fx-font-family: "Arial Black";
-   -fx-graphic-text-gap: 10;
+   /*-fx-graphic-text-gap: 10;
    /*-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
+}
+.title2{
+   -fx-fill: white;
+   -fx-font-size: 16px;
+   -fx-font-weight: bold;
 }
 .button {
     /*-fx-background-color:
@@ -131,11 +137,6 @@
    	-fx-background-position: right;
 }
 
-#grdTitle{
-	-fx-font-size: 20px;
-   -fx-fill:linear-gradient(palegreen, seagreen);
-}
-
 .tooltip{
 	-fx-background-color:transparent ;
 	-fx-font-size: 12px;
@@ -201,5 +202,38 @@
     -fx-text-fill: white;
     -fx-alignment: center-left;
 }
+.list-cell:filled:selected {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+.firstItem, .firstItem:filled:selected:focused{
+	-fx-text-fill:green;
+    -fx-font: bold 16pt "Comic Sans MS";
+}
 
 
+.tab-pane {
+    -fx-tab-min-height: 2.5em; /* 24 */
+    -fx-tab-max-height: 2.5em; /* 24 */
+    -fx-tab-min-width: 5em;
+}
+.tab{
+    -fx-background-color: white;
+}
+.tab-pane *.tab-header-background {
+    -fx-background-color: #005700;
+    -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.6) , 4, 0.0 , 0 , 0);
+}
+
+.tab:selected {
+	-fx-background-color: #002400;
+	-fx-text-fill: white;
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0;
+    -fx-border-style: none ;
+    -fx-border-width: 0;
+}
+.tab:focused {
+	-fx-border-width: 0;
+	-fx-border-style: none ;
+}
