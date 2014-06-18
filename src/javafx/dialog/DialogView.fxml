@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="153.0" prefWidth="376.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.dialog.DialogController">
+<children><Rectangle id="rectangle" fx:id="idRectangle" arcHeight="5.0" arcWidth="5.0" height="57.0" layoutX="1.0" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="379.0">
+<fill>
+<LinearGradient endX="1.0" endY="1.0">
+<stops>
+<Stop color="#0f3d05" />
+<Stop color="WHITE" offset="1.0" />
+</stops>
+</LinearGradient>
+</fill></Rectangle><ImageView fitHeight="40.0" fitWidth="34.0" layoutX="330.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+<image>
+<Image url="@../../META-INF/images/warning.png" />
+</image></ImageView><Text fx:id="txtMessage" layoutX="15.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" wrappingWidth="349.13671875">
+<font>
+<Font size="18.0" />
+</font></Text><Button fx:id="btnOui" layoutX="157.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="OUI" /><Button fx:id="btnNon" layoutX="266.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="NON" />
+</children></AnchorPane>

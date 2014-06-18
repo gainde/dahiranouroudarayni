@@ -13,6 +13,7 @@
     
 -fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%); /* W3C */
 
+
 }
 
 .label {
@@ -20,7 +21,7 @@
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+    /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 .dialog{
 	-fx-background-color:white;
@@ -28,7 +29,7 @@
     -fx-background-insets: 0;
 }
 .rectangle{
-	-fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%); 
+	-fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%); /* W3C */
 }
 
 #title{
@@ -40,26 +41,32 @@
    /*-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
 }
 .button {
-    -fx-background-color:
+    /*-fx-background-color:
         #005700,
         linear-gradient(#005700 0%, #004610 20%, #002400 100%),
-        linear-gradient(#005700, #002400);
-      -fx-background-radius: 5,4,3,5;
+        linear-gradient(#005700, #002400);*/
+    -fx-cursor:hand;
+    -fx-background-color:linear-gradient(to bottom, #627d4d 0%,#002400 100%); /* W3C */
+    -fx-border-width: 1;
+    -fx-border-radius: 5,4,3,5;
     -fx-background-insets: 0,1,2,0;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-font-size: 12px;
-    -fx-padding: 10 20 10 20;
+    -fx-padding: 5 10 5 10;
 }
 .button Text {
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
 }
 .button:hover{
-	-fx-background-color: white;
-    -fx-text-fill: black;
+	-fx-background-color:linear-gradient(to bottom, #ffffff 0%,#005700 100%); /* W3C */
+    -fx-text-fill: #005700;
+}
+.button:active{
+	/*-fx-background-color:linear-gradient(to bottom, #333333 0%,#ffffff 100%); /* W3C */
 }
 .combo-box,.date-picker {
     -fx-background-color:white;
@@ -103,7 +110,7 @@
 
 #listViewMembre{
 	-fx-cursor:hand;
-	-fx-font-size: 18px;
+	-fx-font-size: 14px;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-text-fill: black;
@@ -152,4 +159,47 @@
     -fx-text-fill: white;
     -fx-border-color: white;
 }
+
+
+.table-row-cell{
+    -fx-text-fill: black;
+}
+.table-row-cell:hover{
+	-fx-text-fill: white;
+    -fx-background-color: #005700;
+}
+ 
+.table-row-cell:selected, .table-row-cell:focus{
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+
+
+.table-view {
+    -fx-base: #002400;
+    -fx-control-inner-background:  white;
+    -fx-background-color: white;
+    -fx-table-cell-border-color: #1d1d1d;
+    /*-fx-table-header-border-color: transparent;*/
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(#005700 0%, #004610 20%, #002400 100%);
+}
+
+.table-view .column-header, .table-view .filler {
+   /* -fx-size: 35;*/
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color:transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+}
+
 

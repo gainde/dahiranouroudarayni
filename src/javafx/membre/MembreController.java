@@ -258,6 +258,7 @@ public class MembreController implements Initializable {
 	// action pour Cotisation
 	public void handleBtnCotisation() {
 		// action sur bouton cotisation
+		btnCotisation.getStyleClass().add("buttonMenu");
 		btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -270,6 +271,7 @@ public class MembreController implements Initializable {
 	// action pour Impot
 	public void handleBtnImpot() {
 		// action sur bouton impot
+		btnImpot.getStyleClass().add("buttonMenu");
 		btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
