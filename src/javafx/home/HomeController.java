@@ -180,7 +180,7 @@ public class HomeController implements Initializable {
 		});
 	}	
 	private boolean confirm(){
-		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment ajouter", "Confirmation");
+		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment quitter", "Confirmation");
 		return response.equals(Response.OUI);
 	}
 		
