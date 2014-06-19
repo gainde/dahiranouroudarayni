@@ -77,6 +77,6 @@
 <image>
 <Image url="@../../META-INF/images/Fermer.png" />
 </image></ImageView>
-</children></HBox>
+</children></HBox><Button id="btnQuitter" fx:id="btnQuitter" layoutX="588.0" layoutY="561.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Quitter" />
 	</children>
 </AnchorPane>

@@ -105,6 +105,9 @@ public class ImpotController implements Initializable {
 	private Button btnHome;
 	
 	@FXML
+	private Button btnQuitter;
+	
+	@FXML
 	private ComboBox<Integer> cmbAnnee;
 	@FXML
 	private DatePicker datePickerDeliv;
@@ -184,6 +187,7 @@ public class ImpotController implements Initializable {
 		System.out.println("Montant kst = " + v);
 	
     	handleButtonExecuter();
+    	handleButtonQuitter();
 	}
 	
 	public void setStage(Stage stage) {
@@ -206,7 +210,6 @@ public class ImpotController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("click");
 				parentStage.show();
 				stage.close();
 			}
@@ -419,5 +422,16 @@ public class ImpotController implements Initializable {
 				return false;
 		else
 			return false;
+	}
+	
+	private void handleButtonQuitter() {
+		btnQuitter.setOnMouseReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				parentStage.show();
+				stage.close();	
+			}
+		});
 	}
 }

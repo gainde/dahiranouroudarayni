@@ -78,6 +78,7 @@ public class EvenementController implements Initializable{
     @FXML private Button btnEditer;
     @FXML private Button btnSupprimer;
     @FXML private Button btnEnregistrer;
+    @FXML private Button btnQuitter;
     
     @FXML private DatePicker dateNouveauEven;
     @FXML private TextField txtNomNouveauEven;
@@ -138,6 +139,7 @@ public class EvenementController implements Initializable{
     	HandleButtonEditer();
     	HandleButtonSupprimer();
     	handleButtonEnregistrer();
+    	handleButtonQuitter();
     	btnSupprimer.setDisable(true);
     	btnEnregistrer.setDisable(true);
     	btnEditer.setDisable(true);
@@ -423,6 +425,17 @@ public class EvenementController implements Initializable{
     private boolean confirm(){
 		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment supprimer l'évènement", "Confirmation");
 		return response.equals(Response.OUI);
+	}
+    
+    private void handleButtonQuitter() {
+		btnQuitter.setOnMouseReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				parent.show();
+				stage.close();	
+			}
+		});
 	}
    
 }
