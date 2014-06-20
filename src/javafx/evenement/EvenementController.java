@@ -17,6 +17,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.dialog.FXOptionDialog;
+import javafx.dialog.DialogController.Response;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -38,6 +40,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import util.Utile;
 import validation.ManagerValidation;
@@ -76,6 +79,7 @@ public class EvenementController implements Initializable{
     @FXML private Button btnEditer;
     @FXML private Button btnSupprimer;
     @FXML private Button btnEnregistrer;
+    @FXML private Button btnQuitter;
     
     @FXML private DatePicker dateNouveauEven;
     @FXML private TextField txtNomNouveauEven;
@@ -136,6 +140,7 @@ public class EvenementController implements Initializable{
     	HandleButtonEditer();
     	HandleButtonSupprimer();
     	handleButtonEnregistrer();
+    	handleButtonQuitter();
     	btnSupprimer.setDisable(true);
     	btnEnregistrer.setDisable(true);
     	btnEditer.setDisable(true);
@@ -223,6 +228,13 @@ public class EvenementController implements Initializable{
     
     public void setStage(Stage stage) {
         this.stage = stage;
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				parent.show();
+			}
+		});
     }
     
     private void HandleButtonHome(){
@@ -295,7 +307,8 @@ public class EvenementController implements Initializable{
 
 			@Override
 			public void handle(Event event) {
-				supprimerEvenement(eventSelected);
+				if(confirm())
+					supprimerEvenement(eventSelected);
 			}
 		});
     }
@@ -324,7 +337,6 @@ public class EvenementController implements Initializable{
 		ObservableList<Evenement> evenementDatatmp = FXCollections.observableArrayList();
 		EvenementDao evenementDao = new EvenementDaoImpl();
 		Set<String> cmbData = new HashSet<String>();
-		System.out.println(evenementDao);
 		
 		for (Object p : evenementDao.getAll(LIST_EVENEMENT)) {
 			Evenement evenement = (Evenement)p;
@@ -415,6 +427,22 @@ public class EvenementController implements Initializable{
 		tooltip.setHeight(14);tooltip.setWidth(10);
 		tooltip.setText(text);
 		node.setTooltip(tooltip);
+	}
+    
+    private boolean confirm(){
+		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment supprimer l'évènement", "Confirmation");
+		return response.equals(Response.OUI);
+	}
+    
+    private void handleButtonQuitter() {
+		btnQuitter.setOnMouseReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				parent.show();
+				stage.close();	
+			}
+		});
 	}
    
 }

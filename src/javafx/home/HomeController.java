@@ -3,6 +3,8 @@ package javafx.home;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.dialog.DialogController.Response;
+import javafx.dialog.FXOptionDialog;
 //import javafx.dialog.FXOptionDialog;
 //import javafx.dialog.DialogController.Response;
 import javafx.event.Event;
@@ -136,7 +138,6 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Membre");
 				LoadManagerView.getInstance().afficherVueMembre(stage);
 				stage.hide();
 			}
@@ -161,7 +162,6 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Keur Serigne Touba");
 				LoadManagerView.getInstance().afficherVueKST(stage);
 				stage.hide();
 			}
@@ -173,15 +173,14 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Quitter : ");
 				if(confirm())
 				stage.close();	
 			}
 		});
 	}	
 	private boolean confirm(){
-		//Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment ajouter", "test");
-		return true;//response.equals(Response.OUI);
+		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment quitter", "Confirmation");
+		return response.equals(Response.OUI);
 	}
 		
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javafx.cotisation.CotisationController;
 import javafx.dahira.DahiraController;
+import javafx.dialog.DialogController;
 //import javafx.dialog.DialogController;
 import javafx.evenement.EvenementController;
 import javafx.fxml.FXMLLoader;
@@ -285,7 +286,7 @@ public class LoadManagerView {
 
 		}
 		
-		/*// afficher la fenetre Keur Serigne Touba
+		// afficher la fenetre Keur Serigne Touba
 				public DialogController afficherVueDialog(Stage stage) {
 					Stage primaryStage = new Stage();
 					DialogController diagController = null;
@@ -314,5 +315,5 @@ public class LoadManagerView {
 					}
 					return diagController;
 
-				}*/
+				}
 }

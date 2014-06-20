@@ -12,6 +12,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.dialog.FXOptionDialog;
+import javafx.dialog.DialogController.Response;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -20,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.loadview.LoadManagerView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
@@ -29,7 +32,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
@@ -111,6 +117,12 @@ public class MembreController implements Initializable {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				parent.show();
+			}
+		});
 	}
 
 	public void setParentStage(Stage parent) {
@@ -248,9 +260,11 @@ public class MembreController implements Initializable {
 		btnSupprimer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				clearUnMembre();
-				tableViewMembre.getSelectionModel().clearSelection();
-				listViewMembre.getItems().clear();
+				if(confirm()){
+					clearUnMembre();
+					tableViewMembre.getSelectionModel().clearSelection();
+					listViewMembre.getItems().clear();
+				}
 			}
 		});
 	}
@@ -258,6 +272,7 @@ public class MembreController implements Initializable {
 	// action pour Cotisation
 	public void handleBtnCotisation() {
 		// action sur bouton cotisation
+		btnCotisation.getStyleClass().add("buttonMenu");
 		btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -270,6 +285,7 @@ public class MembreController implements Initializable {
 	// action pour Impot
 	public void handleBtnImpot() {
 		// action sur bouton impot
+		btnImpot.getStyleClass().add("buttonMenu");
 		btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -336,21 +352,54 @@ public class MembreController implements Initializable {
 
 	// preparer les donnees d un membre pour l'affcihage
 	public void makeDataMembre(Membre membre) {
+		listViewMembre.getItems().clear();
 		if (membre != null) {
 			String nomMembre = membre.getPrenom() + " " + membre.getNom();
+			add(nomMembre);
 			String rueMembre = membre.getAdresse().getRue();
+			add(rueMembre);
+			
 			String codePostalMembre = membre.getAdresse().getCodepostale()
 					+ " " + membre.getAdresse().getVille();
+			add(codePostalMembre);
+			
 			String paysMembre = membre.getAdresse().getProvince() + " "
 					+ membre.getAdresse().getPays();
+			add(paysMembre);
+			
 			String telMembre = membre.getTelephone();
+			add(telMembre);
+			
 			String emaillMembre = membre.getEmail();
-			listViewMembre.getItems().clear();
-			dataMembre.addAll(nomMembre, rueMembre, codePostalMembre,
-					paysMembre, telMembre, emaillMembre);
+			add(emaillMembre);
+			
+			listViewMembre.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+				
+				@Override
+				public ListCell<String> call(ListView<String> param) {
+						ListCell<String> cell = new ListCell<String>() {
+		                    @Override
+		                    protected void updateItem(String t, boolean bln) {
+		                        super.updateItem(t, bln);
+		                        setText(t);
+		                        	if(getIndex() == 0){
+		                        		getStyleClass().add("firstItem");
+		                        	}
+		                    }
+						
+		                };
+		                return cell;
+				}
+			});
 			listViewMembre.setItems(dataMembre);
 		}
+		
 
+	}
+	void add(String chaine){
+		if(chaine!= null && !chaine.trim().isEmpty()){
+			dataMembre.add(chaine);
+		}
 	}
 
 	// effacer l'affichage des données d un membre
@@ -433,5 +482,9 @@ public class MembreController implements Initializable {
 		tooltip.setHeight(14);tooltip.setWidth(10);
 		tooltip.setText(text);
 		node.setTooltip(tooltip);
+	}
+	private boolean confirm(){
+		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment supprimer le membre", "Confirmation");
+		return response.equals(Response.OUI);
 	}
 }

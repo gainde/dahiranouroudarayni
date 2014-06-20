@@ -42,23 +42,23 @@ public class Adresse implements Serializable{
 
 
 	public String getRue() {
-		return rue;
+		return rue != null ? rue : "";
 	}
 
 	public String getVille() {
-		return ville;
+		return ville != null ? ville : "";
 	}
 
 	public String getProvince() {
-		return province;
+		return province != null ? province : "";
 	}
 
 	public String getCodepostale() {
-		return codepostale;
+		return codepostale != null ? codepostale : "";
 	}
 
 	public String getPays() {
-		return pays;
+		return pays != null ? pays : "";
 	}
 
 	public void setRue(String rue) {
