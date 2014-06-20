@@ -40,6 +40,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import util.Utile;
 import validation.ManagerValidation;
@@ -227,6 +228,13 @@ public class EvenementController implements Initializable{
     
     public void setStage(Stage stage) {
         this.stage = stage;
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				parent.show();
+			}
+		});
     }
     
     private void HandleButtonHome(){
@@ -329,7 +337,6 @@ public class EvenementController implements Initializable{
 		ObservableList<Evenement> evenementDatatmp = FXCollections.observableArrayList();
 		EvenementDao evenementDao = new EvenementDaoImpl();
 		Set<String> cmbData = new HashSet<String>();
-		System.out.println(evenementDao);
 		
 		for (Object p : evenementDao.getAll(LIST_EVENEMENT)) {
 			Evenement evenement = (Evenement)p;

@@ -35,6 +35,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
@@ -116,6 +117,12 @@ public class MembreController implements Initializable {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				parent.show();
+			}
+		});
 	}
 
 	public void setParentStage(Stage parent) {

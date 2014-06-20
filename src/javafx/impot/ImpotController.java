@@ -45,6 +45,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidationErreur;
@@ -171,20 +172,14 @@ public class ImpotController implements Initializable {
 		Double v = new Double(0.0);
 		CotisationLoyerDao loyerDao = new CotisationLoyerImpl();
 		v = loyerDao.getMontant(COTISATION_LOYER, "address@gmail.com", "2013");
-		// Double montant = v.get(0);
-		System.out.println("Montant Loyer = " + v);
 
 		CotisationEvenementDao evenementDao = new CotisationEvenementImpl();
 		v = evenementDao
 				.getMontant(COTISATION_KST, "address@gmail.com", "2013");
-		// Double montant1 = v.get(0);
-		System.out.println("Montant evenement = " + v);
 
 		CotisationKSTDao kstDao = new CotisationKSTImpl();
 		v = kstDao
 				.getMontant(COTISATION_EVENEMENT, "address@gmail.com", "2013");
-		// Double montant2 = v.get(0);
-		System.out.println("Montant kst = " + v);
 	
     	handleButtonExecuter();
     	handleButtonQuitter();
@@ -192,6 +187,13 @@ public class ImpotController implements Initializable {
 	
 	public void setStage(Stage stage) {
 		this.stage = stage;
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				parentStage.show();
+			}
+		});
 	}
 
 	private void handleButtonChoisir() {

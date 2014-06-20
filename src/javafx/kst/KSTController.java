@@ -16,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import util.Utile;
 import dao.CotisationKSTDao;
 import dao.ProjetDao;
@@ -67,6 +68,12 @@ public class KSTController implements Initializable{
     
     public void setStage(Stage stage) {
         this.stage = stage;
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				parent.show();
+			}
+		});
     }
     
    

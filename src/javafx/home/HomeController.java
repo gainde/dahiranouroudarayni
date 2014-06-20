@@ -136,7 +136,6 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Membre");
 				LoadManagerView.getInstance().afficherVueMembre(stage);
 				stage.hide();
 			}
