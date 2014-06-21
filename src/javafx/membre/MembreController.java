@@ -3,7 +3,6 @@ package javafx.membre;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -43,8 +42,6 @@ import entites.Membre;
 
 public class MembreController implements Initializable {
 
-	@FXML
-	private ImageView imageViewHome;
 
 	@FXML
 	private SplitPane splitPaneVerticale;
@@ -70,6 +67,9 @@ public class MembreController implements Initializable {
 	private Button btnQuitter;
 	@FXML
 	private Button btnHome;
+	@FXML
+	private Button btnAide;
+
 
 
 	@FXML
@@ -152,7 +152,6 @@ public class MembreController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		HandleButtonHome();
 
 		// set bouton non actif
 		tableViewMembre.getSelectionModel().setSelectionMode(
@@ -194,6 +193,7 @@ public class MembreController implements Initializable {
 		filterMembre();
 		
 		toolTipButton(btnHome, "Home");
+		toolTipButton(btnAide, "Aide");
 
 		// handle button
 		handleBtnQuitter(btnHome);
@@ -203,6 +203,7 @@ public class MembreController implements Initializable {
 		handleBtnSupprimer();
 		handleBtnCotisation();
 		handleBtnImpot();
+		HandleButtonAide();
 		// filtrer les membres
 		membreDonnee.addListener(new ListChangeListener<Membre>() {
 			@Override
@@ -219,6 +220,8 @@ public class MembreController implements Initializable {
 
 	// action pour quitter
 	public void handleBtnQuitter(Button t) {
+		if(t.equals(btnHome))// add style
+			btnHome.getStyleClass().add("buttonMenu");
 		// action sur bouton quitter
 		t.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -294,25 +297,24 @@ public class MembreController implements Initializable {
 		});
 	}
 
-	
-	//action sur l image home
-	private void HandleButtonHome() {
-		imageViewHome.setOnMouseReleased(new EventHandler<Event>() {
+	private void HandleButtonAide() {
+		btnAide.getStyleClass().add("buttonMenu");
+		btnAide.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
-				parent.show();
-				stage.close();
+				System.out.println("click Aide");
+				LoadManagerView.getInstance().getBrowserAide();
 			}
 		});
 	}
-
+	
 	// afficher la fenetre pour ajouter des membres
 	public void afficherVueAjoutMembre() {
 		LoadManagerView.getInstance().afficherVueAjoutMembre(this);
 	}
 
-	// afficher la fenetre pour ajouter des membres
+	// afficher la fenetre pour éditer des membres
 	public void afficherVueEditerMembre() {
 		LoadManagerView.getInstance()
 				.afficherVueEditerMembre(this, membreActif);

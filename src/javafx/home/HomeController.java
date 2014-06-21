@@ -85,7 +85,7 @@ public class HomeController implements Initializable {
 		HandleButtonEvenement();
 		HandleButtonImpot();
 		HandleButtonMembre();
-		HandleButtonParametre();
+		HandleButtonAide();
 		HandleButtonKeurSerigneTouba();
 		HandleButtonQuitter();
 		dahira = ManagerEntiteDahira.getInstance().getDahira();
@@ -144,14 +144,14 @@ public class HomeController implements Initializable {
 		});
 	}
 
-	private void HandleButtonParametre() {
+	private void HandleButtonAide() {
 		btnAide.getStyleClass().add("buttonMenu");
 		btnAide.setOnMouseReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Aide");
-				
+				LoadManagerView.getInstance().getBrowserAide();
 			}
 		});
 	}

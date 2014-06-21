@@ -18,6 +18,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.loadview.LoadManagerView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
@@ -39,8 +40,6 @@ import validation.ManagerValidation;
 import validation.Validateur;
 import validation.ValidationErreur;
 import validation.ValidationEmail;
-
-
 import dao.CotisationEvenementDao;
 import dao.CotisationKSTDao;
 import dao.CotisationLoyerDao;
@@ -54,9 +53,7 @@ import entites.Membre;
 import entites.Utilisateur;
 
 public class ImpotController implements Initializable {
-	@FXML
-	private ImageView imageViewHome;
-	
+
 	@FXML private HBox hboxErr;
 	@FXML private Button btnErr;
 	@FXML private ImageView closeShape;
@@ -90,6 +87,8 @@ public class ImpotController implements Initializable {
 	private Button btnChoisir;
 	@FXML
 	private Button btnHome;
+	@FXML
+	private Button btnAide;
 	
 	@FXML
 	private Button btnQuitter;
@@ -141,11 +140,15 @@ public class ImpotController implements Initializable {
 		datePickerDeliv.setValue(LocalDate.now());
 		// set anchorPane
 		Validateur.setAnc(anc);
+		
 		toolTipButton(btnHome, "Home");
+		toolTipButton(btnAide, "Aide");
+		//validation
 		impotManager.setNodeStopWriten(txtAMsg, txtAMsg.getText(), 100);
 		impotManager.setNodeStopWriten(txtObjet, txtObjet.getText(), 30);
 		impotManager.setNodeStopWriten(txtMotDePasse, txtMotDePasse.getText(), 30);
 		impotManager.setNodeStopWriten(txtMotDePasseC, txtMotDePasseC.getText(), 30);
+		
 		btnExecuter.disableProperty().bind(lbDossier.textProperty().isEmpty());
 		// validation email
 		validateurManager.add(new ValidationEmail(txtEmail, textErrEmail,
@@ -153,8 +156,9 @@ public class ImpotController implements Initializable {
 
 		handleButtonChoisir();
 		impotManager.fillComboBox(cmbAnnee);
-		//fillComboBox();
+		
 		handleButtonHome();
+		HandleButtonAide();
 		// TODO delete Test
 		Double v = new Double(0.0);
 		CotisationLoyerDao loyerDao = new CotisationLoyerImpl();
@@ -193,8 +197,22 @@ public class ImpotController implements Initializable {
 			}
 		});
 	}
+	//action sur le bouton Aide
+    private void HandleButtonAide() {
+		btnAide.getStyleClass().add("buttonMenu");
+		btnAide.setOnMouseReleased(new EventHandler<Event>() {
 
+			@Override
+			public void handle(Event event) {
+				System.out.println("click Aide");
+				LoadManagerView.getInstance().getBrowserAide();
+			}
+		});
+	}
+	
 	private void handleButtonHome() {
+		// add style
+		btnHome.getStyleClass().add("buttonMenu");
 		btnHome.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
