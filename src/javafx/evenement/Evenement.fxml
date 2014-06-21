@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anc" prefHeight="596.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.evenement.EvenementController">
+<AnchorPane fx:id="anc" prefHeight="614.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.evenement.EvenementController">
 	<children>
 		<ComboBox fx:id="cmbEvenement" layoutX="95.0" layoutY="98.0" prefHeight="25.0" prefWidth="172.0" />
 		<Label layoutX="44.0" layoutY="21.0" prefHeight="25.0" prefWidth="201.0" text="EVENEMENT" />
@@ -97,6 +97,6 @@
 <image>
 <Image url="@../../META-INF/images/Fermer.png" />
 </image></ImageView>
-</children></HBox><Button fx:id="btnQuitter" layoutX="616.0" layoutY="564.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Quitter" />
+</children></HBox><Button fx:id="btnQuitter" layoutX="611.0" layoutY="563.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Quitter" />
 	</children>
 </AnchorPane>

@@ -3,8 +3,10 @@ package javafx.home;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.dialog.FXOptionDialog;
 import javafx.dialog.DialogController.Response;
+import javafx.dialog.FXOptionDialog;
+//import javafx.dialog.FXOptionDialog;
+//import javafx.dialog.DialogController.Response;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -86,7 +88,7 @@ public class HomeController implements Initializable {
 		HandleButtonParametre();
 		HandleButtonKeurSerigneTouba();
 		HandleButtonQuitter();
-		dahira = ManagerEntiteDahira.getInstance().loadDahira();
+		dahira = ManagerEntiteDahira.getInstance().getDahira();
 	}
 
 	public void setStage(Stage stage) {
