@@ -1,9 +1,8 @@
-
-
 package javafx.loadview;
 
 import java.io.IOException;
 
+import javafx.aide.BrowserHelp;
 import javafx.cotisation.CotisationController;
 import javafx.dahira.DahiraController;
 import javafx.dialog.DialogController;
@@ -18,6 +17,7 @@ import javafx.membre.ajout.AjouterMembreController;
 import javafx.membre.edit.EditerMembreController;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import entites.Dahira;
@@ -38,7 +38,8 @@ public class LoadManagerView {
 		}
 		return INSTANCE;
 	}
-
+	private BrowserHelp browserHelp = null; 
+	private Stage primaryStageAide;
 	// afficher la fenetre de la dahira
 	public void afficherVueDahira(Dahira dahira) {
 		Stage primaryStage = new Stage();
@@ -96,7 +97,7 @@ public class LoadManagerView {
 	public void afficherVueEvenement(Stage stage) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Évènements");
-		//primaryStage.initModality(Modality.WINDOW_MODAL);
+		// primaryStage.initModality(Modality.WINDOW_MODAL);
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader(
@@ -123,7 +124,7 @@ public class LoadManagerView {
 	public void afficherVueImpot(Stage stage) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Impôt");
-		//primaryStage.initModality(Modality.WINDOW_MODAL);
+		// primaryStage.initModality(Modality.WINDOW_MODAL);
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader(
@@ -258,62 +259,80 @@ public class LoadManagerView {
 		}
 
 	}
-	
+
 	// afficher la fenetre Keur Serigne Touba
-		public void afficherVueKST(Stage stage) {
-			Stage primaryStage = new Stage();
-			primaryStage.setTitle("Keur Serigne Touba");
-			primaryStage.initModality(Modality.WINDOW_MODAL);
-			try {
-				// Load the root layout from the fxml file
-				FXMLLoader loader = new FXMLLoader(
-						KSTController.class.getResource("KST.fxml"));
-				AnchorPane anc = (AnchorPane) loader.load();
-				KSTController kstController = (KSTController) loader
-						.getController();
-				Scene scene = new Scene(anc);
-				scene.getStylesheets().add("META-INF/css/style.css");
-				primaryStage.setScene(scene);
-				kstController.setStage(primaryStage);
-				kstController.setParentStage(stage);
-				primaryStage.setResizable(false);
-				primaryStage.show();
+	public void afficherVueKST(Stage stage) {
+		Stage primaryStage = new Stage();
+		primaryStage.setTitle("Keur Serigne Touba");
+		primaryStage.initModality(Modality.WINDOW_MODAL);
+		try {
+			// Load the root layout from the fxml file
+			FXMLLoader loader = new FXMLLoader(
+					KSTController.class.getResource("KST.fxml"));
+			AnchorPane anc = (AnchorPane) loader.load();
+			KSTController kstController = (KSTController) loader
+					.getController();
+			Scene scene = new Scene(anc);
+			scene.getStylesheets().add("META-INF/css/style.css");
+			primaryStage.setScene(scene);
+			kstController.setStage(primaryStage);
+			kstController.setParentStage(stage);
+			primaryStage.setResizable(false);
+			primaryStage.show();
 
-			} catch (IOException e) {
-				// Exception gets thrown if the fxml file could not be loaded
-				e.printStackTrace();
-			}
-
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
 		}
-		
-		// afficher la fenetre Keur Serigne Touba
-				public DialogController afficherVueDialog(Stage stage) {
-					Stage primaryStage = new Stage();
-					DialogController diagController = null;
-					primaryStage.setTitle("Confirmation");
-					primaryStage.initModality(Modality.APPLICATION_MODAL);
-					try {
-						// Load the root layout from the fxml file
-						FXMLLoader loader = new FXMLLoader(
-								DialogController.class.getResource("DialogView.fxml"));
-						AnchorPane anc = (AnchorPane) loader.load();
-						
-						diagController = (DialogController) loader
-								.getController();
-						Scene scene = new Scene(anc);
-						scene.getStylesheets().add("META-INF/css/style.css");
-						scene.getRoot().getStyleClass().add("dialog");
-						primaryStage.setScene(scene);
-						diagController.setStage(primaryStage);
-						primaryStage.initOwner( stage );
-						primaryStage.setResizable(false);
-						//primaryStage.show();
 
-					} catch (IOException e) {
-						// Exception gets thrown if the fxml file could not be loaded
-						e.printStackTrace();
-					}
-					return diagController;
+	}
 
-				}
+	// afficher la fenetre Keur Serigne Touba
+	public DialogController afficherVueDialog(Stage stage) {
+		Stage primaryStage = new Stage();
+		DialogController diagController = null;
+		primaryStage.setTitle("Confirmation");
+		primaryStage.initModality(Modality.APPLICATION_MODAL);
+		try {
+			// Load the root layout from the fxml file
+			FXMLLoader loader = new FXMLLoader(
+					DialogController.class.getResource("DialogView.fxml"));
+			AnchorPane anc = (AnchorPane) loader.load();
+
+			diagController = (DialogController) loader.getController();
+			Scene scene = new Scene(anc);
+			scene.getStylesheets().add("META-INF/css/style.css");
+			scene.getRoot().getStyleClass().add("dialog");
+			primaryStage.setScene(scene);
+			diagController.setStage(primaryStage);
+			primaryStage.initOwner(stage);
+			primaryStage.setResizable(false);
+			// primaryStage.show();
+
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+		}
+		return diagController;
+
+	}
+
+	// afficher la fenetre Aide
+	public void getBrowserAide(){
+		if(browserHelp == null){
+			browserHelp = new BrowserHelp();
+			afficherVueAide();
+		}else
+			primaryStageAide.toFront();
+	}
+	public void afficherVueAide() {
+		 // create the scene
+		primaryStageAide = new Stage();
+		primaryStageAide.setTitle("Aide");
+		Scene scene = new Scene(browserHelp,750,500,Color.web("#666970"));
+		//scene.getStylesheets().add("webviewsample/BrowserToolbar.css");        
+		//scene.getStylesheets().add("META-INF/css/style.css");
+		primaryStageAide.setScene(scene);
+		primaryStageAide.show();
+	}
 }

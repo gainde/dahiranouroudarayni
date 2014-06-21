@@ -70,7 +70,7 @@
 			</children>
 		</HBox>
 		<Text id="grdTitle" layoutY="59.0" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="INFORMATION DES MEMBRES" textAlignment="CENTER" wrappingWidth="800.0" />
-		<Button fx:id="btnHome" layoutX="694.0" layoutY="20.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="66.0">
+		<Button fx:id="btnHome" layoutX="694.0" layoutY="20.0" mnemonicParsing="false">
 			<graphic>
 				<ImageView fx:id="imageViewHome" fitHeight="48.0" fitWidth="64.0" layoutX="636.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
 					<image>
@@ -89,5 +89,17 @@
 			</HBox.margin>
 		</Button>
 		<Separator layoutX="14.0" layoutY="89.0" prefHeight="3.0" prefWidth="774.0" />
+<Button fx:id="btnAide" layoutX="616.0" layoutY="20.0" mnemonicParsing="false">
+<graphic>
+<ImageView fitHeight="48.0" fitWidth="64.0" layoutX="636.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+<cursor>
+<Cursor fx:constant="HAND" />
+</cursor>
+<image>
+<Image url="@../../META-INF/images/help.png" />
+</image>
+</ImageView>
+</graphic>
+</Button>
 	</children>
 </AnchorPane>

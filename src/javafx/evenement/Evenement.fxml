@@ -84,8 +84,8 @@
 					</children>
 				</AnchorPane>
 			</content>
-		</TitledPane><Button fx:id="btnEnregistrer" layoutX="628.0" layoutY="291.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Enregistrer" /><Button fx:id="btnHome" layoutX="640.0" layoutY="19.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="66.0">
-<graphic><ImageView fx:id="imageViewHome" fitHeight="40.0" fitWidth="49.0" layoutX="558.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+		</TitledPane><Button fx:id="btnEnregistrer" layoutX="628.0" layoutY="291.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Enregistrer" /><Button fx:id="btnHome" layoutX="640.0" layoutY="19.0" mnemonicParsing="false">
+<graphic><ImageView fx:id="imageViewHome" fitHeight="73.0" fitWidth="48.0" layoutX="558.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
 <image>
 <Image url="@../../META-INF/images/home.png" />
 </image></ImageView>
@@ -98,5 +98,14 @@
 <Image url="@../../META-INF/images/Fermer.png" />
 </image></ImageView>
 </children></HBox><Button fx:id="btnQuitter" layoutX="611.0" layoutY="563.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Quitter" />
+<Button fx:id="btnAide" layoutX="562.0" layoutY="19.0" mnemonicParsing="false">
+<graphic>
+<ImageView fitHeight="48.0" fitWidth="64.0" layoutX="558.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+<image>
+<Image url="@../../META-INF/images/help.png" />
+</image>
+</ImageView>
+</graphic>
+</Button>
 	</children>
 </AnchorPane>

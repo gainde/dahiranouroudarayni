@@ -24,6 +24,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.loadview.LoadManagerView;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -73,6 +74,7 @@ public class EvenementController implements Initializable{
     @FXML private TextField txtDepense;
     @FXML private TextField txtBudget;
     
+    @FXML private Button btnAide;
     @FXML private Button btnHome;
     @FXML private Button btnErr;
     @FXML private Button btnAjouter;
@@ -123,6 +125,8 @@ public class EvenementController implements Initializable{
     	dateNouveauEven.setValue(LocalDate.now());
     	
     	toolTipButton(btnHome,"Home");
+    	toolTipButton(btnAide,"Aide");
+    	
     	hboxErr.setVisible(false);
     	timeline = new Timeline();
     	validateurManager.hideBoxErr(hboxErr,closeShape, timeline);
@@ -183,11 +187,25 @@ public class EvenementController implements Initializable{
 		});
     	
     	HandleButtonHome();
+    	HandleButtonAide();
     	enableFieldsEdit(true);
     	chargerListEvenement();
     	titledPaneNvEven.setExpanded(false);
     	
 	}
+    //action sur le bouton Aide
+    private void HandleButtonAide() {
+		btnAide.getStyleClass().add("buttonMenu");
+		btnAide.setOnMouseReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				System.out.println("click Aide");
+				LoadManagerView.getInstance().getBrowserAide();
+			}
+		});
+	}
+	
     //initialiser la validation des champs d edition d evenement
     public void initValidation(Node node){
     	node.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -238,6 +256,7 @@ public class EvenementController implements Initializable{
     }
     
     private void HandleButtonHome(){
+		btnHome.getStyleClass().add("buttonMenu");
     	btnHome.setOnMouseReleased(new EventHandler<Event>() {
     		
 			@Override
