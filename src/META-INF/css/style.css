@@ -15,6 +15,10 @@
 
 
 }
+.text-field:disabled{
+	-fx-text-fill:black ;
+	-fx-opacity:0.9;
+}
 
 .label, .text {
     -fx-font-size: 12px;
