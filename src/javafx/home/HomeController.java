@@ -102,7 +102,7 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				
-				LoadManagerView.getInstance().afficherVueDahira(dahira);
+				LoadManagerView.afficherVueDahira(dahira);
 			}
 		});
 	}
@@ -114,7 +114,7 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				
-			        	LoadManagerView.getInstance().afficherVueEvenement(stage);
+			        	LoadManagerView.afficherVueEvenement(stage);
 			        	stage.hide();
 			}
 		});
@@ -126,7 +126,7 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				LoadManagerView.getInstance().afficherVueImpot(stage);
+				LoadManagerView.afficherVueImpot(stage);
 				stage.hide();
 			}
 		});
@@ -138,7 +138,7 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				LoadManagerView.getInstance().afficherVueMembre(stage);
+				LoadManagerView.afficherVueMembre(stage);
 				stage.hide();
 			}
 		});
@@ -151,7 +151,7 @@ public class HomeController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Aide");
-				LoadManagerView.getInstance().getBrowserAide();
+				LoadManagerView.getBrowserAide();
 			}
 		});
 	}
@@ -162,7 +162,7 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				LoadManagerView.getInstance().afficherVueKST(stage);
+				LoadManagerView.afficherVueKST(stage);
 				stage.hide();
 			}
 		});

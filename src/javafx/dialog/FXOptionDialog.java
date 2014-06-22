@@ -11,7 +11,7 @@ public class FXOptionDialog {
 	
 	
 	public static Response showConfirmDialog( Stage owner, String message, String title ) {
-		DialogController diag = LoadManagerView.getInstance().afficherVueDialog(owner);
+		DialogController diag = LoadManagerView.afficherVueDialog(owner);
 		buttonSelected = diag.showConfirmDialog(message, title);
 		
 	    return buttonSelected;

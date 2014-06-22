@@ -205,7 +205,7 @@ public class ImpotController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Aide");
-				LoadManagerView.getInstance().getBrowserAide();
+				LoadManagerView.getBrowserAide();
 			}
 		});
 	}

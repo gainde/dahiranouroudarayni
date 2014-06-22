@@ -24,24 +24,12 @@ import entites.Dahira;
 import entites.Membre;
 
 public class LoadManagerView {
-	/** Constructeur privé */
-	private LoadManagerView() {
-	}
-
-	/** Instance unique non préinitialisée */
-	private static LoadManagerView INSTANCE = null;
-
-	/** Point d'accès pour l'instance unique du singleton */
-	public static synchronized LoadManagerView getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new LoadManagerView();
-		}
-		return INSTANCE;
-	}
-	private BrowserHelp browserHelp = null; 
-	private Stage primaryStageAide;
+	
+	private static BrowserHelp browserHelp = null; 
+	private static Stage primaryStageAide;
+	
 	// afficher la fenetre de la dahira
-	public void afficherVueDahira(Dahira dahira) {
+	public static void afficherVueDahira(Dahira dahira) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Dahira");
 		primaryStage.initModality(Modality.APPLICATION_MODAL);
@@ -68,7 +56,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre Membres
-	public void afficherVueMembre(Stage stage) {
+	public static void afficherVueMembre(Stage stage) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Membres");
 		primaryStage.initModality(Modality.WINDOW_MODAL);
@@ -94,7 +82,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre Membres
-	public void afficherVueEvenement(Stage stage) {
+	public static void afficherVueEvenement(Stage stage) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Évènements");
 		// primaryStage.initModality(Modality.WINDOW_MODAL);
@@ -121,7 +109,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre Membres
-	public void afficherVueImpot(Stage stage) {
+	public static void afficherVueImpot(Stage stage) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Impôt");
 		// primaryStage.initModality(Modality.WINDOW_MODAL);
@@ -147,7 +135,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre pour ajouter des membres
-	public void afficherVueAjoutMembre(MembreController membreController) {
+	public static void afficherVueAjoutMembre(MembreController membreController) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Membre");
 		primaryStage.initModality(Modality.APPLICATION_MODAL);
@@ -175,7 +163,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre pour ajouter des membres
-	public void afficherVueEditerMembre(MembreController membreController,
+	public static void afficherVueEditerMembre(MembreController membreController,
 			Membre membreActif) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Membre");
@@ -205,7 +193,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre pour ajouter des membres
-	public void afficherVueCotisation(Membre membreActif) {
+	public static void afficherVueCotisation(Membre membreActif) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Cotisation");
 		primaryStage.initModality(Modality.APPLICATION_MODAL);
@@ -233,7 +221,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre pour envoyer le message d impot
-	public void afficherVueEmail(Membre membreActif) {
+	public static void afficherVueEmail(Membre membreActif) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Connexion");
 		primaryStage.initModality(Modality.APPLICATION_MODAL);
@@ -261,7 +249,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre Keur Serigne Touba
-	public void afficherVueKST(Stage stage) {
+	public static void afficherVueKST(Stage stage) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Keur Serigne Touba");
 		primaryStage.initModality(Modality.WINDOW_MODAL);
@@ -288,7 +276,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre Keur Serigne Touba
-	public DialogController afficherVueDialog(Stage stage) {
+	public static DialogController afficherVueDialog(Stage stage) {
 		Stage primaryStage = new Stage();
 		DialogController diagController = null;
 		primaryStage.setTitle("Confirmation");
@@ -318,14 +306,16 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre Aide
-	public void getBrowserAide(){
+	public static void getBrowserAide(){
 		if(browserHelp == null){
 			browserHelp = new BrowserHelp();
 			afficherVueAide();
-		}else
+		}else{
+			primaryStageAide.show();
 			primaryStageAide.toFront();
+		}
 	}
-	public void afficherVueAide() {
+	public static void afficherVueAide() {
 		 // create the scene
 		primaryStageAide = new Stage();
 		primaryStageAide.setTitle("Aide");

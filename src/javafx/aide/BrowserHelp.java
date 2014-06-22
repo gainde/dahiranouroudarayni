@@ -21,6 +21,7 @@ public class BrowserHelp extends Region {
         // load the web page
     	URL urlHello = getClass().getResource("../../META-INF/aide.html");
         webEngine.load(urlHello.toExternalForm());
+        System.out.println();
         //webEngine.load("/src/META-INF/aide.html");
         //add the web view to the scene
         getChildren().add(browser);

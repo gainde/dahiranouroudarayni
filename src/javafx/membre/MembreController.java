@@ -279,8 +279,7 @@ public class MembreController implements Initializable {
 		btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				LoadManagerView.getInstance()
-						.afficherVueCotisation(membreActif);
+				LoadManagerView.afficherVueCotisation(membreActif);
 			}
 		});
 	}
@@ -292,7 +291,7 @@ public class MembreController implements Initializable {
 		btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				LoadManagerView.getInstance().afficherVueEmail(membreActif);
+				LoadManagerView.afficherVueEmail(membreActif);
 			}
 		});
 	}
@@ -304,20 +303,19 @@ public class MembreController implements Initializable {
 			@Override
 			public void handle(Event event) {
 				System.out.println("click Aide");
-				LoadManagerView.getInstance().getBrowserAide();
+				LoadManagerView.getBrowserAide();
 			}
 		});
 	}
 	
 	// afficher la fenetre pour ajouter des membres
 	public void afficherVueAjoutMembre() {
-		LoadManagerView.getInstance().afficherVueAjoutMembre(this);
+		LoadManagerView.afficherVueAjoutMembre(this);
 	}
 
 	// afficher la fenetre pour éditer des membres
 	public void afficherVueEditerMembre() {
-		LoadManagerView.getInstance()
-				.afficherVueEditerMembre(this, membreActif);
+		LoadManagerView.afficherVueEditerMembre(this, membreActif);
 	}
 
 	// charger liste des membres
