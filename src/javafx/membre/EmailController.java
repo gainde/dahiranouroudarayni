@@ -84,8 +84,8 @@ public class EmailController implements Initializable {
 	private Utilisateur user = new Utilisateur();
 	
 	private Timeline timeline;
-	//c crucial il faut trouver une meilleur solution
-	Label lbDossier = new Label("/Users/ousmanedieng/Desktop");
+	//TODO c crucial il faut trouver une meilleur solution
+	Label lbDossier = new Label("..");
 	
 	public Stage getStage() {
 		return stage;
@@ -111,6 +111,7 @@ public class EmailController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// set l anchorpane
 		Validateur.setAnc(anc);
+		datePickerDeliv.setEditable(false);
 		// iniialiser à la date d aujourd hui
 		datePickerDeliv.setValue(LocalDate.now());
 		impotManager.setLbDossier(lbDossier);
@@ -124,7 +125,7 @@ public class EmailController implements Initializable {
 		impotManager.setNodeStopWriten(passWordField2, passWordField2.getText(), 30);
 		// Valider le mail
 		validateurManager.add(new ValidationEmail(emailConexionField,
-				connexionErr, false, ValidationErreur.EMAIL_ERR, 45));
+				connexionErr, false, ValidationErreur.EMAIL_ERR, 30));
 		
 		impotManager.fillComboBox(cmbAnnee);
 		// action sur bouton envoyer

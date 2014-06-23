@@ -107,6 +107,7 @@ public class EvenementController implements Initializable{
     private static IntegerProperty index = new SimpleIntegerProperty();
     
     private ManagerValidation validateurManager = new ManagerValidation();
+    private ManagerValidation validateurManagerTabPane = new ManagerValidation();
     
     public void setParentStage(Stage parent){
     	this.parent = parent;
@@ -132,13 +133,8 @@ public class EvenementController implements Initializable{
     	validateurManager.hideBoxErr(hboxErr,closeShape, timeline);
     
     	// validation
-    	initValidation(txtNom);
-    	initValidation(txtBudget);
-    	initValidation(txtDepense);
-    	
-    	initValidation1(txtNomNouveauEven);
-    	initValidation1(txtBudgetNouveauEven);
-   
+    	initValidation();
+    	initValidationTabPane();
    
     	HandleButtonAjouter();
     	HandleButtonEditer();
@@ -207,12 +203,7 @@ public class EvenementController implements Initializable{
 	}
 	
     //initialiser la validation des champs d edition d evenement
-    public void initValidation(Node node){
-    	node.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable,
-					Boolean oldValue, Boolean newValue) {
-				if (newValue) {
+    public void initValidation(){
 					validateurManager.clearListOfValidation();
 					validateurManager.add(new ValidateurChaine(txtNom,
 	    					textErrNom, false, ValidationErreur.CHAINE_ERR, 30));
@@ -220,28 +211,15 @@ public class EvenementController implements Initializable{
 					textErrBudget, false, ValidationErreur.MONTANT_ERR));
 					validateurManager.add(new ValidateurMontant(txtDepense,
 					textErrDepense, true, ValidationErreur.MONTANT_ERR));
-					
-				}
-				
-			}
-		});
     }
     //initialiser la validation des champs d ajout d evenement
-    public void initValidation1(Node node){
-    	node.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable,
-					Boolean oldValue, Boolean newValue) {
-				if (newValue) {
-					validateurManager.clearListOfValidation();
-					validateurManager.add(new ValidateurChaine(txtNomNouveauEven,
+    public void initValidationTabPane(){
+    
+					validateurManagerTabPane.clearListOfValidation();
+					validateurManagerTabPane.add(new ValidateurChaine(txtNomNouveauEven,
 	    					textErrNom1, false, ValidationErreur.CHAINE_ERR,30));
-					validateurManager.add(new ValidateurMontant(txtBudgetNouveauEven,
+					validateurManagerTabPane.add(new ValidateurMontant(txtBudgetNouveauEven,
 					textErrBudget1, false, ValidationErreur.MONTANT_ERR));
-				}
-				
-			}
-		});
     }
     
     public void setStage(Stage stage) {
@@ -271,15 +249,21 @@ public class EvenementController implements Initializable{
 			
 			@Override
 			public void handle(Event event) {
-				Boolean valide = validateurManager.valider();
-				if(valide){
+				Boolean valideDate = validateurManager.dateValidate(dateNouveauEven);
+				Boolean valide = validateurManagerTabPane.valider();
+				if(valide && valideDate){
 					ajouterEvenement();
 					btnErr.setText("Évènement ajouté avec succés!");
 					titledPaneNvEven.setExpanded(false);
-				}else{
+					validateurManagerTabPane.clearListOfValidation();
+				}else if(valideDate){
 					btnErr.setText("Veuillez corriger les champs invalides!");
 					//textErrMsg.setText("Veuillez corriger les champs invalides!");
-				}
+				}else if(valide){
+					btnErr.setText("Date invalide!");
+					//textErrMsg.setText("Veuillez corriger les champs invalides!");
+				}else
+					btnErr.setText("Veuillez corriger les champs invalides!");
 				validateurManager.animate(hboxErr, timeline);
 				hboxErr.setVisible(true);
 			}
@@ -303,8 +287,9 @@ public class EvenementController implements Initializable{
 			
 			@Override
 			public void handle(ActionEvent event) {
+				Boolean valideDate = validateurManager.dateValidate(dateEven);
 				Boolean valide = validateurManager.valider();
-				if(valide){
+				if(valide && valideDate){
 					
 					enregistrer();
 					btnErr.setText("Modification enregistrée avec succés!");
@@ -312,10 +297,14 @@ public class EvenementController implements Initializable{
 			    	btnEditer.setDisable(true);
 			    	btnSupprimer.setDisable(true);
 					enableFieldsEdit(true);
-				}else{
+					validateurManager.clearListOfValidation();
+				}else if(valideDate){
 					btnErr.setText("Veuillez corriger les champs invalides!");
 					//textErrMsg.setText("Veuillez corriger les champs invalides!");
-				}
+				}else if(valide){
+					btnErr.setText("Date invalide!");
+				}else
+					btnErr.setText("Veuillez corriger les champs invalides!");
 				validateurManager.animate(hboxErr, timeline);;
 				hboxErr.setVisible(true);
 				}

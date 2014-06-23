@@ -322,17 +322,20 @@ public class LoadManagerView {
 		if(browserHelp == null){
 			browserHelp = new BrowserHelp();
 			afficherVueAide();
-		}else
+		}else{
+			primaryStageAide.show();
 			primaryStageAide.toFront();
+		}
 	}
 	public void afficherVueAide() {
 		 // create the scene
 		primaryStageAide = new Stage();
 		primaryStageAide.setTitle("Aide");
-		Scene scene = new Scene(browserHelp,750,500,Color.web("#666970"));
+		Scene scene = new Scene(browserHelp,400,700,Color.web("#666970"));
 		//scene.getStylesheets().add("webviewsample/BrowserToolbar.css");        
 		//scene.getStylesheets().add("META-INF/css/style.css");
 		primaryStageAide.setScene(scene);
 		primaryStageAide.show();
+		primaryStageAide.setX(0);primaryStageAide.setY(0);
 	}
 }

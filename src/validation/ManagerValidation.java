@@ -11,6 +11,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -46,10 +47,18 @@ public class ManagerValidation{
 		return p.valider();
 	}
 	
-	public void setVisibleImageValidate(){
-		
+	public Boolean dateValidate(DatePicker date){
+		if(date.getValue() == null){
+			return false;
+		}else
+			return true;
 	}
-	
+	public Boolean dateValidate(DatePicker dateStart,DatePicker dateEnd){
+		if(dateStart.getValue().isAfter(dateEnd.getValue())){
+			return false;
+		}else
+			return true;
+	}
 	// effacer la liste de validation
 	public void clearListOfValidation(){
 		if(!valideList.isEmpty())

@@ -16,7 +16,7 @@
 
 }
 
-.label, .text {
+.label{
     -fx-font-size: 12px;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
@@ -118,6 +118,9 @@
 	-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 3, 0.0 , 0 ,1 );
 }
 
+.bgWhite{
+	-fx-background-color:white;
+}
 
 #btnErr {
 	-fx-text-fill:red;

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -15,9 +16,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.Utile;
+import validation.ManagerValidation;
+import validation.Validateur;
+import validation.ValidateurChaine;
+import validation.ValidateurMontant;
+import validation.ValidationErreur;
 import dao.CotisationKSTDao;
 import dao.ProjetDao;
 import daoimpl.CotisationKSTImpl;
@@ -25,13 +35,23 @@ import daoimpl.ProjetDaoImpl;
 import entites.ProjetKST;
 
 public class KSTController implements Initializable{
-
+	
+	@FXML private HBox hboxErr;
+	@FXML private Button btnErr;
+	@FXML private ImageView closeShape;
+	
+	@FXML
+	private Text textErrNom;
+	@FXML
+	private Text textErrBudget;
+	
     @FXML private TextField txtNom;
     @FXML private TextField txtBudget;
     
     @FXML private Button btnEditer;
     @FXML private Button btnEnregistrer;
     @FXML private Button btnQuitter;
+    @FXML private Button Annuler;
     
     @FXML private DatePicker dateDebut;
     @FXML private DatePicker dateFin;
@@ -40,6 +60,8 @@ public class KSTController implements Initializable{
     
     @FXML private Label lbBudget;
     @FXML private Label lbCotisations;
+    @FXML
+   	private AnchorPane anc;	
     
     private Stage stage;
     private Stage parent;
@@ -47,14 +69,35 @@ public class KSTController implements Initializable{
     private final String MONTANT_COTISATION_KST_QUERY = "select sum(k.montant) from cotisationkst k";
 	private final String PROJET_QUERY = "select p from ProjetKST p";
 	
+	private Timeline timeline;
+	private ManagerValidation validateurManager = new ManagerValidation();
+	private int nbChilds = 0;
 	ProjetKST projetKSTExistant = null;
 	
     public void setParentStage(Stage parent){
     	this.parent = parent;
     }
+    
+    public void setAnchorPane(AnchorPane anc) {
+		this.anc = anc;
+	}
 	
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+    	nbChilds = anc.getChildren().size();
+    	// set l anchorpane
+    	Validateur.setAnc(anc);
+    	hboxErr.setVisible(false);
+		timeline = new Timeline();
+		validateurManager.hideBoxErr(hboxErr,closeShape, timeline);
+		validateurManager.clearListOfValidation();
+		validateurManager.add(new ValidateurChaine(txtNom,
+				textErrNom, false, ValidationErreur.CHAINE_ERR, 30));
+		validateurManager.add(new ValidateurMontant(txtBudget,
+		textErrBudget, false, ValidationErreur.MONTANT_ERR));
+		
+		btnEnregistrer.disableProperty().bind(btnEditer.disableProperty().not());
+		
     	HandleButtonEditer();
     	handleButtonEnregistrer();
     	handleButtonQuitter();
@@ -84,7 +127,6 @@ public class KSTController implements Initializable{
 			public void handle(Event event) {
 				enableFieldsEdit(false);
 				btnEditer.setDisable(true);
-				btnEnregistrer.setDisable(false);
 				
 			}
 		});
@@ -97,12 +139,32 @@ public class KSTController implements Initializable{
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				//TODO Valider
-				enregistrer();
-				enableFieldsEdit(true);
+				Boolean valide1 = valideDate();
+				Boolean valide = validateurManager.valider();
+				if(valide && valide1){
+					enregistrer();
+					btnErr.setText("Évènement ajouté avec succés!");
+					titledPaneInfo.setExpanded(false);
+				}else if(valide1){
+					btnErr.setText("Veuillez corriger les champs invalides!");
+					//textErrMsg.setText("Veuillez corriger les champs invalides!");
+				}else if(valide){
+					btnErr.setText("Dates invalides!");
+				}else
+					btnErr.setText("Veuillez corriger les champs invalides!");
+				validateurManager.animate(hboxErr, timeline);
+				hboxErr.setVisible(true);
 			}
 		});
     }
-    
+    public Boolean valideDate(){
+    	if(validateurManager.dateValidate(dateDebut) &&
+    			validateurManager.dateValidate(dateFin) &&
+    			validateurManager.dateValidate(dateDebut,dateFin))
+    		return true;
+    	else
+    		return false;
+    }
  	public void handleButtonQuitter() {
  		btnQuitter.setOnAction(new EventHandler<ActionEvent>() {
  			@Override
@@ -135,7 +197,7 @@ public class KSTController implements Initializable{
 			projetDao.create(kst);
 		}
 		setBudget(kst.getBudget());
-		btnEnregistrer.setDisable(true);
+		validateurManager.updateAnchorePane(nbChilds, anc);
     }
     
     private void loadValue(){
