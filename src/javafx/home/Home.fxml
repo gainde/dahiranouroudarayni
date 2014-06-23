@@ -12,7 +12,7 @@
 		<Button id="btnKeurSerigneTouba" fx:id="btnKeurSerigneTouba" layoutX="325.0" layoutY="240.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="165.0" text="Keur Serigne Touba" />
 		<Button id="btnParametre" fx:id="btnAide" layoutX="74.0" layoutY="340.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="165.0" text="Aide" />
 		<Button id="btnImpot" fx:id="btnImpot" layoutX="325.0" layoutY="340.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="165.0" text="Impôt" />
-		<Label id="title" alignment="CENTER" layoutX="107.0" layoutY="48.0" prefHeight="35.0" prefWidth="350.0" styleClass="titleHome" text="DAHIRA NOUROU DARAYNI" textAlignment="CENTER" />
+		<Label alignment="CENTER" layoutX="107.0" layoutY="48.0" prefHeight="35.0" prefWidth="350.0" styleClass="title" text="DAHIRA NOUROU DARAYNI" textAlignment="CENTER" />
 		<Button id="btnQuitter" fx:id="btnQuitter" layoutX="445.0" layoutY="443.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="91.0" text="Quitter" />
 	</children>
 </AnchorPane>

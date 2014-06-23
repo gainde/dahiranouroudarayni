@@ -10,7 +10,7 @@
 <AnchorPane fx:id="anc" prefHeight="614.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.evenement.EvenementController">
 	<children>
 		<ComboBox fx:id="cmbEvenement" layoutX="95.0" layoutY="98.0" prefHeight="25.0" prefWidth="172.0" />
-		<Label layoutX="44.0" layoutY="21.0" prefHeight="25.0" prefWidth="201.0" text="EVENEMENT" />
+		<Label layoutX="251.0" layoutY="19.0" prefHeight="25.0" prefWidth="201.0" text="EVENEMENT" />
 		<TableView fx:id="tableEvenement" layoutX="18.0" layoutY="139.0" prefHeight="272.0" prefWidth="374.0">
 			<columns>
 				<TableColumn id="colonneNom" fx:id="colonneNom" prefWidth="160.0" text="Nom" />
@@ -89,7 +89,7 @@
 <image>
 <Image url="@../../META-INF/images/home.png" />
 </image></ImageView>
-</graphic></Button><HBox fx:id="hboxErr" layoutX="205.0" layoutY="17.0" prefHeight="36.0" prefWidth="316.0">
+</graphic></Button><HBox fx:id="hboxErr" layoutX="193.0" layoutY="47.0" prefHeight="36.0" prefWidth="316.0">
 <children><Button id="btnErr" fx:id="btnErr" layoutX="227.0" layoutY="54.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="302.0" textAlignment="CENTER" textFill="RED">
 <HBox.margin>
 <Insets right="1.0" top="7.0" />

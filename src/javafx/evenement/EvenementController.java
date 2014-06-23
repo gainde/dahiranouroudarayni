@@ -17,8 +17,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.dialog.FXOptionDialog;
 import javafx.dialog.DialogController.Response;
+import javafx.dialog.FXOptionDialog;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -200,7 +200,6 @@ public class EvenementController implements Initializable{
 
 			@Override
 			public void handle(Event event) {
-				System.out.println("click Aide");
 				LoadManagerView.getBrowserAide();
 			}
 		});
@@ -434,6 +433,7 @@ public class EvenementController implements Initializable{
 		EvenementDao eventDao = new EvenementDaoImpl();
 		eventDao.update(even);
 		evenementData.set(index.get(), even);
+		
 		//btnEditer.setDisable(false);
 		btnEnregistrer.setDisable(true);
 		validateurManager.updateAnchorePane(nbChilds, anc);

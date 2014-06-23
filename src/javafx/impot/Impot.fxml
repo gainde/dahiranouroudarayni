@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="anc" prefHeight="600.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.impot.ImpotController">
 	<children>
-		<Label layoutX="291.0" layoutY="17.0" text="IMPOT">
+		<Label layoutX="291.0" layoutY="17.0" styleClass="title" text="IMPOT">
 			<font>
 				<Font size="31.0" />
 			</font>

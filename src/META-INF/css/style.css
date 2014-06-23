@@ -20,12 +20,11 @@
 	-fx-opacity:0.9;
 }
 
-.label, .text {
+.label{
     -fx-font-size: 12px;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-text-fill: white;
-    /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 
 .dialog{
@@ -37,32 +36,14 @@
 	-fx-background-color: linear-gradient(to bottom,  #005700 0%,#002400 71%); /* W3C */
 }
 
-.label #title, #grdTitle{
+.header{
    -fx-fill: white;
-   -fx-font-size: 20px;
+   -fx-font-size: 20px !important;
    -fx-font-weight: bold;
    -fx-font-family: "Arial Black";
-   /*-fx-graphic-text-gap: 10;
-   /*-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
-}
-.titleHome{
-   -fx-fill: white;
-   -fx-font-size: 20px;
-   -fx-font-weight: bold;
-   -fx-font-family: "Arial Black";
-   /*-fx-graphic-text-gap: 10;
-   /*-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
-}
-.title2{
-   -fx-fill: white;
-   -fx-font-size: 16px;
-   -fx-font-weight: bold;
+   -fx-alignment: center ;
 }
 .button {
-    /*-fx-background-color:
-        #005700,
-        linear-gradient(#005700 0%, #004610 20%, #002400 100%),
-        linear-gradient(#005700, #002400);*/
     -fx-cursor:hand;
     -fx-background-color:linear-gradient(to bottom, #627d4d 0%,#002400 100%); /* W3C */
     -fx-border-width: 1;
@@ -185,6 +166,7 @@
 .titled-pane > .title
 {
     -fx-background-color:linear-gradient(to bottom,  #007800 0%,#005000 71%);
+    -fx-font-size:12px;
 }
 
 .titled-pane > .title > .arrow-button 
@@ -381,4 +363,20 @@
 .table-view .increment-button:hover ,.table-view .decrement-button:hover {
     -fx-background-color:derive(green,100%);
 	-fx-border-color:derive(green,80%);	
+}
+.slider .fill {
+ -fx-background-color: #00828b;
+ -fx-padding: 0.333333em; 
+}
+.slider .fill:hover {
+ -fx-background-color: #219297;
+}
+.slider{
+ -fx-show-tick-labels:true;	 
+/*-fx-show-tick-marks:true ; 
+/*-fx-major-tick-unit:25; 	 
+-fx-minor-tick-count:3; */	 
+}
+.slider{
+	
 }
