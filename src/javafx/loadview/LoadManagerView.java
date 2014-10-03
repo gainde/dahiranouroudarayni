@@ -1,6 +1,8 @@
 package javafx.loadview;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.aide.BrowserHelp;
 import javafx.cotisation.CotisationController;
@@ -9,6 +11,8 @@ import javafx.dialog.DialogController;
 //import javafx.dialog.DialogController;
 import javafx.evenement.EvenementController;
 import javafx.fxml.FXMLLoader;
+import javafx.home.Home;
+import javafx.home.HomeController;
 import javafx.impot.ImpotController;
 import javafx.kst.KSTController;
 import javafx.membre.EmailController;
@@ -20,13 +24,69 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.utilisateur.LoginController;
+import javafx.utilisateur.LoginManager;
 import entites.Dahira;
 import entites.Membre;
+import entites.Utilisateur;
 
 public class LoadManagerView {
 	
 	private static BrowserHelp browserHelp = null; 
 	private static Stage primaryStageAide;
+	
+	
+	public static void afficherHome(final LoginManager loginManager, String sessionID) {
+		Stage primaryStage = new Stage();
+        primaryStage.setTitle("Accueil");
+
+        try {
+            // Load the root layout from the fxml file
+            FXMLLoader loader = new FXMLLoader(Home.class.getResource("Home.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            HomeController controlleur = (HomeController)loader.getController();
+            Scene scene = new Scene(rootLayout);
+            scene.getStylesheets().add("META-INF/css/style.css");
+            primaryStage.setScene(scene);
+            controlleur.setStage(primaryStage);
+            primaryStage.centerOnScreen();
+            primaryStage.setResizable(false);
+            controlleur.initSessionID(loginManager, sessionID);
+            primaryStage.show();
+           
+        } catch (IOException e) {
+            // Exception gets thrown if the fxml file could not be loaded
+            e.printStackTrace();
+        }
+
+	}
+	public static void afficherLogin(final LoginManager loginManager) {
+		Stage primaryStage = new Stage();
+        primaryStage.setTitle("Login");
+
+        try {
+            // Load the root layout from the fxml file
+            FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("Login.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            LoginController controlleur = (LoginController)loader.getController();
+            Scene scene = new Scene(rootLayout);
+            scene.getStylesheets().add("META-INF/css/style.css");
+            primaryStage.setScene(scene);
+            controlleur.setStage(primaryStage);
+            primaryStage.centerOnScreen();
+            primaryStage.setResizable(false);
+            controlleur.initManager(loginManager);
+            primaryStage.show();
+           
+        } catch (IOException e) {
+            // Exception gets thrown if the fxml file could not be loaded
+        	Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE,
+					null, e);
+            e.printStackTrace();
+        }
+        
+
+	}
 	
 	// afficher la fenetre de la dahira
 	public static void afficherVueDahira(Dahira dahira) {
@@ -56,7 +116,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre Membres
-	public static void afficherVueMembre(Stage stage) {
+	public static void afficherVueMembre(Stage stage, final LoginManager loginManager,String sessionID) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Membres");
 		primaryStage.initModality(Modality.WINDOW_MODAL);
@@ -72,6 +132,7 @@ public class LoadManagerView {
 			primaryStage.setScene(scene);
 			membreController.setStage(primaryStage);
 			membreController.setParentStage(stage);
+			membreController.initSessionID(loginManager, sessionID);;
 			primaryStage.setResizable(false);
 			primaryStage.show();
 
@@ -193,7 +254,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre pour ajouter des membres
-	public static void afficherVueCotisation(Membre membreActif) {
+	public static void afficherVueCotisation(Membre membreActif, final LoginManager loginManager, String sessionID) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Cotisation");
 		primaryStage.initModality(Modality.APPLICATION_MODAL);
@@ -210,6 +271,7 @@ public class LoadManagerView {
 			// cotisation.setParentStage(primaryStage);
 			cotisation.setStage(primaryStage);
 			cotisation.setMembre(membreActif);
+			cotisation.initSessionID(loginManager, sessionID);
 			primaryStage.setResizable(false);
 			primaryStage.show();
 
@@ -221,7 +283,7 @@ public class LoadManagerView {
 	}
 
 	// afficher la fenetre pour envoyer le message d impot
-	public static void afficherVueEmail(Membre membreActif) {
+	public static void afficherVueEmail(Membre membreActif, Utilisateur user) {
 		Stage primaryStage = new Stage();
 		primaryStage.setTitle("Connexion");
 		primaryStage.initModality(Modality.APPLICATION_MODAL);
@@ -237,6 +299,7 @@ public class LoadManagerView {
 			primaryStage.setScene(scene);
 			emailController.setStage(primaryStage);
 			emailController.setMembreEnvoyer(membreActif);
+			emailController.setUtilisateur(user);
 			// emailController.setMembreController(this);
 			primaryStage.setResizable(false);
 			primaryStage.show();

@@ -3,6 +3,7 @@ package javafx.membre;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.loadview.LoadManagerView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -36,6 +38,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import javafx.utilisateur.LoginManager;
 import dao.MembreDao;
 import daoimpl.MembreDaoImpl;
 import entites.Membre;
@@ -83,10 +86,16 @@ public class MembreController implements Initializable {
 	private TableColumn<Membre, String> tableNom;
 	@FXML
 	private TableColumn<Membre, String> tableTelephone;
+	
+	@FXML
+	private Label sessionLabel;
+	@FXML
+	private Button logoutButton;
 
 	private Stage stage;
 	private Stage parent;
 	private Membre membreActif;
+	private LoginManager loginManager;
 	
 
 	private static IntegerProperty index = new SimpleIntegerProperty();
@@ -136,7 +145,18 @@ public class MembreController implements Initializable {
 	public Membre getMembreActif() {
 		return membreActif;
 	}
-
+	
+	public void initSessionID(final LoginManager loginManager, String sessionID) {
+		sessionLabel.setText(sessionID);
+		this.loginManager = loginManager;
+		logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				stage.close();
+				loginManager.logout();
+			}
+		});
+	}
 	public void setMembreActif(Membre membreActif) {
 		this.membreActif = membreActif;
 	}
@@ -279,7 +299,7 @@ public class MembreController implements Initializable {
 		btnCotisation.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				LoadManagerView.afficherVueCotisation(membreActif);
+				LoadManagerView.afficherVueCotisation(membreActif, loginManager, sessionLabel.getText());
 			}
 		});
 	}
@@ -291,7 +311,7 @@ public class MembreController implements Initializable {
 		btnImpot.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				LoadManagerView.afficherVueEmail(membreActif);
+				LoadManagerView.afficherVueEmail(membreActif, loginManager.getUser());
 			}
 		});
 	}

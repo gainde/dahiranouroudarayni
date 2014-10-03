@@ -21,7 +21,6 @@ public class ManagerValidation{
 		
 	}
 	
-	
 	public ArrayList<Validateur> getValideList() {
 		return valideList;
 	}

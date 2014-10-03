@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -153,6 +155,12 @@ public class KSTController implements Initializable{
 		montantProgress.setProgress(montant/Double.parseDouble(txtBudget.getText()));
 		montantjs.setMax(Double.parseDouble(txtBudget.getText()));
 		montantjs.setValue(montant);
+		montantjs.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                    Number old_val, Number new_val) {
+            	montantProgress.setProgress(new_val.doubleValue() / Double.parseDouble(txtBudget.getText()));
+            }
+        });
     }
     
     private void loadProjet(){

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.dialog.DialogController.Response;
 import javafx.dialog.FXOptionDialog;
+import javafx.event.ActionEvent;
 //import javafx.dialog.FXOptionDialog;
 //import javafx.dialog.DialogController.Response;
 import javafx.event.Event;
@@ -13,7 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.loadview.LoadManagerView;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.utilisateur.LoginManager;
 import entites.Dahira;
 import entites.ManagerEntiteDahira;
 
@@ -32,9 +35,14 @@ public class HomeController implements Initializable {
 	private Button btnAide;
 	@FXML
 	private Button btnQuitter;
+	@FXML
+	private Label sessionLabel;
+	@FXML
+	private Button logoutButton;
 
 	private Stage stage;
 	private Dahira dahira;
+	private LoginManager loginManager;
 
 	//private MediaPlayer mediaPlayer;
 	
@@ -138,7 +146,7 @@ public class HomeController implements Initializable {
 
 			@Override
 			public void handle(Event event) {
-				LoadManagerView.afficherVueMembre(stage);
+				LoadManagerView.afficherVueMembre(stage, loginManager, sessionLabel.getText());
 				stage.hide();
 			}
 		});
@@ -181,6 +189,21 @@ public class HomeController implements Initializable {
 	private boolean confirm(){
 		Response response = FXOptionDialog.showConfirmDialog(stage, "Voulez vous vraiment quitter", "Confirmation");
 		return response.equals(Response.OUI);
+	}
+	public void initSessionID(final LoginManager loginManager, String sessionID) {
+		sessionLabel.setText(sessionID);
+		this.loginManager = loginManager;
+		btnEvenement.setDisable(!sessionID.equals("social"));
+		btnKeurSerigneTouba.setDisable(sessionID.equals("social"));
+		btnImpot.setDisable(!sessionID.equals("social"));
+		
+		logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				stage.close();
+				loginManager.logout();
+			}
+		});
 	}
 		
 }

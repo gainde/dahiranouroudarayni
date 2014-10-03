@@ -147,6 +147,6 @@
 <image>
 <Image url="@../../META-INF/images/Fermer.png" />
 </image></ImageView>
-</children></HBox>
+</children></HBox><Label fx:id="sessionLabel" layoutX="586.0" layoutY="20.0" prefHeight="17.0" prefWidth="91.0" /><Button fx:id="logoutButton" layoutX="696.0" layoutY="16.0" mnemonicParsing="false" text="Logout" />
 	</children>
 </AnchorPane>

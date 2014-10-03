@@ -183,9 +183,6 @@ public class ManagerImpot {
 			if(!motdePass.isEmpty() && !motdePass2.isEmpty())
 				if(motdePass.compareTo(motdePass2) == 0)
 					return true;
-				else
-					return false;
-			else
-				return false;
+			return false;
 		}
 }

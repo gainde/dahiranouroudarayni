@@ -102,6 +102,9 @@ public class EmailController implements Initializable {
 	public void setMembreEnvoyer(Membre membreActif) {
 		this.membreActif = membreActif;
 	}
+	public void setUtilisateur(Utilisateur user){
+		this.user = user;
+	}
 
 	public void setAnchorPane(AnchorPane anc) {
 		this.anc = anc;
@@ -194,8 +197,8 @@ public class EmailController implements Initializable {
 	public void setInfo(){
 		impotManager.setTxtAMsg(textMsg);
 		impotManager.setTxtObjet(textObjet);
-		user.setLogin(emailConexionField.getText());
-		user.setPass(passWordField.getText());
+		user.setLoginEmailServeur(emailConexionField.getText());
+		user.setMotDePasseEmailServeur(passWordField.getText());
 		impotManager.setUser(user);
 	}
 	

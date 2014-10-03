@@ -38,6 +38,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.utilisateur.LoginManager;
 import logique.TypeCotisation;
 import util.Utile;
 import validation.ManagerValidation;
@@ -102,9 +103,18 @@ public class CotisationController implements Initializable{
     @FXML private ComboBox<Evenement> cmbEvenement;
     
     @FXML private Button btnQuitter;
+    @FXML private Tab loyerTab;
+    @FXML private Tab KSTTab;
+    @FXML private Tab evenementTab;
     
     @FXML
 	private AnchorPane anc;	
+    
+    @FXML
+	private Label sessionLabel;
+	@FXML
+	private Button logoutButton;
+	private LoginManager loginManager;
    
     private Stage stage;
     
@@ -132,6 +142,8 @@ public class CotisationController implements Initializable{
 	
 	private int nbChilds;
 	private Timeline timeline;
+	
+	
 	
 	Validateur valideurLoyer;
 	Validateur valideurKST;
@@ -547,5 +559,19 @@ public class CotisationController implements Initializable{
 	
 		valideurKST = validateurManager.add(new ValidateurMontant(montantKST,
 				textErrKST, true, ValidationErreur.MONTANT_ERR));
+	}
+	public void initSessionID(final LoginManager loginManager, String sessionID) {
+		sessionLabel.setText(sessionID);
+		this.loginManager = loginManager;
+		loyerTab.setDisable(!sessionID.equals("social"));
+	    KSTTab.setDisable(sessionID.equals("social"));;
+	    evenementTab.setDisable(!sessionID.equals("social"));;
+		logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				stage.close();
+				loginManager.logout();
+			}
+		});
 	}
 }
